@@ -1,4 +1,4 @@
-{# The teardowns in numbers: charts drawn from assets/data/stats.json, as HTML and inline SVG (no script needed to read
+{# The dataset in numbers: charts drawn from assets/data/stats.json, as HTML and inline SVG (no script needed to read
    them; assets/js/sections/stats.js adds the hover and keyboard read-out of the line chart and the histogram). Bars of
    one series are one colour; the three-series charts use the validated set --series-1..3. #}
 {% set p = stats.progress %}
@@ -21,13 +21,13 @@
 <section id="stats" class="sec s-stats" data-section="stats" data-module="stats" aria-labelledby="stats-h">
   <div class="wrap">
     <header class="sec__head s-stats__head">
-      <h2 id="stats-h" data-reveal>The teardowns in numbers</h2>
-      <p class="lead" data-reveal>Counted over all {{ site.numbers.desktops | num }} desktops and every step of their teardowns.</p>
+      <h2 id="stats-h" data-reveal>The dataset in numbers</h2>
+      <p class="lead" data-reveal>Counted over all {{ site.numbers.desktops | num }} desktops and every step of their disassembly.</p>
     </header>
 
     <div class="s-stats__grid">
       <figure class="s-stats__card s-stats__card--progress" data-reveal>
-        <figcaption class="s-stats__title"><b>As a machine comes apart</b><span>Mean over the desktops; each teardown runs from its first picture (0&nbsp;%) to its last (100&nbsp;%).</span></figcaption>
+        <figcaption class="s-stats__title"><b>As a machine is disassembled</b><span>Mean over the desktops; each disassembly sequence runs from its first picture (0&nbsp;%) to its last (100&nbsp;%).</span></figcaption>
         <ul class="s-stats__legend" aria-hidden="true">
           <li><i class="s-stats__key s-stats__key--1"></i>Parts still in the machine</li>
           <li><i class="s-stats__key s-stats__key--2"></i>Of those, mostly in view</li>
@@ -88,7 +88,7 @@
         </figure>
 
         <figure class="s-stats__card" data-reveal>
-          <figcaption class="s-stats__title"><b>Steps per desktop</b><span>Most teardowns take 35 to 49 steps.</span></figcaption>
+          <figcaption class="s-stats__title"><b>Steps per desktop</b><span>Most desktops take 35 to 49 steps.</span></figcaption>
           <div class="hist" role="img" aria-label="Histogram of steps per desktop: {% for b in bins %}{% if b.n %}{{ b.lo }} to {{ b.hi }} steps, {{ b.n }} desktop{{ 's' if b.n > 1 }}; {% endif %}{% endfor %}">
             {% for b in bins %}
             <span class="hist__col" data-tip="{{ b.lo }}–{{ b.hi }} steps: {{ b.n }} desktop{{ 's' if b.n != 1 }}">

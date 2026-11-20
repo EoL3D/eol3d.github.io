@@ -7,18 +7,18 @@
   <meta name="description" content="EoL3D is a dataset of 66 end-of-life desktop computers disassembled step by step: 2,748 steps, 11,221 images from four views, 84,225 instance annotations, 184,263 question-answer pairs, operator video and robot demonstrations.">
   <meta name="theme-color" content="#FFFFFF">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="EoL3D: Step-by-step teardowns of end-of-life desktop computers">
+  <meta property="og:title" content="EoL3D: Step-by-step disassembly of end-of-life desktop computers">
   <meta property="og:description" content="EoL3D is a dataset of 66 end-of-life desktop computers disassembled step by step: 2,748 steps, 11,221 images from four views, 84,225 instance annotations, 184,263 question-answer pairs, operator video and robot demonstrations.">
   <meta property="og:url" content="https://eol3d.github.io/guide.html">
   <meta property="og:image" content="https://eol3d.github.io/assets/img/og-card.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="EoL3D: Step-by-step teardowns of end-of-life desktop computers, over a wall of the dataset's desktops">
+  <meta property="og:image:alt" content="EoL3D: Step-by-step disassembly of end-of-life desktop computers, over a wall of the dataset's desktops">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=6d5fe0e5">
   <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=a079d0fe">
   <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=8fab2da2">
+  <link rel="stylesheet" href="assets/css/site.css?v=dfda251d">
   <script>
     // Motion is switched on here and switched off again if the page script has not started within three seconds,
     // so a script that fails to load can never leave the content hidden.
@@ -37,7 +37,7 @@
   "./assets/js/sections/numbers.js": "./assets/js/sections/numbers.js?v=e3b25e90",
   "./assets/js/sections/stages.js": "./assets/js/sections/stages.js?v=b165ea77",
   "./assets/js/sections/start.js": "./assets/js/sections/start.js?v=331f2bda",
-  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=7e440300",
+  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=09c700d5",
   "./assets/js/teardown/gl.js": "./assets/js/teardown/gl.js?v=7839b5fe",
   "./assets/js/teardown/shaders.js": "./assets/js/teardown/shaders.js?v=15212227",
   "./assets/js/teardown/store.js": "./assets/js/teardown/store.js?v=229d5514",
@@ -161,7 +161,7 @@ export DATA=$PWD/e3d                   <span class="c"># any folder</span></pre>
                   <td class="s-start__size"><span class="vh">Size: </span>9.5 GB</td>
                 </tr>
                 <tr>
-                  <td class="s-start__use">Recognising parts outside the machine (the parts laid out after the teardown)</td>
+                  <td class="s-start__use">Recognising parts outside the machine (the parts laid out after disassembly)</td>
                   <td class="s-start__paths"><code>annotations/components/</code></td>
                   <td class="s-start__size"><span class="vh">Size: </span>0.26 GB</td>
                 </tr>
@@ -183,12 +183,12 @@ export DATA=$PWD/e3d                   <span class="c"># any folder</span></pre>
                 <tr>
                   <td class="s-start__use">Every capture of the four views, as the capture rigs wrote it</td>
                   <td class="s-start__paths"><code>raw/scanner/</code><code>raw/oak/</code><code>raw/realsense/</code></td>
-                  <td class="s-start__size"><span class="vh">Size: </span>about 382 GB</td>
+                  <td class="s-start__size"><span class="vh">Size: </span>about 372 GB</td>
                 </tr>
                 <tr>
                   <td class="s-start__use">Robot demonstrations, one archive per episode, in two settings</td>
                   <td class="s-start__paths"><code>raw/robot/</code></td>
-                  <td class="s-start__size"><span class="vh">Size: </span>about 550 GB</td>
+                  <td class="s-start__size"><span class="vh">Size: </span>about 519 GB</td>
                 </tr>
                 <tr>
                   <td class="s-start__use">Part classes, states and verbs; the train and test split</td>
@@ -337,7 +337,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
 
     <header class="s-data__head">
       <h2 id="guide-data-h" data-reveal>The dataset, file by file</h2>
-      <p class="s-data__lead" data-reveal>EoL3D is built from 66 real desktop computers, used and retired from service. An operator takes each one apart step by step; after every step the remaining assembly is recorded from four fixed views, and an operation log names the part and the action of the step. Below: what each part of the release holds, where it lives in the repository and how to read it.</p>
+      <p class="s-data__lead" data-reveal>EoL3D is built from 66 real desktop computers, used and retired from service. An operator disassembles each one step by step; after every step the remaining assembly is recorded from four fixed views, and an operation log names the part and the action of the step. Below: what each part of the release holds, where it lives in the repository and how to read it.</p>
     </header>
 
     <div class="s-data__glance" data-reveal>
@@ -366,10 +366,10 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
             <td data-label="How much"><div>11,221 images over the 4 views</div></td>
             <td data-label="Format"><div>PNG, JPEG, NumPy depth, PLY</div></td>
             <td data-label="Folder"><div><code>raw/<wbr>scanner/<wbr></code><br><code>raw/<wbr>oak/<wbr></code><br><code>raw/<wbr>realsense/<wbr></code></div></td>
-            <td data-label="Size" class="s-data__num"><div>~382 GB</div></td>
+            <td data-label="Size" class="s-data__num"><div>~372 GB</div></td>
           </tr>
           <tr>
-            <th scope="row"><a href="#data-components">Component pictures</a><span>The removed parts laid out on the bench after the teardown, each one masked</span></th>
+            <th scope="row"><a href="#data-components">Component pictures</a><span>The removed parts laid out on the bench after disassembly, each one masked</span></th>
             <td data-label="How much"><div>64 shots<br>626 annotations</div></td>
             <td data-label="Format"><div>PNG, JPEG, COCO JSON</div></td>
             <td data-label="Folder"><div><code>annotations/<wbr>components/<wbr></code></div></td>
@@ -401,7 +401,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
             <td data-label="How much"><div>1,808 episodes<br>1,092 Fixtured<br>716 On motherboard</div></td>
             <td data-label="Format"><div>One ZIP per episode: pickled frames, JSON</div></td>
             <td data-label="Folder"><div><code>raw/<wbr>robot/<wbr></code></div></td>
-            <td data-label="Size" class="s-data__num"><div>~550 GB</div></td>
+            <td data-label="Size" class="s-data__num"><div>~519 GB</div></td>
           </tr>
         </tbody>
       </table>
@@ -490,7 +490,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
       <article id="data-states" class="s-data__item s-data__item--stack" aria-labelledby="data-states-h">
         <div class="s-data__text" data-reveal>
           <h3 id="data-states-h">Part states</h3>
-          <p class="s-data__body">Every part has a state and a placement at every step, so a part can be followed through the whole teardown, up to the step it leaves the case.</p>
+          <p class="s-data__body">Every part has a state and a placement at every step, so a part can be followed through the whole disassembly, up to the step it leaves the case.</p>
           <dl class="spec s-data__spec">
             <div><dt>Per step</dt><dd><code>instances.json</code>: <code>states["&lt;step&gt;"]</code> = state and placement; <code>leaving</code>: the step the part leaves, and the frames before and after</dd></div>
             <div><dt>Timeline</dt><dd><code>sequence.json</code>: <code>timeline</code>, runs of (from, to, state, placement) per part</dd></div>
@@ -534,7 +534,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
       <article id="data-components" class="s-data__item s-data__item--brief" aria-labelledby="data-components-h">
         <div class="s-data__text" data-reveal>
           <h3 id="data-components-h">Component pictures</h3>
-          <p class="s-data__body">After the teardown, the removed parts were laid out on the bench and photographed, and each part was masked on its own, so a part can be recognised outside the machine too: 64 shots, 626 annotations.</p>
+          <p class="s-data__body">After disassembly, the removed parts were laid out on the bench and photographed, and each part was masked on its own, so a part can be recognised outside the machine too: 64 shots, 626 annotations.</p>
         </div>
         <dl class="spec s-data__spec s-data__aside" data-reveal>
           <div><dt>Folder</dt><dd><code>annotations/components/&lt;view&gt;/D&lt;nn&gt;/</code>, views <code>cmp_scan</code>, <code>cmp_oak1</code>, <code>cmp_oak2</code>, <code>cmp_rs</code></dd></div>
@@ -637,14 +637,14 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
       <article id="data-robot" class="s-data__item s-data__item--stack" aria-labelledby="data-robot-h">
         <div class="s-data__text" data-reveal>
           <h3 id="data-robot-h">Robot demonstrations</h3>
-          <p class="s-data__body">A robot arm takes single components out in two settings: Fixtured, with parts held in slots on a base plate (1,092 episodes), and On motherboard, with parts still mounted on a board (716 episodes). A base camera and a wrist camera film each episode, recorded frame by frame with the robot's state. They are a separate recording, not the teardowns above.</p>
+          <p class="s-data__body">A robot arm takes single components out in two settings: Fixtured, with parts held in slots on a base plate (1,092 episodes), and On motherboard, with parts still mounted on a board (716 episodes). A base camera and a wrist camera film each episode, recorded frame by frame with the robot's state. They are a separate recording, not the disassembly sequences above.</p>
           <dl class="spec s-data__spec">
             <div><dt>Folders</dt><dd><code>raw/robot/on_fixture/raw_data/&lt;component&gt;/</code>, <code>raw/robot/on_motherboard/data/raw_data/&lt;component&gt;/</code>: one <code>episode_*.zip</code> per episode</dd></div>
             <div><dt>Frames</dt><dd><code>frame_*.pkl</code>: timestamps, <code>joint_positions</code>, <code>tcp_pose</code>, <code>gripper_pos</code>, <code>base_rgb</code>, <code>wrist_rgb</code></dd></div>
             <div><dt>Episode</dt><dd><code>episode_meta.json</code>, <code>control_trace.jsonl</code></dd></div>
             <div><dt>Catalog</dt><dd><code>archive_catalog.jsonl</code>: every archive with its component, frames, bytes and SHA-256</dd></div>
           </dl>
-          <p class="s-data__trap"><b>Read it right</b> <code>on_motherboard/data/stage_b_pre_sft_rollouts/</code> holds policy rollouts, not demonstrations. Frames are Python pickles: open them only from this repository, in an isolated environment. The archives are native recordings, not a LeRobot or RLDS conversion.</p>
+          <p class="s-data__trap"><b>Read it right</b> Frames are Python pickles: open them only from this repository, in an isolated environment. The archives are native recordings, not a LeRobot or RLDS conversion.</p>
         </div>
         <figure class="frame s-data__fig" data-reveal>
           <img src="assets/img/uses/tile-robot.webp?v=a3af6edb" width="1600" height="583" loading="lazy" decoding="async"
@@ -683,7 +683,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
       <li class="s-benchmark__track" id="guide-track-qa" data-reveal>
         <p class="s-benchmark__top"><span class="chip chip--accent">Kit released</span></p>
         <h3 class="s-benchmark__name">Visual question answering</h3>
-        <p class="s-benchmark__def">Answer a question about a teardown from its images, as one JSON object.</p>
+        <p class="s-benchmark__def">Answer a question about a disassembly sequence from its images, as one JSON object.</p>
         <dl class="spec s-benchmark__spec">
           <div><dt>Input</dt><dd>The images of a step from one or more cameras (two moments for questions about a change), with the parts in question outlined, and the question.</dd></div>
           <div><dt>Output</dt><dd>A strict JSON answer in the task's format, e.g. a list of boxes, a state, a yes or no, or a removal plan.</dd></div>
@@ -960,7 +960,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
           </tr>
           <tr>
             <th scope="row" class="s-benchmark__task"><span class="s-benchmark__id">V10</span> <span class="s-benchmark__tname">Completed operations</span></th>
-            <td class="s-benchmark__asks">Which operations have been carried out so far, and how far the teardown has got.</td>
+            <td class="s-benchmark__asks">Which operations have been carried out so far, and how far the disassembly has got.</td>
             <td class="s-benchmark__scored">F1 over the completed and started operations; accuracy of the progress bin.</td>
             <td class="s-benchmark__n"><span class="vh">Questions: </span>300</td>
           </tr>
@@ -1026,7 +1026,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
       <div class="s-team__qs">
         <details>
           <summary>What does "end-of-life" mean here?</summary>
-          <p>Every desktop is a real, used computer that had been retired from service, from one of several brands. Each one was taken apart by hand, one step at a time.</p>
+          <p>Every desktop is a real, used computer that had been retired from service, from one of several brands. Each one was disassembled by hand, one step at a time.</p>
         </details>
         <details>
           <summary>Which views carry annotations?</summary>

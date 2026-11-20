@@ -1,4 +1,4 @@
-// The teardowns in numbers: a crosshair read-out on the line chart (pointer and arrow keys), a hover tooltip on the
+// The dataset in numbers: a crosshair read-out on the line chart (pointer and arrow keys), a hover tooltip on the
 // histogram's columns, and the highlighting of the flow chart. Every value is also in the page itself (labels, the table), so this only adds convenience.
 import { qs, qsa, on, clamp } from '../lib/dom.js';
 

@@ -36,8 +36,8 @@
 <section id="stages" class="sec s-stages" data-section="stages" data-module="stages" aria-labelledby="stages-h">
   <div class="wrap">
     <header class="sec__head">
-      <h2 id="stages-h" data-reveal>From seeing a machine to taking it apart</h2>
-      <p class="lead" data-reveal>The same {{ n.desktops | num }} teardowns serve four stages of the work. Each has its own annotations and its own questions.</p>
+      <h2 id="stages-h" data-reveal>From seeing a machine to disassembling it</h2>
+      <p class="lead" data-reveal>The same {{ n.desktops | num }} desktops serve four stages of the work. Each has its own annotations and its own questions.</p>
     </header>
 
     <div class="s-stages__tabs" role="tablist" aria-label="Stages" data-reveal>
@@ -49,12 +49,12 @@
     <div class="s-stages__panels" data-reveal>
       <article class="s-stages__panel" id="stage-1" role="tabpanel" aria-labelledby="stage-tab-1" tabindex="0">
         <div class="s-stages__vis">
-          <ol class="s-stages__strip" aria-label="Four scanner frames of one teardown with the masks of the parts">
+          <ol class="s-stages__strip" aria-label="Four scanner frames of one disassembly sequence with the masks of the parts">
             {% for i in [1, 2, 3, 4] %}
             <li><img src="{{ ('assets/img/story/masks-' ~ i ~ '.webp') | v }}" width="300" height="300" decoding="async" alt="{{ ['Step 1: every part of the opened desktop filled in the colour of its class.', 'A later step: the cooler and its duct are gone; the remaining parts keep their colours.', 'Later still: the CPU is gone, the board and the power supply remain.', 'The last steps: only the empty case and one bracket remain.'][loop.index0] }}"></li>
             {% endfor %}
           </ol>
-          <p class="s-stages__cap">One teardown, four of its steps. A part keeps its identity and its colour until it is removed.</p>
+          <p class="s-stages__cap">One disassembly sequence, four of its steps. A part keeps its identity and its colour until it is removed.</p>
           <div class="s-stages__pair">
             <figure><img src="{{ 'assets/img/story/extent-full.webp' | v }}" width="300" height="300" decoding="async" alt="The same frame with every part drawn at its complete extent, including the areas other parts cover."><figcaption>Complete extent</figcaption></figure>
             <figure><img src="{{ 'assets/img/story/extent-visible.webp' | v }}" width="300" height="300" decoding="async" alt="The same frame with only the visible area of every part."><figcaption>Visible area</figcaption></figure>
@@ -70,12 +70,12 @@
 
       <article class="s-stages__panel" id="stage-2" role="tabpanel" aria-labelledby="stage-tab-2" tabindex="0">
         <div class="s-stages__vis">
-          <ol class="s-stages__chain" aria-label="Four states of one CPU over a teardown">
+          <ol class="s-stages__chain" aria-label="Four states of one CPU over a disassembly sequence">
             {% for cap in ['Covered', 'Exposed', 'Unlocked', 'Removed'] %}
             <li><img src="{{ ('assets/img/story/state-' ~ loop.index ~ '.webp') | v }}" width="220" height="220" decoding="async" alt="{{ ['The CPU lies under its heatsink.', 'The heatsink is gone and the CPU shows in its closed socket.', 'The socket lever is open.', 'The socket is empty.'][loop.index0] }}"><span>{{ cap }}</span></li>
             {% endfor %}
           </ol>
-          <p class="s-stages__cap">One CPU through a teardown: its state is recorded at every step.</p>
+          <p class="s-stages__cap">One CPU through a disassembly sequence: its state is recorded at every step.</p>
           <div class="s-stages__pair s-stages__pair--arrow">
             <figure><img src="{{ 'assets/img/story/step-before.webp' | v }}" width="240" height="240" decoding="async" alt="A fan sits on a heatsink."><figcaption>Before a step</figcaption></figure>
             <figure><img src="{{ 'assets/img/story/step-after.webp' | v }}" width="240" height="240" decoding="async" alt="The fan is gone and the fins of the heatsink show."><figcaption>After it: the fan is gone</figcaption></figure>
@@ -83,7 +83,7 @@
         </div>
         <div class="s-stages__text">
           <h3>Understanding</h3>
-          <p>What state each part is in, what a step did, and how far the teardown has come. States are recorded for every part at every step, and the operation log names the action, the part and the tool of each step.</p>
+          <p>What state each part is in, what a step did, and how far the disassembly has come. States are recorded for every part at every step, and the operation log names the action, the part and the tool of each step.</p>
           <ul class="s-stages__types" aria-label="Question types"><li>Action</li><li>State change</li><li>Multi-step change</li><li>Progress</li></ul>
           <p class="s-stages__links"><a class="arrow" href="#track-qa">Question-answering results</a></p>
         </div>

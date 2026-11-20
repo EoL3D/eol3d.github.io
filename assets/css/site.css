@@ -925,7 +925,7 @@ code, kbd, pre, samp { font-family: var(--mono); font-size: .875em; }
 /* 19 cite: "Citation". One line for now, and one line on the terms. */
 .s-cite__soon { color: var(--ink); }
 .s-cite__licence { max-width: var(--measure); font-size: var(--fs-0); color: var(--text); }
-/* 20 stats: "The teardowns in numbers". White cards with the soft shadow on the white page (the one section between
+/* 20 stats: "The dataset in numbers". White cards with the soft shadow on the white page (the one section between
    two sheets that is not a sheet, for rhythm). Chart marks follow the data-viz specs: thin bars (8 px) with a rounded
    data end and a square baseline, 2 px lines, 8 px dots with a 2 px ring, hairline grid, text in text tokens only.
    The three series colours were checked for colour-blind separation (all pairs) against white; the orange is below

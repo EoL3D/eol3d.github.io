@@ -11,7 +11,7 @@
 
     <header class="s-data__head">
       <h2 id="guide-data-h" data-reveal>The dataset, file by file</h2>
-      <p class="s-data__lead" data-reveal>{{ site.name | e }} is built from {{ n.desktops | num }} real desktop computers, used and retired from service. An operator takes each one apart step by step; after every step the remaining assembly is recorded from four fixed views, and an operation log names the part and the action of the step. Below: what each part of the release holds, where it lives in the repository and how to read it.</p>
+      <p class="s-data__lead" data-reveal>{{ site.name | e }} is built from {{ n.desktops | num }} real desktop computers, used and retired from service. An operator disassembles each one step by step; after every step the remaining assembly is recorded from four fixed views, and an operation log names the part and the action of the step. Below: what each part of the release holds, where it lives in the repository and how to read it.</p>
     </header>
 
     {# ------------------------------------------------------------------ at a glance #}
@@ -44,7 +44,7 @@
             <td data-label="Size" class="s-data__num"><div>{{ size('raw/scanner/') }}</div></td>
           </tr>
           <tr>
-            <th scope="row"><a href="#data-components">Component pictures</a><span>The removed parts laid out on the bench after the teardown, each one masked</span></th>
+            <th scope="row"><a href="#data-components">Component pictures</a><span>The removed parts laid out on the bench after disassembly, each one masked</span></th>
             <td data-label="How much"><div>{{ n.component_shots | num }} shots<br>{{ n.component_annotations | num }} annotations</div></td>
             <td data-label="Format"><div>PNG, JPEG, COCO JSON</div></td>
             <td data-label="Folder"><div><code>annotations/<wbr>components/<wbr></code></div></td>
@@ -172,7 +172,7 @@
       <article id="data-states" class="s-data__item s-data__item--stack" aria-labelledby="data-states-h">
         <div class="s-data__text" data-reveal>
           <h3 id="data-states-h">Part states</h3>
-          <p class="s-data__body">Every part has a state and a placement at every step, so a part can be followed through the whole teardown, up to the step it leaves the case.</p>
+          <p class="s-data__body">Every part has a state and a placement at every step, so a part can be followed through the whole disassembly, up to the step it leaves the case.</p>
           <dl class="spec s-data__spec">
             <div><dt>Per step</dt><dd><code>instances.json</code>: <code>states["&lt;step&gt;"]</code> = state and placement; <code>leaving</code>: the step the part leaves, and the frames before and after</dd></div>
             <div><dt>Timeline</dt><dd><code>sequence.json</code>: <code>timeline</code>, runs of (from, to, state, placement) per part</dd></div>
@@ -216,7 +216,7 @@
       <article id="data-components" class="s-data__item s-data__item--brief" aria-labelledby="data-components-h">
         <div class="s-data__text" data-reveal>
           <h3 id="data-components-h">Component pictures</h3>
-          <p class="s-data__body">After the teardown, the removed parts were laid out on the bench and photographed, and each part was masked on its own, so a part can be recognised outside the machine too: {{ n.component_shots | num }} shots, {{ n.component_annotations | num }} annotations.</p>
+          <p class="s-data__body">After disassembly, the removed parts were laid out on the bench and photographed, and each part was masked on its own, so a part can be recognised outside the machine too: {{ n.component_shots | num }} shots, {{ n.component_annotations | num }} annotations.</p>
         </div>
         <dl class="spec s-data__spec s-data__aside" data-reveal>
           <div><dt>Folder</dt><dd><code>annotations/components/&lt;view&gt;/D&lt;nn&gt;/</code>, views <code>cmp_scan</code>, <code>cmp_oak1</code>, <code>cmp_oak2</code>, <code>cmp_rs</code></dd></div>
@@ -319,14 +319,14 @@
       <article id="data-robot" class="s-data__item s-data__item--stack" aria-labelledby="data-robot-h">
         <div class="s-data__text" data-reveal>
           <h3 id="data-robot-h">Robot demonstrations</h3>
-          <p class="s-data__body">A robot arm takes single components out in two settings: Fixtured, with parts held in slots on a base plate ({{ n.robot_fixtured | num }} episodes), and On motherboard, with parts still mounted on a board ({{ n.robot_on_board | num }} episodes). A base camera and a wrist camera film each episode, recorded frame by frame with the robot's state. They are a separate recording, not the teardowns above.</p>
+          <p class="s-data__body">A robot arm takes single components out in two settings: Fixtured, with parts held in slots on a base plate ({{ n.robot_fixtured | num }} episodes), and On motherboard, with parts still mounted on a board ({{ n.robot_on_board | num }} episodes). A base camera and a wrist camera film each episode, recorded frame by frame with the robot's state. They are a separate recording, not the disassembly sequences above.</p>
           <dl class="spec s-data__spec">
             <div><dt>Folders</dt><dd><code>raw/robot/on_fixture/raw_data/&lt;component&gt;/</code>, <code>raw/robot/on_motherboard/data/raw_data/&lt;component&gt;/</code>: one <code>episode_*.zip</code> per episode</dd></div>
             <div><dt>Frames</dt><dd><code>frame_*.pkl</code>: timestamps, <code>joint_positions</code>, <code>tcp_pose</code>, <code>gripper_pos</code>, <code>base_rgb</code>, <code>wrist_rgb</code></dd></div>
             <div><dt>Episode</dt><dd><code>episode_meta.json</code>, <code>control_trace.jsonl</code></dd></div>
             <div><dt>Catalog</dt><dd><code>archive_catalog.jsonl</code>: every archive with its component, frames, bytes and SHA-256</dd></div>
           </dl>
-          <p class="s-data__trap"><b>Read it right</b> <code>on_motherboard/data/stage_b_pre_sft_rollouts/</code> holds policy rollouts, not demonstrations. Frames are Python pickles: open them only from this repository, in an isolated environment. The archives are native recordings, not a LeRobot or RLDS conversion.</p>
+          <p class="s-data__trap"><b>Read it right</b> Frames are Python pickles: open them only from this repository, in an isolated environment. The archives are native recordings, not a LeRobot or RLDS conversion.</p>
         </div>
         <figure class="frame s-data__fig" data-reveal>
           <img src="{{ 'assets/img/uses/tile-robot.webp' | v }}" width="1600" height="583" loading="lazy" decoding="async"

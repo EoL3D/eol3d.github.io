@@ -1,6 +1,6 @@
 # EoL3D website
 
-Source of the EoL3D dataset website: step-by-step teardowns of end-of-life desktop computers.
+Source of the EoL3D dataset website: step-by-step disassembly of end-of-life desktop computers.
 
 The site is static. `index.html`, `guide.html` and `assets/css/site.css` are generated; edit the sources and rebuild:
 

@@ -1,7 +1,7 @@
 <section id="numbers" class="sec s-numbers" data-section="numbers" data-module="numbers" aria-labelledby="numbers-h">
   <div class="wrap">
     <h2 id="numbers-h" class="vh">About the dataset</h2>
-    <p class="s-numbers__intro" data-reveal><strong>{{ site.name | e }}</strong> is a dataset of {{ site.numbers.desktops | num }} end-of-life desktop computers, each taken apart by hand, one step at a time. After every step the machine is recorded from {{ site.numbers.views | num }} fixed views. Instance masks, part states, removal relations, question-answer pairs, operator video and robot demonstrations are built on those records.</p>
+    <p class="s-numbers__intro" data-reveal><strong>{{ site.name | e }}</strong> is a dataset of {{ site.numbers.desktops | num }} end-of-life desktop computers, each disassembled by hand, one step at a time. After every step the machine is recorded from {{ site.numbers.views | num }} fixed views. Instance masks, part states, removal relations, question-answer pairs, operator video and robot demonstrations are built on those records.</p>
 
     <ul class="s-numbers__row" aria-label="{{ site.name | e }} in numbers" data-reveal>
       {% for t in site.tiles if t.key in ['desktops', 'steps', 'annotations', 'qa_pairs'] %}

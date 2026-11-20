@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EoL3D: Step-by-step teardowns of end-of-life desktop computers</title>
+  <title>EoL3D: Step-by-step disassembly of end-of-life desktop computers</title>
   <meta name="description" content="EoL3D is a dataset of 66 end-of-life desktop computers disassembled step by step: 2,748 steps, 11,221 images from four views, 84,225 instance annotations, 184,263 question-answer pairs, operator video and robot demonstrations.">
   <meta name="theme-color" content="#FFFFFF">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="EoL3D: Step-by-step teardowns of end-of-life desktop computers">
+  <meta property="og:title" content="EoL3D: Step-by-step disassembly of end-of-life desktop computers">
   <meta property="og:description" content="EoL3D is a dataset of 66 end-of-life desktop computers disassembled step by step: 2,748 steps, 11,221 images from four views, 84,225 instance annotations, 184,263 question-answer pairs, operator video and robot demonstrations.">
   <meta property="og:url" content="https://eol3d.github.io/">
   <meta property="og:image" content="https://eol3d.github.io/assets/img/og-card.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="EoL3D: Step-by-step teardowns of end-of-life desktop computers, over a wall of the dataset's desktops">
+  <meta property="og:image:alt" content="EoL3D: Step-by-step disassembly of end-of-life desktop computers, over a wall of the dataset's desktops">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=6d5fe0e5">
   <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=a079d0fe">
   <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=8fab2da2">
+  <link rel="stylesheet" href="assets/css/site.css?v=dfda251d">
   <script>
     // Motion is switched on here and switched off again if the page script has not started within three seconds,
     // so a script that fails to load can never leave the content hidden.
@@ -37,7 +37,7 @@
   "./assets/js/sections/numbers.js": "./assets/js/sections/numbers.js?v=e3b25e90",
   "./assets/js/sections/stages.js": "./assets/js/sections/stages.js?v=b165ea77",
   "./assets/js/sections/start.js": "./assets/js/sections/start.js?v=331f2bda",
-  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=7e440300",
+  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=09c700d5",
   "./assets/js/teardown/gl.js": "./assets/js/teardown/gl.js?v=7839b5fe",
   "./assets/js/teardown/shaders.js": "./assets/js/teardown/shaders.js?v=15212227",
   "./assets/js/teardown/store.js": "./assets/js/teardown/store.js?v=229d5514",
@@ -56,7 +56,7 @@
     <div class="band__wall" aria-hidden="true"></div>
     <div class="wrap band__in s-hero__in">
       <h1 id="hero-h" class="s-hero__name"><img class="s-hero__mark" src="assets/img/logo.png?v=9afc0c1a" width="1323" height="304" alt="EoL3D"></h1>
-      <p class="s-hero__title">Step-by-step teardowns of <span class="s-hero__nw">end-of-life</span> desktop computers</p>
+      <p class="s-hero__title">Step-by-step disassembly of <span class="s-hero__nw">end-of-life</span> desktop computers</p>
       <ul class="s-hero__authors" aria-label="Authors">
         <li>Chang Liu<sup>1</sup></li>
         <li>Haiyang Zhao<sup>2</sup></li>
@@ -107,11 +107,11 @@
 
     <figure class="s-hero__teaser" data-reveal>
       <video class="s-hero__video" width="1280" height="720" muted playsinline loop preload="none" controls
-             poster="assets/img/teaser-poster.webp?v=fe3ca3ba" aria-label="Eight of the 66 desktops taken apart in step, as the scanner saw them after every step" data-hero-video>
+             poster="assets/img/teaser-poster.webp?v=fe3ca3ba" aria-label="Eight of the 66 desktops disassembled in step, as the scanner saw them after every step" data-hero-video>
         <source src="assets/video/teaser.mp4?v=232d060a" type="video/mp4">
       </video>
       <figcaption class="s-hero__cap">
-        <span>Eight of the 66 desktops, taken apart in step, as the scanner saw them after every step.</span>
+        <span>Eight of the 66 desktops, disassembled in step, as the scanner saw them after every step.</span>
         <button class="s-hero__toggle" type="button" aria-pressed="false" aria-label="Play video" hidden data-hero-toggle>
           <svg class="s-hero__icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5v14l12-7z"/></svg>
           <svg class="s-hero__icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
@@ -125,7 +125,7 @@
 <section id="numbers" class="sec s-numbers" data-section="numbers" data-module="numbers" aria-labelledby="numbers-h">
   <div class="wrap">
     <h2 id="numbers-h" class="vh">About the dataset</h2>
-    <p class="s-numbers__intro" data-reveal><strong>EoL3D</strong> is a dataset of 66 end-of-life desktop computers, each taken apart by hand, one step at a time. After every step the machine is recorded from 4 fixed views. Instance masks, part states, removal relations, question-answer pairs, operator video and robot demonstrations are built on those records.</p>
+    <p class="s-numbers__intro" data-reveal><strong>EoL3D</strong> is a dataset of 66 end-of-life desktop computers, each disassembled by hand, one step at a time. After every step the machine is recorded from 4 fixed views. Instance masks, part states, removal relations, question-answer pairs, operator video and robot demonstrations are built on those records.</p>
 
     <ul class="s-numbers__row" aria-label="EoL3D in numbers" data-reveal>
       <li class="s-numbers__cell">
@@ -189,13 +189,13 @@
             <li data-k="oak"><b>Two OAK-D cameras</b><span>colour, depth and point clouds</span></li>
             <li data-k="realsense"><b>RealSense camera</b><span>colour, depth and point clouds at an angle</span></li>
             <li data-k="video"><b>Two video cameras</b><span>film the hands at work from two sides</span></li>
-            <li data-k="desktop"><b>The desktop</b><span>on the bench, taken apart one step at a time</span></li>
+            <li data-k="desktop"><b>The desktop</b><span>on the bench, disassembled one step at a time</span></li>
           </ol>
         </figcaption>
       </figure>
 
       <ol class="s-capture__steps">
-        <li data-reveal><h3>One step at a time</h3><p>An operator takes the machine apart by hand. Every step is logged: the action, the part and the tool.</p></li>
+        <li data-reveal><h3>One step at a time</h3><p>An operator disassembles the machine by hand. Every step is logged: the action, the part and the tool.</p></li>
         <li data-reveal><h3>Four views after every step</h3><p>The scanner and three cameras record what is left on the bench, so all four views show the same state.</p></li>
         <li data-reveal><h3>Annotated backward</h3><p>Annotators start from the late steps: a part that is exposed there is followed back through the frames where it was covered, under one identity.</p></li>
         <li data-reveal><h3>Questions, video and robot data</h3><p>Question-answer pairs are generated from the annotations and the log. Two video cameras film the operator's hands, and a robot arm repeats part removals under teleoperation.</p></li>
@@ -208,7 +208,7 @@
   <div class="wrap">
     <header class="s-hdata__head">
       <h2 id="data-h" data-reveal>What is in the dataset</h2>
-      <p class="s-hdata__lead" data-reveal>Each of the 66 desktops is recorded after every step of its teardown and annotated part by part. These are the parts of the release, shown with the dataset's own pictures.</p>
+      <p class="s-hdata__lead" data-reveal>Each of the 66 desktops is recorded after every step of its disassembly and annotated part by part. These are the parts of the release, shown with the dataset's own pictures.</p>
     </header>
 
     <div class="s-hdata__grid">
@@ -280,8 +280,8 @@
 <section id="stages" class="sec s-stages" data-section="stages" data-module="stages" aria-labelledby="stages-h">
   <div class="wrap">
     <header class="sec__head">
-      <h2 id="stages-h" data-reveal>From seeing a machine to taking it apart</h2>
-      <p class="lead" data-reveal>The same 66 teardowns serve four stages of the work. Each has its own annotations and its own questions.</p>
+      <h2 id="stages-h" data-reveal>From seeing a machine to disassembling it</h2>
+      <p class="lead" data-reveal>The same 66 desktops serve four stages of the work. Each has its own annotations and its own questions.</p>
     </header>
 
     <div class="s-stages__tabs" role="tablist" aria-label="Stages" data-reveal>
@@ -294,13 +294,13 @@
     <div class="s-stages__panels" data-reveal>
       <article class="s-stages__panel" id="stage-1" role="tabpanel" aria-labelledby="stage-tab-1" tabindex="0">
         <div class="s-stages__vis">
-          <ol class="s-stages__strip" aria-label="Four scanner frames of one teardown with the masks of the parts">
+          <ol class="s-stages__strip" aria-label="Four scanner frames of one disassembly sequence with the masks of the parts">
             <li><img src="assets/img/story/masks-1.webp?v=4c2f9298" width="300" height="300" decoding="async" alt="Step 1: every part of the opened desktop filled in the colour of its class."></li>
             <li><img src="assets/img/story/masks-2.webp?v=88645564" width="300" height="300" decoding="async" alt="A later step: the cooler and its duct are gone; the remaining parts keep their colours."></li>
             <li><img src="assets/img/story/masks-3.webp?v=c3cae1ad" width="300" height="300" decoding="async" alt="Later still: the CPU is gone, the board and the power supply remain."></li>
             <li><img src="assets/img/story/masks-4.webp?v=105f2345" width="300" height="300" decoding="async" alt="The last steps: only the empty case and one bracket remain."></li>
           </ol>
-          <p class="s-stages__cap">One teardown, four of its steps. A part keeps its identity and its colour until it is removed.</p>
+          <p class="s-stages__cap">One disassembly sequence, four of its steps. A part keeps its identity and its colour until it is removed.</p>
           <div class="s-stages__pair">
             <figure><img src="assets/img/story/extent-full.webp?v=871f47e1" width="300" height="300" decoding="async" alt="The same frame with every part drawn at its complete extent, including the areas other parts cover."><figcaption>Complete extent</figcaption></figure>
             <figure><img src="assets/img/story/extent-visible.webp?v=959b4277" width="300" height="300" decoding="async" alt="The same frame with only the visible area of every part."><figcaption>Visible area</figcaption></figure>
@@ -316,13 +316,13 @@
 
       <article class="s-stages__panel" id="stage-2" role="tabpanel" aria-labelledby="stage-tab-2" tabindex="0">
         <div class="s-stages__vis">
-          <ol class="s-stages__chain" aria-label="Four states of one CPU over a teardown">
+          <ol class="s-stages__chain" aria-label="Four states of one CPU over a disassembly sequence">
             <li><img src="assets/img/story/state-1.webp?v=7586cec4" width="220" height="220" decoding="async" alt="The CPU lies under its heatsink."><span>Covered</span></li>
             <li><img src="assets/img/story/state-2.webp?v=bdb6e446" width="220" height="220" decoding="async" alt="The heatsink is gone and the CPU shows in its closed socket."><span>Exposed</span></li>
             <li><img src="assets/img/story/state-3.webp?v=ff1b89b9" width="220" height="220" decoding="async" alt="The socket lever is open."><span>Unlocked</span></li>
             <li><img src="assets/img/story/state-4.webp?v=607302d6" width="220" height="220" decoding="async" alt="The socket is empty."><span>Removed</span></li>
           </ol>
-          <p class="s-stages__cap">One CPU through a teardown: its state is recorded at every step.</p>
+          <p class="s-stages__cap">One CPU through a disassembly sequence: its state is recorded at every step.</p>
           <div class="s-stages__pair s-stages__pair--arrow">
             <figure><img src="assets/img/story/step-before.webp?v=031fe26b" width="240" height="240" decoding="async" alt="A fan sits on a heatsink."><figcaption>Before a step</figcaption></figure>
             <figure><img src="assets/img/story/step-after.webp?v=27c3e59f" width="240" height="240" decoding="async" alt="The fan is gone and the fins of the heatsink show."><figcaption>After it: the fan is gone</figcaption></figure>
@@ -330,7 +330,7 @@
         </div>
         <div class="s-stages__text">
           <h3>Understanding</h3>
-          <p>What state each part is in, what a step did, and how far the teardown has come. States are recorded for every part at every step, and the operation log names the action, the part and the tool of each step.</p>
+          <p>What state each part is in, what a step did, and how far the disassembly has come. States are recorded for every part at every step, and the operation log names the action, the part and the tool of each step.</p>
           <ul class="s-stages__types" aria-label="Question types"><li>Action</li><li>State change</li><li>Multi-step change</li><li>Progress</li></ul>
           <p class="s-stages__links"><a class="arrow" href="#track-qa">Question-answering results</a></p>
         </div>
@@ -491,13 +491,13 @@
 <section id="stats" class="sec s-stats" data-section="stats" data-module="stats" aria-labelledby="stats-h">
   <div class="wrap">
     <header class="sec__head s-stats__head">
-      <h2 id="stats-h" data-reveal>The teardowns in numbers</h2>
-      <p class="lead" data-reveal>Counted over all 66 desktops and every step of their teardowns.</p>
+      <h2 id="stats-h" data-reveal>The dataset in numbers</h2>
+      <p class="lead" data-reveal>Counted over all 66 desktops and every step of their disassembly.</p>
     </header>
 
     <div class="s-stats__grid">
       <figure class="s-stats__card s-stats__card--progress" data-reveal>
-        <figcaption class="s-stats__title"><b>As a machine comes apart</b><span>Mean over the desktops; each teardown runs from its first picture (0&nbsp;%) to its last (100&nbsp;%).</span></figcaption>
+        <figcaption class="s-stats__title"><b>As a machine is disassembled</b><span>Mean over the desktops; each disassembly sequence runs from its first picture (0&nbsp;%) to its last (100&nbsp;%).</span></figcaption>
         <ul class="s-stats__legend" aria-hidden="true">
           <li><i class="s-stats__key s-stats__key--1"></i>Parts still in the machine</li>
           <li><i class="s-stats__key s-stats__key--2"></i>Of those, mostly in view</li>
@@ -578,7 +578,7 @@
         </figure>
 
         <figure class="s-stats__card" data-reveal>
-          <figcaption class="s-stats__title"><b>Steps per desktop</b><span>Most teardowns take 35 to 49 steps.</span></figcaption>
+          <figcaption class="s-stats__title"><b>Steps per desktop</b><span>Most desktops take 35 to 49 steps.</span></figcaption>
           <div class="hist" role="img" aria-label="Histogram of steps per desktop: 10 to 14 steps, 1 desktop; 20 to 24 steps, 1 desktop; 30 to 34 steps, 2 desktops; 35 to 39 steps, 13 desktops; 40 to 44 steps, 22 desktops; 45 to 49 steps, 24 desktops; 50 to 54 steps, 2 desktops; 55 to 59 steps, 1 desktop; ">
             <span class="hist__col" data-tip="10–14 steps: 1 desktop">
               <i style="height: 4.2%"></i>
@@ -849,8 +849,8 @@
 <section id="explore" class="sec sec--sheet tint--lilac s-explore" data-section="explore" data-module="explore" aria-labelledby="explore-h">
   <div class="wrap">
     <header class="s-explore__head">
-      <h2 id="explore-h" data-reveal>Take one apart</h2>
-      <p class="s-explore__lead" data-reveal>Step through a teardown as the scanner saw it, with its masks, or as the measured points behind the picture: turn them, colour them by class or by depth, and pull the parts apart.</p>
+      <h2 id="explore-h" data-reveal>Disassemble one</h2>
+      <p class="s-explore__lead" data-reveal>Step through a disassembly sequence as the scanner saw it, with its masks, or as the measured points behind the picture: turn them, colour them by class or by depth, and pull the parts apart.</p>
     </header>
 
     <div class="s-explore__pick" data-x="pick" data-reveal hidden>
@@ -860,7 +860,7 @@
 
     <div class="s-explore__panel" data-reveal>
       <div class="s-explore__main">
-        <div class="s-explore__stage" data-x="stage" tabindex="0" role="group" aria-label="Teardown view. Left and right arrow keys change the step; drag to turn the 3D view.">
+        <div class="s-explore__stage" data-x="stage" tabindex="0" role="group" aria-label="Disassembly view. Left and right arrow keys change the step; drag to turn the 3D view.">
           <img class="s-explore__poster" data-x="poster" src="assets/data/explorer/d13/S01_c.webp?v=a0d1fb15" width="814" height="972" loading="lazy" decoding="async" alt="Scanner picture of a Dell desktop computer before disassembly">
           <p class="s-explore__tip" data-x="tip" hidden></p>
         </div>
@@ -912,7 +912,7 @@
   <div class="wrap">
     <header class="s-hbench__head">
       <h2 id="benchmark-h" data-reveal>Benchmark</h2>
-      <p class="s-hbench__lead" data-reveal>Four tracks on the same teardowns. Each fixes the input, the output, the metric and the evaluation set; the charts show how current models do on it.</p>
+      <p class="s-hbench__lead" data-reveal>Four tracks on the same disassembly sequences. Each fixes the input, the output, the metric and the evaluation set; the charts show how current models do on it.</p>
     </header>
 
     <div class="s-hbench__tracks">
@@ -972,7 +972,7 @@
                alt="The drive bay of an HP desktop before and after one step, the two pictures of a question about a change: a drive sits in the bay before and is gone after.">
           <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
           <h3 class="s-hbench__name" id="track-qa-h">Visual question answering</h3>
-          <p class="s-hbench__def">Answer a question about a teardown from its images, as one JSON object.</p>
+          <p class="s-hbench__def">Answer a question about a disassembly sequence from its images, as one JSON object.</p>
           <dl class="s-hbench__spec">
             <div><dt>Input</dt><dd>The images of a step and the question</dd></div>
             <div><dt>Output</dt><dd>A strict JSON answer in the task's format</dd></div>

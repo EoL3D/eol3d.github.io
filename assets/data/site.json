@@ -1,8 +1,8 @@
 {
   "generated": "2026-11-20",
   "name": "EoL3D",
-  "title": "Step-by-step teardowns of end-of-life desktop computers",
-  "tagline": "Real desktop computers taken apart by hand and imaged from four views after every step, with instance masks, part states and removal order, plus question-answer pairs, operator video and robot demonstrations.",
+  "title": "Step-by-step disassembly of end-of-life desktop computers",
+  "tagline": "Real desktop computers disassembled by hand and imaged from four views after every step, with instance masks, part states and removal order, plus question-answer pairs, operator video and robot demonstrations.",
   "description": "EoL3D is a dataset of 66 end-of-life desktop computers disassembled step by step: 2,748 steps, 11,221 images from four views, 84,225 instance annotations, 184,263 question-answer pairs, operator video and robot demonstrations.",
   "year": 2026,
   "links": {
@@ -209,7 +209,7 @@
       "about": false
     },
     {
-      "use": "Recognising parts outside the machine (the parts laid out after the teardown)",
+      "use": "Recognising parts outside the machine (the parts laid out after disassembly)",
       "paths": [
         "annotations/components/"
       ],
@@ -247,7 +247,7 @@
         "raw/oak/",
         "raw/realsense/"
       ],
-      "size_gb": 382,
+      "size_gb": 372,
       "about": true
     },
     {
@@ -255,7 +255,7 @@
       "paths": [
         "raw/robot/"
       ],
-      "size_gb": 550,
+      "size_gb": 519,
       "about": true
     },
     {
@@ -370,7 +370,7 @@
           "group": "Understanding",
           "id": "V10",
           "name": "Completed operations",
-          "asks": "Which operations have been carried out so far, and how far the teardown has got.",
+          "asks": "Which operations have been carried out so far, and how far the disassembly has got.",
           "scored": "F1 over the completed and started operations; accuracy of the progress bin.",
           "n": 300
         },
