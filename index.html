@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=6d5fe0e5">
   <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=a079d0fe">
   <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=43d9b01d">
+  <link rel="stylesheet" href="assets/css/site.css?v=2ccf46db">
   <script>
     // Motion is switched on here and switched off again if the page script has not started within three seconds,
     // so a script that fails to load can never leave the content hidden.
@@ -981,12 +981,12 @@
           <a class="arrow s-hbench__go" href="guide.html#start-eval-qa">Run it</a>
         </div>
         <figure class="s-hbench__res">
-          <figcaption class="s-hbench__cap"><b>Score per task on the held-out desktops</b><span>663 questions from 12 desktops, 0 to 100. Models as released, and after fine-tuning on the training desktops.</span></figcaption>
+          <figcaption class="s-hbench__cap"><b>Score per task on the held-out desktops</b><span>663 questions from 12 desktops, 0 to 100. Zero-shot, and after fine-tuning on the training desktops.</span></figcaption>
           <div class="hm-wrap" data-scroll-x tabindex="0" role="group" aria-label="Table of scores per task and model; scrolls sideways on a narrow screen">
             <table class="hm">
               <colgroup><col class="hm__c-task"><col span="7"></colgroup>
               <thead>
-                <tr><td></td><td></td><th scope="colgroup" colspan="4" class="hm__span">As released</th><th scope="colgroup" colspan="2" class="hm__span">Fine-tuned</th></tr>
+                <tr><td></td><td></td><th scope="colgroup" colspan="4" class="hm__span">Zero-shot</th><th scope="colgroup" colspan="2" class="hm__span">Fine-tuned</th></tr>
                 <tr><th scope="col" class="hm__task">Task</th><th scope="col">Const.</th><th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">GPT-6</th><th scope="col">Opus</th><th scope="col">Qwen</th><th scope="col">InternVL</th></tr>
               </thead>
               <tbody>
@@ -1056,26 +1056,32 @@
           <a class="arrow s-hbench__go" href="guide.html#start-eval-depth">Run it</a>
         </div>
         <figure class="s-hbench__res">
-          <figcaption class="s-hbench__cap"><b>Pixels within 5&nbsp;% of the measured depth</b><span>6 models as released, on the first step of 5 desktops, after one scale factor per image. Scale: predicted over measured depth before that (1 is exact).</span></figcaption>
-          <table class="rt">
-            <thead><tr><th scope="col">Model</th><th scope="col" class="rt__barhead">&delta; &lt; 1.05</th><th scope="col" class="rt__num">Scale</th></tr></thead>
+          <figcaption class="s-hbench__cap"><b>Depth error without and with scale alignment</b><span>6 models, zero-shot, on the first step of 5 desktops. MAE: mean absolute error of the depth as predicted, in metres (lower is better). &delta; &lt; 1.05: pixels within 5&nbsp;% of the measured depth after one scale factor per image. Scale: predicted over measured depth before that (1 is exact).</span></figcaption>
+          <table class="rt rt--two">
+            <thead><tr><th scope="col">Model</th><th scope="col" class="rt__barhead">MAE, no scale alignment</th><th scope="col" class="rt__barhead">&delta; &lt; 1.05, aligned</th><th scope="col" class="rt__num">Scale</th></tr></thead>
             <tbody>
               <tr><th scope="row">UniDepth V2</th>
+                  <td class="rt__bar rt__bar--raw"><span class="rt__cell"><span class="rt__track"><i style="width: 19.2%"></i></span><b>0.398&nbsp;m</b></span></td>
                   <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 98.7%"></i></span><b>98.7&nbsp;%</b></span></td>
                   <td class="rt__num">1.33&times;</td></tr>
               <tr><th scope="row">DA3-BASE</th>
+                  <td class="rt__bar rt__bar--raw"><span class="rt__cell rt__cell--none"><span>no metric output<sup>&Dagger;</sup></span></span></td>
                   <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 90.6%"></i></span><b>90.6&nbsp;%</b></span></td>
                   <td class="rt__num">0.76&times;<sup>&Dagger;</sup></td></tr>
               <tr><th scope="row">Metric3D v2</th>
+                  <td class="rt__bar rt__bar--raw"><span class="rt__cell"><span class="rt__track"><i style="width: 100.0%"></i></span><b>2.073&nbsp;m</b></span></td>
                   <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 86.7%"></i></span><b>86.7&nbsp;%</b></span></td>
                   <td class="rt__num">2.75&times;</td></tr>
               <tr><th scope="row">Depth Pro</th>
+                  <td class="rt__bar rt__bar--raw"><span class="rt__cell"><span class="rt__track"><i style="width: 47.3%"></i></span><b>0.980&nbsp;m</b></span></td>
                   <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 72.4%"></i></span><b>72.4&nbsp;%</b></span></td>
                   <td class="rt__num">1.86&times;</td></tr>
               <tr><th scope="row">Depth Anything V2</th>
+                  <td class="rt__bar rt__bar--raw"><span class="rt__cell"><span class="rt__track"><i style="width: 35.5%"></i></span><b>0.736&nbsp;m</b></span></td>
                   <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 71.5%"></i></span><b>71.5&nbsp;%</b></span></td>
                   <td class="rt__num">1.65&times;</td></tr>
               <tr><th scope="row">Pi3X</th>
+                  <td class="rt__bar rt__bar--raw"><span class="rt__cell"><span class="rt__track"><i style="width: 58.6%"></i></span><b>1.214&nbsp;m</b></span></td>
                   <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 50.4%"></i></span><b>50.4&nbsp;%</b></span></td>
                   <td class="rt__num">2.02&times;</td></tr>
             </tbody>

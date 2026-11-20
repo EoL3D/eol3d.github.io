@@ -57,12 +57,12 @@
           <a class="arrow s-hbench__go" href="guide.html#start-eval-qa">Run it</a>
         </div>
         <figure class="s-hbench__res">
-          <figcaption class="s-hbench__cap"><b>Score per task on the held-out desktops</b><span>{{ res.vqa.questions | num }} questions from {{ res.vqa.desktops | num }} desktops, 0 to 100. Models as released, and after fine-tuning on the training desktops.</span></figcaption>
+          <figcaption class="s-hbench__cap"><b>Score per task on the held-out desktops</b><span>{{ res.vqa.questions | num }} questions from {{ res.vqa.desktops | num }} desktops, 0 to 100. Zero-shot, and after fine-tuning on the training desktops.</span></figcaption>
           <div class="hm-wrap" data-scroll-x tabindex="0" role="group" aria-label="Table of scores per task and model; scrolls sideways on a narrow screen">
             <table class="hm">
               <colgroup><col class="hm__c-task"><col span="7"></colgroup>
               <thead>
-                <tr><td></td><td></td><th scope="colgroup" colspan="4" class="hm__span">As released</th><th scope="colgroup" colspan="2" class="hm__span">Fine-tuned</th></tr>
+                <tr><td></td><td></td><th scope="colgroup" colspan="4" class="hm__span">Zero-shot</th><th scope="colgroup" colspan="2" class="hm__span">Fine-tuned</th></tr>
                 <tr><th scope="col" class="hm__task">Task</th><th scope="col">Const.</th><th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">GPT-6</th><th scope="col">Opus</th><th scope="col">Qwen</th><th scope="col">InternVL</th></tr>
               </thead>
               {% for group in ['Perception', 'Understanding', 'Planning'] %}
@@ -98,12 +98,18 @@
           <a class="arrow s-hbench__go" href="guide.html#start-eval-depth">Run it</a>
         </div>
         <figure class="s-hbench__res">
-          <figcaption class="s-hbench__cap"><b>Pixels within 5&nbsp;% of the measured depth</b><span>{{ res.depth.models | length }} models as released, on the first step of {{ res.depth.desktops | length }} desktops, after one scale factor per image. Scale: predicted over measured depth before that (1 is exact).</span></figcaption>
-          <table class="rt">
-            <thead><tr><th scope="col">Model</th><th scope="col" class="rt__barhead">&delta; &lt; 1.05</th><th scope="col" class="rt__num">Scale</th></tr></thead>
+          <figcaption class="s-hbench__cap"><b>Depth error without and with scale alignment</b><span>{{ res.depth.models | length }} models, zero-shot, on the first step of {{ res.depth.desktops | length }} desktops. MAE: mean absolute error of the depth as predicted, in metres (lower is better). &delta; &lt; 1.05: pixels within 5&nbsp;% of the measured depth after one scale factor per image. Scale: predicted over measured depth before that (1 is exact).</span></figcaption>
+          {% set mae_top = res.depth.models | selectattr('raw.mae') | map(attribute='raw.mae') | max %}
+          <table class="rt rt--two">
+            <thead><tr><th scope="col">Model</th><th scope="col" class="rt__barhead">MAE, no scale alignment</th><th scope="col" class="rt__barhead">&delta; &lt; 1.05, aligned</th><th scope="col" class="rt__num">Scale</th></tr></thead>
             <tbody>
               {% for m in res.depth.models | sort(attribute='aligned.d105', reverse=true) %}
               <tr><th scope="row">{{ m.name | e }}</th>
+                  {% if m.raw.mae %}
+                  <td class="rt__bar rt__bar--raw"><span class="rt__cell"><span class="rt__track"><i style="width: {{ (m.raw.mae / mae_top * 100) | round(1) }}%"></i></span><b>{{ '%.3f' | format(m.raw.mae) }}&nbsp;m</b></span></td>
+                  {% else %}
+                  <td class="rt__bar rt__bar--raw"><span class="rt__cell rt__cell--none"><span>no metric output<sup>&Dagger;</sup></span></span></td>
+                  {% endif %}
                   <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: {{ m.aligned.d105 | round(1) }}%"></i></span><b>{{ '%.1f' | format(m.aligned.d105) }}&nbsp;%</b></span></td>
                   <td class="rt__num">{{ '%.2f' | format(m.ratio) }}&times;{% if m.scale == 'relative' %}<sup>&Dagger;</sup>{% endif %}</td></tr>
               {% endfor %}

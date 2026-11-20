@@ -894,6 +894,12 @@ code, kbd, pre, samp { font-family: var(--mono); font-size: .875em; }
 .rt__bar b { flex: none; min-width: 3.4rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .rt .rt__num { width: 4.6rem; padding-left: .5rem; text-align: right; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .rt thead .rt__num { color: var(--muted); }
+/* two measures side by side: each bar column has its own axis, named in its heading */
+.rt--two th[scope="row"] { width: 24%; }
+.rt--two .rt__bar { width: 32%; }
+.rt--two .rt__bar + .rt__bar { padding-left: .9rem; }
+.rt--two .rt__bar b { min-width: 3.9rem; text-align: right; }
+.rt__cell--none { font-size: var(--fs-00); color: var(--muted); }
 
 /* a shaded score table: one soft cell per task and model, paler for a low score, the number always printed */
 .hm-wrap { position: relative; overflow-x: auto; border-radius: var(--r-2); }
@@ -921,6 +927,11 @@ code, kbd, pre, samp { font-family: var(--mono); font-size: .875em; }
   .s-hbench__swipe { display: block; }
   .rt th[scope="row"] { width: 42%; padding-right: .5rem; }
   .rt .rt__num { width: 3.9rem; }
+  .rt--two th[scope="row"] { width: 30%; }
+  .rt--two .rt__bar { width: auto; }
+  .rt--two .rt__track { display: none; }
+  .rt--two .rt__bar b { min-width: 0; text-align: left; }
+  .rt--two .rt__bar + .rt__bar { padding-left: .5rem; }
 }
 /* 19 cite: "Citation". One line for now, and one line on the terms. */
 .s-cite__soon { color: var(--ink); }

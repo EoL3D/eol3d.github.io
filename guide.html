@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=6d5fe0e5">
   <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=a079d0fe">
   <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=43d9b01d">
+  <link rel="stylesheet" href="assets/css/site.css?v=2ccf46db">
   <script>
     // Motion is switched on here and switched off again if the page script has not started within three seconds,
     // so a script that fails to load can never leave the content hidden.
@@ -765,7 +765,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
       <div class="s-benchmark__scroll" data-scroll-x tabindex="0" role="group" aria-label="Question-answering results; scrolls sideways">
       <table class="s-benchmark__table s-benchmark__res">
         <thead>
-          <tr><td colspan="4"></td><th scope="colgroup" colspan="5" class="s-benchmark__span">As released</th><th scope="colgroup" colspan="4" class="s-benchmark__span">Fine-tuned</th></tr>
+          <tr><td colspan="4"></td><th scope="colgroup" colspan="5" class="s-benchmark__span">Zero-shot</th><th scope="colgroup" colspan="4" class="s-benchmark__span">Fine-tuned</th></tr>
           <tr><td colspan="4"></td><th scope="colgroup" colspan="4" class="s-benchmark__span s-benchmark__span--sub">With the images</th><th scope="col" class="s-benchmark__span s-benchmark__span--sub">No image</th><th scope="colgroup" colspan="2" class="s-benchmark__span s-benchmark__span--sub">With the images</th><th scope="colgroup" colspan="2" class="s-benchmark__span s-benchmark__span--sub">No image</th></tr>
           <tr><th scope="col">Task</th><th scope="col">Metric</th><th scope="col">Questions</th><th scope="col">Const.</th>
               <th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">GPT-6 Astra</th><th scope="col">Opus 5.5</th><th scope="col">GPT-6 Astra</th>
@@ -809,7 +809,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
       <p class="s-benchmark__note">Models: Qwen3-VL-8B, InternVL3.5-8B, GPT-6 Astra and Claude Opus 5.5, each given the same images in the same order. Fine-tuned: Qwen and InternVL with LoRA on the questions of the training desktops. Const. repeats the most frequent complete reference answer of a row. No image: the planning questions that state a target, an action, a plan, a rule or choices are also asked as text alone; a dash marks questions that need the images. Planning questions can have several right answers: any action of a feasible kind counts, and a removal plan may take any order that meets the prerequisites and reaches the goal. <sup>&dagger;</sup>At least 10&nbsp;% of the replies failed strict parsing.</p>
 
       <h4 id="bench-results-depth" class="s-benchmark__rh">Depth from a single image</h4>
-      <p class="s-benchmark__rp">6 models as released, none trained on the dataset, on the first step of D03, D04, D10, D11, D13.</p>
+      <p class="s-benchmark__rp">6 models, zero-shot (none trained on the dataset), on the first step of D03, D04, D10, D11, D13.</p>
       <div class="s-benchmark__scroll" data-scroll-x tabindex="0" role="group" aria-label="Depth results; scrolls sideways">
       <table class="s-benchmark__table s-benchmark__res">
         <thead>
