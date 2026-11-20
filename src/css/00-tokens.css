@@ -1,0 +1,127 @@
+/* 00 tokens: every colour, size and spacing value used anywhere on the site.
+   The look (fifth build): soft. A white page, one centred column, running text in a calm grey, headings in a regular
+   weight, small round corners, hairlines and pale panels to tell surfaces apart, and ONE accent hue: it tints the
+   pale band at the top of the page and colours the links and whatever is chosen. No black, no saturated fields, no
+   shadows. To change the hue, change the four --accent* and the two --band-* values and nothing else. */
+@font-face { font-family: "EoL Text"; font-weight: 300 700; font-style: normal; font-display: swap; src: url("../fonts/text-var.woff2") format("woff2"); }
+@font-face { font-family: "EoL Mono"; font-weight: 400 500; font-style: normal; font-display: swap; src: url("../fonts/mono-400.woff") format("woff"); }
+@font-face { font-family: "EoL Mono"; font-weight: 600 800; font-style: normal; font-display: swap; src: url("../fonts/mono-700.woff") format("woff"); }
+
+:root {
+  /* ground and surfaces */
+  --page: #FFFFFF;
+  --soft: #F5F8F8;                /* panels, code, the explorer's stage */
+  --soft-2: #ECF1F2;              /* controls at rest, table heads */
+  --line: #E2E8EA;                /* hairlines: card and panel edges, table rows */
+  --line-2: #CFD8DC;
+
+  /* words: never black */
+  --ink: #2D3A42;                 /* headings and strong words */
+  --text: #58666F;                /* running text */
+  --muted: #5E6A73;               /* notes and captions */
+
+  /* the one accent hue */
+  --accent: #6A55B8;              /* fills: the main button, slider progress, what is chosen (white text on it) */
+  --accent-ink: #5A47A8;          /* links and accent-coloured words on white */
+  --accent-soft: #EFEBFA;         /* pale accent: chips, a chosen item's ground */
+  --accent-soft-2: #E0D9F5;
+  --band-a: #ECE7FA;              /* the header band: a pale wash of the hue at the top ... */
+  --band-b: #F6F3FD;              /* ... paler lower down, then it dissolves into the page */
+  --band-art: .55;                /* how strongly the wall of desktops behind the title shows */
+  --on-accent: #FFFFFF;
+
+  /* the explorer's stage; assets/js/teardown/view.js reads both */
+  --stage: #F3F6F7;
+  --stage-shade: #AEBBC2;         /* tint of the contact shadow under the point cloud */
+  --media-bg: var(--soft-2);      /* behind a picture while it loads */
+
+  --font: "EoL Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", "Noto Sans", Roboto, Arial, sans-serif;
+  --mono: "EoL Mono", ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+  --display: var(--font);
+
+  --fs-00: .8125rem;              /* 13 px: superscripts, the smallest notes */
+  --fs-0: .9375rem;               /* 15 px: captions, chips, table text */
+  --fs-1: 1.0625rem;              /* 17 px: secondary text, buttons */
+  --fs-2: 1.125rem;               /* 18 px: running text */
+  --fs-3: 1.3125rem;              /* 21 px: the line under the title, lead-ins */
+  --fs-4: 1.5rem;                 /* 24 px: sub-headings */
+  --fs-5: clamp(1.7rem, 1.45rem + 1vw, 2.125rem);     /* section headings */
+  --fs-6: clamp(2.6rem, 1.8rem + 3.2vw, 3.5rem);      /* the page title */
+  --lh: 1.6;
+
+  --sp-1: .25rem;
+  --sp-2: .5rem;
+  --sp-3: .75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4.5rem;
+  --sp-sec: clamp(3rem, 2rem + 3vw, 4.5rem);          /* between sections */
+
+  --r-1: 8px;                     /* small controls */
+  --r-2: 12px;                    /* code, inner pictures */
+  --r-3: 16px;                    /* pictures, panels */
+  --r-4: 20px;                    /* cards */
+  --r-5: 28px;                    /* a section's sheet */
+  --r-pill: 999px;                /* buttons, chips */
+  --shadow-1: 0 1px 2px rgba(52, 46, 84, .04), 0 8px 24px rgba(52, 46, 84, .06);      /* a card lying on a sheet */
+  --shadow-2: 0 2px 4px rgba(52, 46, 84, .05), 0 14px 32px rgba(52, 46, 84, .09);
+
+  /* the soft pages: each section sits on a sheet in a pale tint of its own; the swatch is the same colour, stronger,
+     and stands before the section's heading like a square of the explorer's legend */
+  --tint-lilac: #F4F1FC;  --sw-lilac: #A898E2;
+  --tint-rose: #FCF1F6;   --sw-rose: #E79CBF;
+  --tint-peach: #FDF3EC;  --sw-peach: #F0AA80;
+  --tint-sand: #FAF6E9;   --sw-sand: #DDBB58;
+  --lift: none;
+  --lift-move: none;
+
+  --wrap: 1040px;                 /* the page's one column */
+  --measure: 52rem;               /* widest line of running text */
+  --gutter: clamp(1rem, .45rem + 2.6vw, 2rem);
+  --nav-h: 0px;                   /* there is no fixed bar */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+
+  /* names kept from earlier builds so that nothing breaks while a file is being restyled; new code does not use them */
+  --stock: var(--page);
+  --stock-2: var(--soft);
+  --stock-3: var(--soft-2);
+  --panel: var(--page);
+  --ink-2: var(--text);
+  --ink-3: var(--muted);
+  --flame: var(--accent);
+  --sun: var(--soft);
+  --leaf: var(--accent-soft);
+  --rose: var(--soft);
+  --aqua: var(--accent-soft);
+  --white: var(--page);
+  --tint: var(--soft);
+  --well: var(--soft-2);
+  --navy: var(--ink);
+  --accent-2: var(--accent);
+  --sky: var(--accent);
+  --teal: var(--accent);
+  --teal-ink: var(--accent-ink);
+  --teal-soft: var(--accent-soft);
+  --rule: var(--line);
+  --solid: var(--soft-2);
+  --on-solid: var(--ink);
+  --sel: var(--accent);
+  --on-sel: var(--on-accent);
+  --head-bg: var(--soft-2);
+  --head-fg: var(--ink);
+  --code-bg: var(--soft);
+  --bar-bg: var(--soft-2);
+  --heading: var(--font);
+  --heading-weight: 400;
+  --heading-stretch: 100%;
+  --heading-case: none;
+  --numeral: var(--font);
+  --label-font: var(--font);
+  --label-case: none;
+  --figure-font: var(--font);
+  --tick: transparent;
+  --stripe-display: none;
+  --hero-pattern: none;
+}

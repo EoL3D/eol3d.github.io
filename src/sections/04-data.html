@@ -1,0 +1,73 @@
+<section id="data" class="sec sec--sheet tint--rose s-hdata" data-section="data" aria-labelledby="data-h">
+  <div class="wrap">
+    {% set n = site.numbers %}
+    <header class="s-hdata__head">
+      <h2 id="data-h" data-reveal>What is in the dataset</h2>
+      <p class="s-hdata__lead" data-reveal>Each of the {{ n.desktops | num }} desktops is recorded after every step of its teardown and annotated part by part. These are the parts of the release, shown with the dataset's own pictures.</p>
+    </header>
+
+    <div class="s-hdata__grid">
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic"><img src="{{ 'assets/img/uses/tile-masks.webp' | v }}" width="1200" height="900" loading="lazy" decoding="async"
+             alt="Top-down scanner picture of an opened HP desktop; every part is filled and outlined in its class colour: power supply, drive cage, motherboard, CPU cooler, cover, memory, connectors and screws."></div>
+        <figcaption><b>Instance masks</b><span>Every part in every scanner frame, in {{ n.classes | num }} classes.</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic"><img src="{{ 'assets/img/uses/tile-views.webp' | v }}" width="1200" height="900" loading="lazy" decoding="async"
+             alt="The same desktop after one step from four views: the scanner straight down (top left), an OAK camera nearly overhead (top right), a second OAK camera and a RealSense camera at an angle (bottom)."></div>
+        <figcaption><b>Four views</b><span>The 3D scanner and three cameras, after every step.</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic"><img src="{{ 'assets/img/uses/tile-points.webp' | v }}" width="1200" height="900" loading="lazy" decoding="async"
+             alt="The measured points of one step of a Dell desktop, turned in 3D, each point coloured by the class of its part and the parts lifted slightly apart."></div>
+        <figcaption><b>3D points</b><span>A labelled point cloud for every step, in millimetres.</span></figcaption>
+      </figure>
+
+      <figure class="s-hdata__fig s-hdata__fig--wide" data-reveal>
+        <div class="s-hdata__pic"><img src="{{ 'assets/img/uses/tile-extent.webp' | v }}" width="1600" height="583" loading="lazy" decoding="async"
+             alt="Two copies of a CPU cooler close-up. Left: only the parts of the heatsink that show around the fan are filled. Right: the heatsink's complete outline, dashed, with the part hidden under the fan hatched."></div>
+        <figcaption><b>Visible region and complete extent</b><span>Two masks per part: what the scanner sees (left) and the whole part, its hidden area hatched (right).</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig s-hdata__fig--qa" data-reveal>
+        <div class="s-hdata__pic"><img src="{{ 'assets/img/uses/tile-qa.webp' | v }}" width="1040" height="780" loading="lazy" decoding="async"
+             alt="Scanner view of an HP motherboard in its case: the CPU in its socket with the lever closed, one memory module with both latches open. The question below is asked about this machine."></div>
+        <figcaption><b>Question-answer pairs</b><span>{{ n.qa_pairs | num }} pairs in {{ n.qa_tasks | num }} tasks, each with its reasoning.</span></figcaption>
+      </figure>
+
+      <figure class="s-hdata__fig s-hdata__fig--wide" data-reveal>
+        <div class="s-hdata__pic"><img src="{{ 'assets/img/uses/tile-states.webp' | v }}" width="1600" height="583" loading="lazy" decoding="async"
+             alt="Three crops of the same corner of a desktop at steps 1, 10 and 20. The power supply, outlined in pink, is installed, then swung up out of the way, then gone, a dashed line marking its last place."></div>
+        <figcaption><b>Part states</b><span>A state for every part at every step: here the power supply installed, swung out, removed.</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic"><img src="{{ 'assets/img/uses/tile-order.webp' | v }}" width="1200" height="900" loading="lazy" decoding="async"
+             alt="Close-up of a Dell desktop around its CPU cooler. The hidden CPU is filled in yellow; the parts dealt with first are outlined in white and numbered 1 to 8 in the order the operator handled them."></div>
+        <figcaption><b>Relations and removal order</b><span>What has to come off before the CPU, in recorded order.</span></figcaption>
+      </figure>
+
+      <figure class="s-hdata__fig s-hdata__fig--wide" data-reveal>
+        <div class="s-hdata__pic"><img src="{{ 'assets/img/uses/tile-robot.webp' | v }}" width="1600" height="583" loading="lazy" decoding="async"
+             alt="Three robot camera frames during memory module removal: the base camera over a memory slot on a perforated plate, the wrist camera between the gripper fingers, and the base camera over the memory slots of a whole motherboard."></div>
+        <figcaption><b>Robot demonstrations</b><span>{{ n.robot_demos | num }} episodes of a robot arm taking parts out, filmed by a base and a wrist camera.</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic s-hdata__panel" role="img" aria-label="{{ n.clips | num }} paired clips, {{ n.clip_hours | num }} hours of operator video">
+          <p><b>{{ n.clips | num }}</b><span>paired clips</span></p>
+          <p><b>{{ n.clip_hours | num }}</b><span>hours</span></p>
+        </div>
+        <figcaption><b>Operator video</b><span>Two synchronised video cameras film the bench at an angle from two sides; faces masked.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="s-hdata__example" data-reveal>
+      <p>One question-answer record, asked about the machine in the picture above:</p>
+      <dl class="s-hdata__quote">
+        <div><dt>Question</dt><dd>Looking at the machine in these pictures, which one of the following actions is possible right now?</dd></div>
+        <div><dt>Options</dt><dd>take out the RAM module; take out the motherboard; take out the CPU</dd></div>
+        <div><dt>Answer</dt><dd><code>{"verb": "remove", "target": "RAM module"}</code></dd></div>
+      </dl>
+    </div>
+
+    <p class="s-hdata__more" data-reveal><a class="arrow" href="guide.html#guide-data">Files and fields</a></p>
+  </div>
+</section>

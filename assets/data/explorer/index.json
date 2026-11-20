@@ -1,0 +1,67 @@
+{
+  "desktops": [
+    {
+      "id": "d13",
+      "label": "D13",
+      "brand": "Dell",
+      "model": "Dell OptiPlex 7020",
+      "steps": 42,
+      "parts": 46,
+      "has3d": true
+    },
+    {
+      "id": "d19",
+      "label": "D19",
+      "brand": "Dell",
+      "model": "Dell OptiPlex 990",
+      "steps": 55,
+      "parts": 60,
+      "has3d": true
+    },
+    {
+      "id": "d24",
+      "label": "D24",
+      "brand": "HP",
+      "model": "HP Compaq 8300 Elite SFF",
+      "steps": 42,
+      "parts": 49,
+      "has3d": true
+    },
+    {
+      "id": "d28",
+      "label": "D28",
+      "brand": "HP",
+      "model": "HP EliteDesk 800 G1 SFF",
+      "steps": 47,
+      "parts": 51,
+      "has3d": true
+    },
+    {
+      "id": "d34",
+      "label": "D34",
+      "brand": "HP",
+      "model": "HP PRO 3500 Series MT",
+      "steps": 37,
+      "parts": 38,
+      "has3d": true
+    },
+    {
+      "id": "d49",
+      "label": "D49",
+      "brand": "Dell",
+      "model": "Dell Precision T5500",
+      "steps": 33,
+      "parts": 44,
+      "has3d": true
+    },
+    {
+      "id": "d56",
+      "label": "D56",
+      "brand": "HP",
+      "model": "HP Z230",
+      "steps": 46,
+      "parts": 52,
+      "has3d": true
+    }
+  ]
+}

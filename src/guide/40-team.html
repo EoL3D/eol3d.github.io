@@ -1,0 +1,55 @@
+<section id="guide-team" class="g-sec s-team" data-section="guide-team" data-module="team" aria-labelledby="guide-team-h">
+    <header class="g-sec__head">
+      <h2 id="guide-team-h">Licence, citation and questions</h2>
+    </header>
+
+    <div class="s-team__block">
+      <h3 id="guide-licence">Licence and use</h3>
+      <div class="s-team__licence">
+        <p class="s-team__kicker"><span class="chip chip--accent">Pre-release</span></p>
+        <p>A licence and a formal citation come with the first tagged release. Until then the data is provided for inspection and for research evaluation.</p>
+        <p>Please do not redistribute copies of the data, and do not use it to train models you intend to release, without our permission. Annotations may still change before that release.</p>
+      </div>
+    </div>
+
+    <div class="s-team__block">
+      <h3 id="guide-cite">Citation</h3>
+      <div class="s-team__sheet">
+        <button class="code__copy" type="button" hidden data-copy aria-label="Copy the BibTeX entry">Copy</button>
+        <pre class="code s-team__bib"><code data-bibtex>@misc{eol3d{{ site.year }},
+  title        = {{ '{' }}{{ site.name | e }}: {{ site.title | e }}{{ '}' }},
+  author       = {{ '{' }}{{ site.authors | map(attribute='name') | join(' and ') | e }}{{ '}' }},
+  year         = {{ '{' }}{{ site.year }}{{ '}' }},
+  howpublished = {\url{{ '{' }}{{ site.links.site | e }}{{ '}' }}}
+}</code></pre>
+      </div>
+      <p class="s-team__cite-note">Until the formal citation is published, please cite this page. Contact: {{ site.contact.name | e }}, <a href="mailto:{{ site.contact.email | e }}">{{ site.contact.email | e }}</a>.</p>
+      <span class="vh" aria-live="polite" data-copy-status></span>
+    </div>
+
+    <div class="s-team__block">
+      <h3 id="guide-faq">Questions</h3>
+      <div class="s-team__qs">
+        <details>
+          <summary>What does "end-of-life" mean here?</summary>
+          <p>Every desktop is a real, used computer that had been retired from service, from one of several brands. Each one was taken apart by hand, one step at a time.</p>
+        </details>
+        <details>
+          <summary>Which views carry annotations?</summary>
+          <p>The scanner view, which looks straight down on the assembly: its images carry the instance masks, the part states and the relations. The three camera views are recorded after every step as well.</p>
+        </details>
+        <details>
+          <summary>Are faces visible in the operator video?</summary>
+          <p>No. Faces are masked in every frame of the published clips.</p>
+        </details>
+        <details>
+          <summary>Where are the scanner's 3D reconstructions?</summary>
+          <p>In <code>reconstructions/scanner/</code>: one PLY per annotated step of {{ site.numbers.recon_desktops | num }} desktops, every point labelled with its part. The home page's explorer shows some of them in 3D. The depth and point clouds of the three cameras are in <code>raw/</code>, as is the robot data.</p>
+        </details>
+        <details>
+          <summary>Why does the repository have a different name?</summary>
+          <p>The Hugging Face repository, {{ site.links.hf_name | e }}, still carries the dataset's earlier name. It holds the same data as {{ site.name | e }}.</p>
+        </details>
+      </div>
+    </div>
+</section>

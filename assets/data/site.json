@@ -1,0 +1,412 @@
+{
+  "generated": "2026-11-20",
+  "name": "EoL3D",
+  "title": "Step-by-step teardowns of end-of-life desktop computers",
+  "tagline": "Real desktop computers taken apart by hand and imaged from four views after every step, with instance masks, part states and removal order, plus question-answer pairs, operator video and robot demonstrations.",
+  "description": "EoL3D is a dataset of 66 end-of-life desktop computers disassembled step by step: 2,748 steps, 11,221 images from four views, 84,225 instance annotations, 184,263 question-answer pairs, operator video and robot demonstrations.",
+  "year": 2026,
+  "links": {
+    "hf": "https://huggingface.co/datasets/ChangChrisLiu/E3D-Desktop-Disassembly",
+    "hf_repo": "ChangChrisLiu/E3D-Desktop-Disassembly",
+    "hf_name": "E3D-Desktop-Disassembly",
+    "github": "https://github.com/EoL3D",
+    "site": "https://eol3d.github.io"
+  },
+  "authors": [
+    {
+      "name": "Chang Liu",
+      "aff": [
+        1
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Haiyang Zhao",
+      "aff": [
+        2
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Jiurun Song",
+      "aff": [
+        1
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Badrinath Balasubramaniam",
+      "aff": [
+        2
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Jiachen Li",
+      "aff": [
+        3
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Zhiwen Fan",
+      "aff": [
+        1
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Sara Behdad",
+      "aff": [
+        4
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Yu She",
+      "aff": [
+        5
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Beiwen Li",
+      "aff": [
+        2
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Xiao Liang",
+      "aff": [
+        1
+      ],
+      "corresponding": false
+    },
+    {
+      "name": "Minghui Zheng",
+      "aff": [
+        1
+      ],
+      "corresponding": true
+    }
+  ],
+  "affiliations": [
+    {
+      "id": 1,
+      "name": "Texas A&M University",
+      "slug": "tamu",
+      "logo": "assets/img/logos/tamu.png",
+      "logo_w": 500,
+      "logo_h": 112
+    },
+    {
+      "id": 2,
+      "name": "University of Georgia",
+      "slug": "uga",
+      "logo": "assets/img/logos/uga.png",
+      "logo_w": 2400,
+      "logo_h": 788
+    },
+    {
+      "id": 3,
+      "name": "Georgia Institute of Technology",
+      "slug": "gatech",
+      "logo": "assets/img/logos/gatech.png",
+      "logo_w": 348,
+      "logo_h": 60
+    },
+    {
+      "id": 4,
+      "name": "University of Florida",
+      "slug": "uf",
+      "logo": "assets/img/logos/uf.png",
+      "logo_w": 768,
+      "logo_h": 789
+    },
+    {
+      "id": 5,
+      "name": "Purdue University",
+      "slug": "purdue",
+      "logo": "assets/img/logos/purdue.svg",
+      "logo_w": 248,
+      "logo_h": 45
+    }
+  ],
+  "contact": {
+    "name": "Minghui Zheng",
+    "email": "mhzheng@tamu.edu"
+  },
+  "numbers": {
+    "desktops": 66,
+    "steps": 2748,
+    "images": 11221,
+    "annotations": 84225,
+    "classes": 24,
+    "qa_pairs": 184263,
+    "qa_tasks": 11,
+    "clips": 3179,
+    "clip_hours": 11.1,
+    "robot_demos": 1808,
+    "views": 4,
+    "scanner_frames": 2800,
+    "parts": 3217,
+    "component_shots": 64,
+    "component_annotations": 626,
+    "clip_desktops": 64,
+    "qa_eval": 5347,
+    "robot_fixtured": 1092,
+    "robot_on_board": 716,
+    "recon_files": 2764,
+    "recon_desktops": 65,
+    "recon_gb": 57.9
+  },
+  "tiles": [
+    {
+      "key": "desktops",
+      "label": "end-of-life desktops",
+      "sub": ""
+    },
+    {
+      "key": "steps",
+      "label": "disassembly steps",
+      "sub": ""
+    },
+    {
+      "key": "images",
+      "label": "images from four views",
+      "sub": ""
+    },
+    {
+      "key": "annotations",
+      "label": "instance annotations",
+      "sub": ""
+    },
+    {
+      "key": "qa_pairs",
+      "label": "question-answer pairs",
+      "sub": ""
+    },
+    {
+      "key": "clips",
+      "label": "paired operator clips",
+      "sub": "11.1 hours, faces masked"
+    },
+    {
+      "key": "robot_demos",
+      "label": "robot demonstrations",
+      "sub": ""
+    }
+  ],
+  "download": [
+    {
+      "use": "Instance segmentation and detection on the scanner view, with part states and relations",
+      "paths": [
+        "annotations/scanner/",
+        "benchmarks/level1/"
+      ],
+      "size_gb": 9.5,
+      "about": false
+    },
+    {
+      "use": "Recognising parts outside the machine (the parts laid out after the teardown)",
+      "paths": [
+        "annotations/components/"
+      ],
+      "size_gb": 0.26,
+      "about": false
+    },
+    {
+      "use": "The scanner's 3D reconstructions, one labelled point cloud per step",
+      "paths": [
+        "reconstructions/scanner/"
+      ],
+      "size_gb": 57.9,
+      "about": false
+    },
+    {
+      "use": "Question answering on the images",
+      "paths": [
+        "vlm/vlmpack_2026-11-05/"
+      ],
+      "size_gb": 31.8,
+      "about": false
+    },
+    {
+      "use": "Operator video of the hands at work, faces masked",
+      "paths": [
+        "video/hand_work_selected/"
+      ],
+      "size_gb": 140,
+      "about": false
+    },
+    {
+      "use": "Every capture of the four views, as the capture rigs wrote it",
+      "paths": [
+        "raw/scanner/",
+        "raw/oak/",
+        "raw/realsense/"
+      ],
+      "size_gb": 382,
+      "about": true
+    },
+    {
+      "use": "Robot demonstrations, one archive per episode, in two settings",
+      "paths": [
+        "raw/robot/"
+      ],
+      "size_gb": 550,
+      "about": true
+    },
+    {
+      "use": "Part classes, states and verbs; the train and test split",
+      "paths": [
+        "taxonomy.yaml",
+        "splits.json"
+      ],
+      "size_gb": null,
+      "about": false
+    }
+  ],
+  "benchmark": {
+    "detection": {
+      "frame_px": 1600,
+      "desktops": {
+        "train": 48,
+        "val": 6,
+        "test": 12
+      },
+      "images": {
+        "train": 2051,
+        "val": 257,
+        "test": 492
+      },
+      "instances": {
+        "train": 57647,
+        "val": 6785,
+        "test": 12930
+      },
+      "classes_with_test": 21,
+      "test_desktops": [
+        "D04",
+        "D10",
+        "D15",
+        "D20",
+        "D24",
+        "D30",
+        "D31",
+        "D32",
+        "D46",
+        "D48",
+        "D49",
+        "D65"
+      ],
+      "val_desktops": [
+        "D03",
+        "D21",
+        "D33",
+        "D35",
+        "D41",
+        "D60"
+      ]
+    },
+    "qa": {
+      "eval": 5347,
+      "groups": [
+        "Perception",
+        "Understanding",
+        "Planning"
+      ],
+      "tasks": [
+        {
+          "group": "Perception",
+          "id": "V1",
+          "name": "Visible component boxes",
+          "asks": "Every part visible in one image, with its class and box.",
+          "scored": "F1 over class-and-box matches at IoU 0.5 or more.",
+          "n": 300
+        },
+        {
+          "group": "Perception",
+          "id": "V8",
+          "name": "Component grounding",
+          "asks": "The box of a part named in the question.",
+          "scored": "Hit when the box overlaps the true box at IoU 0.5 or more.",
+          "n": 300
+        },
+        {
+          "group": "Perception",
+          "id": "V2",
+          "name": "Component state or screw count",
+          "asks": "The state of a marked part, or \"cannot tell\" when the image does not show it; or how many screws of one kind are still in place.",
+          "scored": "Exact match; a screw count that is off by one earns partial credit.",
+          "n": 300
+        },
+        {
+          "group": "Perception",
+          "id": "V15",
+          "name": "Same step across views",
+          "asks": "Whether two images from two cameras show the same step.",
+          "scored": "Accuracy.",
+          "n": 400
+        },
+        {
+          "group": "Understanding",
+          "id": "V3",
+          "name": "Observed operation",
+          "asks": "What was done between two moments: the operation and the part it was done to; asked without a hint, with a hint box, and over a span of steps.",
+          "scored": "Correct when verb and target are both right; over a span, F1 over the action groups.",
+          "n": 900
+        },
+        {
+          "group": "Understanding",
+          "id": "V12",
+          "name": "State change",
+          "asks": "Whether anything changed between two moments, from neighbouring steps to several steps apart.",
+          "scored": "Accuracy.",
+          "n": 800
+        },
+        {
+          "group": "Understanding",
+          "id": "V10",
+          "name": "Completed operations",
+          "asks": "Which operations have been carried out so far, and how far the teardown has got.",
+          "scored": "F1 over the completed and started operations; accuracy of the progress bin.",
+          "n": 300
+        },
+        {
+          "group": "Planning",
+          "id": "V4",
+          "name": "Proposed action feasibility",
+          "asks": "Whether an action on a marked part can be done now and, if not, which parts have to be dealt with first.",
+          "scored": "Accuracy of the yes or no; F1 over the parts named as blocking.",
+          "n": 400
+        },
+        {
+          "group": "Planning",
+          "id": "V6",
+          "name": "Next feasible action",
+          "asks": "Every action that can be done now; also as multiple choice, and under one added rule.",
+          "scored": "F1 over the groups of feasible actions; accuracy for the multiple choice.",
+          "n": 747
+        },
+        {
+          "group": "Planning",
+          "id": "V7",
+          "name": "Removal plan",
+          "asks": "A plan that takes a named part out, free or under one added rule.",
+          "scored": "The plan is replayed on the relations: valid, goal reached, recall of the required steps.",
+          "n": 600
+        },
+        {
+          "group": "Planning",
+          "id": "V16",
+          "name": "Proposed plan validity",
+          "asks": "Whether a proposed sequence of actions can be carried out, and the first step that cannot.",
+          "scored": "Replayed step by step on the relations: accuracy of the validity and of the first wrong step.",
+          "n": 300
+        }
+      ]
+    }
+  }
+}

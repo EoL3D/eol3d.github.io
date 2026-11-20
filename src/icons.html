@@ -1,0 +1,20 @@
+{# Small line icons for buttons (drawn here, 24 x 24 grid, stroke in the button's text colour). Not logos. #}
+{% macro icon(name) -%}
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+{%- if name == 'data' -%}
+<ellipse cx="12" cy="5.5" rx="7" ry="2.75"/><path d="M5 5.5v6.5c0 1.5 3.1 2.75 7 2.75s7-1.25 7-2.75V5.5"/><path d="M5 12v6.5c0 1.5 3.1 2.75 7 2.75s7-1.25 7-2.75V12"/>
+{%- elif name == 'code' -%}
+<path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/>
+{%- elif name == 'book' -%}
+<path d="M3.5 5.5c2.8-.9 5.6-.6 8.5 1.2v13c-2.9-1.8-5.7-2.1-8.5-1.2z"/><path d="M20.5 5.5c-2.8-.9-5.6-.6-8.5 1.2v13c2.9-1.8 5.7-2.1 8.5-1.2z"/>
+{%- elif name == 'chart' -%}
+<path d="M4 20h16"/><path d="M7 16.5v-5"/><path d="M12 16.5V6.5"/><path d="M17 16.5v-8"/>
+{%- elif name == 'cube' -%}
+<path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5"/><path d="M12 12v9"/>
+{%- elif name == 'home' -%}
+<path d="M4 11 12 4l8 7"/><path d="M6.5 9.5V20h11V9.5"/>
+{%- elif name == 'download' -%}
+<path d="M12 4v11"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M5 19.5h14"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}

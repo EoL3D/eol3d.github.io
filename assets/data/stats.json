@@ -1,0 +1,594 @@
+{
+  "generated": "2026-11-18",
+  "classes": [
+    {
+      "id": "screw",
+      "label": "Screw",
+      "instances": 791,
+      "annotations": 20920
+    },
+    {
+      "id": "ram_latch",
+      "label": "RAM latch",
+      "instances": 494,
+      "annotations": 20245
+    },
+    {
+      "id": "connector",
+      "label": "Connector",
+      "instances": 1015,
+      "annotations": 18510
+    },
+    {
+      "id": "ram_module",
+      "label": "RAM module",
+      "instances": 127,
+      "annotations": 3225
+    },
+    {
+      "id": "chassis",
+      "label": "Chassis",
+      "instances": 66,
+      "annotations": 2800
+    },
+    {
+      "id": "motherboard",
+      "label": "Motherboard",
+      "instances": 66,
+      "annotations": 2714
+    },
+    {
+      "id": "cpu_socket_lever",
+      "label": "CPU socket lever",
+      "instances": 65,
+      "annotations": 2694
+    },
+    {
+      "id": "cpu",
+      "label": "CPU",
+      "instances": 65,
+      "annotations": 1854
+    },
+    {
+      "id": "psu",
+      "label": "Power supply",
+      "instances": 65,
+      "annotations": 1810
+    },
+    {
+      "id": "cover",
+      "label": "Cover",
+      "instances": 64,
+      "annotations": 1809
+    },
+    {
+      "id": "drive_cage",
+      "label": "Drive cage",
+      "instances": 55,
+      "annotations": 1609
+    },
+    {
+      "id": "expansion_card",
+      "label": "Expansion card",
+      "instances": 36,
+      "annotations": 1060
+    },
+    {
+      "id": "cable_clip",
+      "label": "Cable clip",
+      "instances": 35,
+      "annotations": 1014
+    },
+    {
+      "id": "cpu_cooler",
+      "label": "CPU cooler",
+      "instances": 75,
+      "annotations": 783
+    },
+    {
+      "id": "storage_drive",
+      "label": "Storage drive",
+      "instances": 65,
+      "annotations": 752
+    },
+    {
+      "id": "psu_latch",
+      "label": "Power supply latch",
+      "instances": 20,
+      "annotations": 735
+    },
+    {
+      "id": "card_latch",
+      "label": "Card latch",
+      "instances": 16,
+      "annotations": 564
+    },
+    {
+      "id": "screw_hole",
+      "label": "Screw hole",
+      "instances": 35,
+      "annotations": 510
+    },
+    {
+      "id": "optical_drive",
+      "label": "Optical drive",
+      "instances": 29,
+      "annotations": 279
+    },
+    {
+      "id": "drive_latch",
+      "label": "Drive latch",
+      "instances": 20,
+      "annotations": 251
+    },
+    {
+      "id": "case_fan",
+      "label": "Case fan",
+      "instances": 5,
+      "annotations": 45
+    },
+    {
+      "id": "misc_part",
+      "label": "Misc part",
+      "instances": 1,
+      "annotations": 23
+    },
+    {
+      "id": "cooler_bracket",
+      "label": "Cooler bracket",
+      "instances": 2,
+      "annotations": 13
+    },
+    {
+      "id": "cooler_latch",
+      "label": "Cooler latch",
+      "instances": 5,
+      "annotations": 6
+    }
+  ],
+  "verbs": [
+    {
+      "verb": "disconnect",
+      "count": 1006
+    },
+    {
+      "verb": "unscrew",
+      "count": 785
+    },
+    {
+      "verb": "remove",
+      "count": 594
+    },
+    {
+      "verb": "open",
+      "count": 349
+    },
+    {
+      "verb": "displace",
+      "count": 32
+    },
+    {
+      "verb": "release",
+      "count": 32
+    },
+    {
+      "verb": "reorient",
+      "count": 10
+    }
+  ],
+  "tools": [
+    {
+      "tool": "none",
+      "count": 2020
+    },
+    {
+      "tool": "PH2",
+      "count": 369
+    },
+    {
+      "tool": "T15",
+      "count": 355
+    },
+    {
+      "tool": "unknown",
+      "count": 40
+    },
+    {
+      "tool": "hand",
+      "count": 19
+    },
+    {
+      "tool": "PH1",
+      "count": 5
+    }
+  ],
+  "steps_per_desktop": [
+    36,
+    47,
+    47,
+    45,
+    45,
+    48,
+    55,
+    45,
+    45,
+    41,
+    46,
+    45,
+    41,
+    47,
+    41,
+    44,
+    45,
+    47,
+    54,
+    45,
+    42,
+    43,
+    41,
+    41,
+    40,
+    37,
+    42,
+    46,
+    46,
+    35,
+    42,
+    46,
+    43,
+    36,
+    41,
+    41,
+    44,
+    36,
+    53,
+    36,
+    34,
+    41,
+    46,
+    38,
+    35,
+    35,
+    41,
+    35,
+    32,
+    42,
+    40,
+    40,
+    47,
+    45,
+    47,
+    45,
+    46,
+    45,
+    43,
+    45,
+    39,
+    37,
+    36,
+    21,
+    42,
+    12
+  ],
+  "parts_per_desktop": [
+    43,
+    50,
+    52,
+    47,
+    50,
+    51,
+    61,
+    57,
+    50,
+    45,
+    58,
+    50,
+    46,
+    55,
+    45,
+    53,
+    50,
+    58,
+    60,
+    46,
+    49,
+    47,
+    47,
+    49,
+    44,
+    47,
+    47,
+    51,
+    50,
+    37,
+    44,
+    50,
+    47,
+    38,
+    40,
+    45,
+    49,
+    45,
+    55,
+    44,
+    44,
+    48,
+    51,
+    47,
+    41,
+    50,
+    48,
+    44,
+    44,
+    49,
+    47,
+    50,
+    55,
+    51,
+    55,
+    52,
+    54,
+    50,
+    51,
+    51,
+    48,
+    50,
+    59,
+    24,
+    51,
+    51
+  ],
+  "brands": [
+    {
+      "brand": "Dell",
+      "desktops": 34
+    },
+    {
+      "brand": "HP",
+      "desktops": 29
+    },
+    {
+      "brand": "Apple",
+      "desktops": 1
+    },
+    {
+      "brand": "Custom build",
+      "desktops": 1
+    },
+    {
+      "brand": "Lenovo",
+      "desktops": 1
+    }
+  ],
+  "visibility": {
+    "visible": 69654,
+    "occluded_full": 7305,
+    "occluded_partial": 5018,
+    "visible_tiny": 1828,
+    "too_small": 420
+  },
+  "occlusion_hist": [
+    65218,
+    4539,
+    1131,
+    1135,
+    1087,
+    938,
+    1209,
+    724,
+    719,
+    7525,
+    0
+  ],
+  "progress": {
+    "grid": [
+      0.0,
+      5.0,
+      10.0,
+      15.0,
+      20.0,
+      25.0,
+      30.0,
+      35.0,
+      40.0,
+      45.0,
+      50.0,
+      55.0,
+      60.0,
+      65.0,
+      70.0,
+      75.0,
+      80.0,
+      85.0,
+      90.0,
+      95.0,
+      100.0
+    ],
+    "present": [
+      100.0,
+      97.76,
+      96.09,
+      90.91,
+      85.21,
+      81.07,
+      75.73,
+      70.76,
+      67.35,
+      63.51,
+      60.04,
+      56.31,
+      53.35,
+      50.58,
+      47.37,
+      44.03,
+      40.27,
+      36.01,
+      31.64,
+      25.75,
+      7.65
+    ],
+    "visible": [
+      66.54,
+      69.89,
+      71.49,
+      73.55,
+      79.15,
+      84.33,
+      90.95,
+      92.16,
+      92.56,
+      93.01,
+      92.92,
+      92.68,
+      92.75,
+      92.71,
+      92.3,
+      92.21,
+      92.93,
+      93.58,
+      93.35,
+      93.22,
+      98.03
+    ],
+    "full": [
+      22.35,
+      20.5,
+      19.22,
+      17.58,
+      13.58,
+      8.91,
+      3.26,
+      2.05,
+      1.79,
+      1.52,
+      1.63,
+      1.63,
+      1.58,
+      1.68,
+      1.68,
+      1.72,
+      1.17,
+      0.48,
+      0.2,
+      0.21,
+      0.86
+    ],
+    "sd": {
+      "present": [
+        0.0,
+        1.92,
+        3.45,
+        4.02,
+        3.95,
+        4.0,
+        4.1,
+        3.99,
+        4.12,
+        4.79,
+        4.57,
+        4.2,
+        4.21,
+        4.28,
+        4.41,
+        4.9,
+        5.35,
+        5.39,
+        5.01,
+        8.55,
+        8.25
+      ],
+      "visible": [
+        17.89,
+        17.54,
+        16.86,
+        16.81,
+        16.79,
+        14.72,
+        7.01,
+        4.73,
+        4.2,
+        3.42,
+        3.38,
+        3.26,
+        3.53,
+        3.72,
+        3.97,
+        3.78,
+        4.55,
+        3.64,
+        2.94,
+        4.18,
+        7.16
+      ],
+      "full": [
+        14.11,
+        13.9,
+        13.25,
+        14.02,
+        14.35,
+        12.09,
+        4.74,
+        2.45,
+        2.35,
+        2.17,
+        2.29,
+        2.31,
+        2.29,
+        2.51,
+        2.54,
+        2.52,
+        2.75,
+        2.07,
+        1.03,
+        1.17,
+        6.15
+      ]
+    }
+  },
+  "qa_by_task": [
+    {
+      "task": "V1",
+      "records": 2804
+    },
+    {
+      "task": "V2",
+      "records": 34349
+    },
+    {
+      "task": "V3",
+      "records": 6587
+    },
+    {
+      "task": "V4",
+      "records": 38488
+    },
+    {
+      "task": "V6",
+      "records": 4901
+    },
+    {
+      "task": "V7",
+      "records": 13938
+    },
+    {
+      "task": "V8",
+      "records": 29146
+    },
+    {
+      "task": "V10",
+      "records": 2641
+    },
+    {
+      "task": "V12",
+      "records": 7947
+    },
+    {
+      "task": "V15",
+      "records": 30550
+    },
+    {
+      "task": "V16",
+      "records": 12912
+    }
+  ]
+}

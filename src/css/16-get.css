@@ -1,0 +1,11 @@
+/* 16 get: "Download". A sentence, the one command in a code block with its copy control, three buttons, a note. */
+.s-get__cmd { padding-right: 5rem; }
+.s-get__code { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; }
+.s-get__code:focus-visible { outline-offset: 4px; }
+.s-get__actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-5); }
+.s-get__note { max-width: var(--measure); margin-top: var(--sp-4); font-size: var(--fs-0); color: var(--muted); }
+
+@media (max-width: 560px) {
+  .s-get__cmd { padding-right: var(--sp-4); padding-top: 3.4rem; }
+  .s-get__actions .btn { flex: 1 1 100%; }
+}

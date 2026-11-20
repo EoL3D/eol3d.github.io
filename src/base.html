@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page == 'guide' %}Guide · {{ site.name | e }}{% else %}{{ site.name | e }}: {{ site.title | e }}{% endif %}</title>
+  <meta name="description" content="{{ site.description | e }}">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ site.name | e }}: {{ site.title | e }}">
+  <meta property="og:description" content="{{ site.description | e }}">
+  <meta property="og:url" content="{{ site.links.site | e }}/{% if page == 'guide' %}guide.html{% endif %}">
+  <meta property="og:image" content="{{ site.links.site | e }}/assets/img/og-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ site.name | e }}: {{ site.title | e }}, over a wall of the dataset's desktops">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="64x64" href="{{ 'assets/img/mark-64.png' | v }}">
+  <link rel="apple-touch-icon" href="{{ 'assets/img/mark-180.png' | v }}">
+  <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ 'assets/css/site.css' | v }}">
+  <script>
+    // Motion is switched on here and switched off again if the page script has not started within three seconds,
+    // so a script that fails to load can never leave the content hidden.
+    document.documentElement.className = 'js';
+    setTimeout(function () { if (!window.__eolStarted) document.documentElement.className = 'no-js'; }, 3000);
+  </script>
+  <script type="importmap">
+{{ importmap }}
+  </script>
+  <script type="module" src="{{ 'assets/js/main.js' | v }}"></script>
+</head>
+<body id="top" class="page--{{ page }}">
+  <a class="skip" href="#main">Skip to content</a>
+
+{% from "icons.html" import icon %}
+{% if page == 'guide' %}
+  <header class="band band--short band--wall">
+    <div class="band__wall" aria-hidden="true"></div>
+    <div class="wrap band__in">
+      <p class="band__name"><a href="index.html">{{ site.name | e }}</a></p>
+      <h1 class="band__title">Guide</h1>
+      <p class="band__btns">
+        <a class="btn btn--band" href="index.html">{{ icon("home") }}Home</a>
+        <a class="btn btn--band" href="{{ site.links.hf | e }}" rel="noopener">{{ icon("data") }}Dataset</a>
+        <a class="btn btn--band" href="{{ site.links.github | e }}" rel="noopener">{{ icon("code") }}Code</a>
+      </p>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap guide">
+      <nav class="guide__toc" aria-label="Contents">
+        <p class="guide__toc-h">Contents</p>
+        <ol>
+          {% for s in toc %}
+          <li><a href="#{{ s.id }}">{{ s.title }}</a>{% if s.subs %}
+            <ol>
+              {% for h in s.subs %}
+              <li><a href="#{{ h.id }}">{{ h.title }}</a></li>
+              {% endfor %}
+            </ol>{% endif %}</li>
+          {% endfor %}
+        </ol>
+      </nav>
+      <div class="guide__body">
+        <p class="guide__lead">Everything in detail: how to download and read the data, what each part of it holds, how the benchmark tracks are scored, and the terms of use.</p>
+{{ sections }}
+      </div>
+    </div>
+  </main>
+{% else %}
+  <main id="main">
+{{ sections }}
+  </main>
+{% endif %}
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <p>{% for a in site.affiliations %}{{ a.name | e }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+      <p>Contact: {{ site.contact.name | e }}, <a href="mailto:{{ site.contact.email | e }}">{{ site.contact.email | e }}</a> · {{ site.name | e }}, {{ site.year }}</p>
+    </div>
+  </footer>
+</body>
+</html>

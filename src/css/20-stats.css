@@ -1,0 +1,89 @@
+/* 20 stats: "The teardowns in numbers". White cards with the soft shadow on the white page (the one section between
+   two sheets that is not a sheet, for rhythm). Chart marks follow the data-viz specs: thin bars (8 px) with a rounded
+   data end and a square baseline, 2 px lines, 8 px dots with a 2 px ring, hairline grid, text in text tokens only.
+   The three series colours were checked for colour-blind separation (all pairs) against white; the orange is below
+   3:1, so every chart that uses it also has direct labels or a table. */
+.s-stats { --series-1: #6A55B8; --series-2: #E8833A; --series-3: #2B9FB0; --bar: var(--series-1); --track: var(--soft-2); }
+.s-stats__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px; }
+.s-stats__card { min-width: 0; margin: 0; padding: clamp(1rem, .7rem + 1vw, 1.5rem); border-radius: var(--r-4); background: var(--page); box-shadow: var(--shadow-1); }
+.s-stats__card--wide { grid-column: 1 / -1; }
+.s-stats__side { display: grid; gap: 20px; align-content: start; min-width: 0; }
+.s-stats__grid > .s-stats__card:nth-last-child(-n + 2):not(.s-stats__card--wide) { grid-column: auto; }
+.s-stats__title { display: grid; gap: .2rem; margin-bottom: var(--sp-4); }
+.s-stats__title b { font-size: var(--fs-1); font-weight: 600; color: var(--ink); }
+.s-stats__title span { font-size: var(--fs-0); line-height: 1.45; color: var(--muted); }
+
+.s-stats__legend { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-bottom: var(--sp-4); font-size: var(--fs-0); color: var(--text); }
+.s-stats__legend li { display: inline-flex; align-items: center; gap: .45rem; }
+.s-stats__legend--seg { margin: var(--sp-3) 0 0; }
+.s-stats__key { width: 14px; height: 4px; border-radius: 2px; background: var(--k); flex: none; }
+.s-stats__legend--seg .s-stats__key { width: 10px; height: 10px; border-radius: 3px; }
+.s-stats__key--1 { --k: var(--series-1); }
+.s-stats__key--2 { --k: var(--series-2); }
+.s-stats__key--3 { --k: var(--series-3); }
+
+/* the line chart: lines in an SVG stretched to the plot, every word in HTML so it keeps its size on a phone */
+.lc { position: relative; padding: 4px 8px 28px 44px; border-radius: var(--r-2); outline-offset: 4px; }
+.lc:focus-visible { outline: 2px solid var(--accent); }
+.lc__plot { position: relative; height: clamp(200px, 150px + 9vw, 270px); }
+.lc__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.lc__line { fill: none; stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; }
+.lc__line--1 { stroke: var(--series-1); }
+.lc__line--2 { stroke: var(--series-2); }
+.lc__line--3 { stroke: var(--series-3); }
+.lc__grid { position: absolute; left: 0; right: 0; height: 1px; background: var(--line); }
+.lc__ytick { position: absolute; left: -44px; width: 36px; transform: translateY(-50%); text-align: right; font-size: var(--fs-00); color: var(--muted); font-variant-numeric: tabular-nums; }
+.lc__xtick { position: absolute; bottom: -24px; transform: translateX(-50%); font-size: var(--fs-00); color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.lc__xtick--first { transform: none; }
+.lc__xtick--last { transform: translateX(-100%); }
+.lc__label { position: absolute; transform: translate(-50%, 6px); padding: 0 .3rem; border-radius: 4px; background: rgba(255, 255, 255, .85); font-size: var(--fs-00); font-weight: 600; color: var(--ink); white-space: nowrap; pointer-events: none; }
+.lc__label--above { transform: translate(-50%, calc(-100% - 6px)); }
+.lc__cross { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--line-2); pointer-events: none; }
+.lc__dot { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; box-shadow: 0 0 0 2px var(--page); pointer-events: none; }
+.lc__dot--1 { background: var(--series-1); }
+.lc__dot--2 { background: var(--series-2); }
+.lc__dot--3 { background: var(--series-3); }
+
+.s-stats__tip { position: absolute; z-index: 3; min-width: 11rem; padding: .5rem .7rem; border: 1px solid var(--line); border-radius: var(--r-2); background: var(--page); box-shadow: var(--shadow-2);
+                font-size: var(--fs-00); line-height: 1.55; color: var(--text); pointer-events: none; white-space: nowrap; }
+.s-stats__tip b { display: block; color: var(--ink); font-weight: 600; }
+.s-stats__tip i { display: inline-block; width: 8px; height: 8px; margin-right: .4rem; border-radius: 50%; vertical-align: .05em; }
+
+.s-stats__table { margin-top: var(--sp-3); font-size: var(--fs-0); }
+.s-stats__table summary { min-height: 32px; display: inline-flex; align-items: center; color: var(--accent-ink); cursor: pointer; }
+.s-stats__table .table { margin-top: var(--sp-2); font-variant-numeric: tabular-nums; }
+.s-stats__note { margin-top: var(--sp-2); color: var(--muted); }
+
+/* the segmented bar (one whole in parts): 28 px, each part its own block with 4 px corners and a 2 px gap */
+.seg-bar { display: flex; gap: 2px; height: 28px; }
+.seg-bar__part { display: flex; align-items: center; min-width: 6px; padding-left: .5rem; border-radius: 4px; font-size: var(--fs-0); font-weight: 600; font-variant-numeric: tabular-nums; }
+.seg-bar__part--1 { background: var(--series-1); color: #fff; }
+.seg-bar__part--2 { background: var(--series-2); color: #1f1a17; }
+.seg-bar__part--3 { background: var(--series-3); padding: 0; }
+
+/* the histogram: one column per five steps, 4 px rounded cap, square base, a 2 px gap */
+.hist { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 2px; align-items: end; height: 140px; margin-top: var(--sp-5); border-bottom: 1px solid var(--line); }
+.hist__col { position: relative; display: flex; align-items: flex-end; justify-content: center; height: 100%; outline: none; }
+.hist__col i { display: block; width: min(100%, 24px); min-height: 0; border-radius: 4px 4px 0 0; background: var(--bar); }
+.hist__col b { position: absolute; left: 50%; transform: translateX(-50%); font-size: var(--fs-00); font-weight: 600; color: var(--ink); }
+.hist__col:hover i { background: var(--accent-ink); }
+.hist__axis { display: flex; justify-content: space-between; padding-top: .3rem; font-size: var(--fs-00); color: var(--muted); }
+
+/* bar tables: a name, a thin bar, the value (a table with a bar column, so every row keeps its number) */
+.bars { display: grid; row-gap: .35rem; }
+.bars--two { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column; grid-template-rows: repeat(12, auto); column-gap: clamp(1.5rem, 1rem + 2vw, 3rem); }
+.bars__row { display: grid; grid-template-columns: minmax(7.5rem, 38%) minmax(0, 1fr) 3.75rem; align-items: center; gap: .75rem; font-size: var(--fs-0); }
+.bars__name { color: var(--text); overflow-wrap: anywhere; }
+.bars__track { height: 8px; }
+.bars__track i { display: block; height: 100%; min-width: 2px; border-radius: 0 4px 4px 0; background: var(--bar); }
+.bars__val { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 900px) {
+  .s-stats__grid { grid-template-columns: minmax(0, 1fr); }
+  .bars--two { grid-template-columns: minmax(0, 1fr); grid-auto-flow: row; grid-template-rows: none; }
+}
+@media (max-width: 560px) {
+  .bars__row { grid-template-columns: minmax(6.5rem, 42%) minmax(0, 1fr) 3.4rem; gap: .5rem; }
+  .lc { padding-left: 38px; }
+  .lc__ytick { left: -38px; width: 32px; }
+}

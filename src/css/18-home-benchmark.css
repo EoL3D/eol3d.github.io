@@ -1,0 +1,23 @@
+/* 18 home / benchmark: the heading and a sentence, then four cards in a 2 x 2 grid (one column on a phone). A card:
+   a hairline, round corners, the track's picture, its status, name, definition, three quiet rows and a link. */
+.s-hbench__head { display: grid; gap: var(--sp-3); max-width: var(--measure); margin-bottom: var(--sp-6); }
+.s-hbench__lead { font-size: var(--fs-2); line-height: var(--lh); color: var(--text); }
+
+.s-hbench__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.s-hbench__card { display: flex; flex-direction: column; min-width: 0; padding: 22px; border: 0; border-radius: var(--r-4); background: var(--page); box-shadow: var(--shadow-1); }
+.s-hbench__pic { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-2); background: var(--soft); }
+.s-hbench__status { margin-top: var(--sp-4); }
+.s-hbench__name { margin-top: var(--sp-2); font-size: var(--fs-3); font-weight: 600; line-height: 1.3; color: var(--ink); }
+.s-hbench__def { margin-top: var(--sp-2); font-size: var(--fs-1); line-height: 1.55; color: var(--text); }
+.s-hbench__def code { font-size: .9em; }
+.s-hbench__spec { display: grid; gap: .35rem; margin-top: var(--sp-4); padding-top: var(--sp-3); border-top: 1px solid var(--line); }
+.s-hbench__spec > div { display: grid; grid-template-columns: 4.25rem minmax(0, 1fr); gap: var(--sp-3); font-size: var(--fs-0); line-height: 1.5; }
+.s-hbench__spec dt { font-weight: 600; color: var(--ink); }
+.s-hbench__spec dd { color: var(--text); }
+.s-hbench__go { align-self: flex-start; margin-top: auto; padding-top: var(--sp-3); }
+.s-hbench__more { margin-top: var(--sp-5); }
+
+@media (max-width: 560px) {
+  .s-hbench__cards { grid-template-columns: minmax(0, 1fr); }
+  .s-hbench__card { padding: 18px; }
+}

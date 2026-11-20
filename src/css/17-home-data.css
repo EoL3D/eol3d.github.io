@@ -1,0 +1,47 @@
+/* 17 home / dataset: a heading, one or two sentences, then a three-column grid of pictures, each with its caption
+   under it. In a row every picture box has the same height: a one-column box is 4:3, a two-column box is two columns
+   plus the gap wide and one box tall (the pictures of pipeline/make_uses.py are cut to exactly those shapes). */
+.s-hdata__head { display: grid; gap: var(--sp-3); max-width: var(--measure); margin-bottom: var(--sp-6); }
+.s-hdata__lead { font-size: var(--fs-2); line-height: var(--lh); color: var(--text); }
+
+.s-hdata__grid { --cols: 3; container-type: inline-size; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: 32px 20px; }
+.s-hdata__fig { display: flex; flex-direction: column; min-width: 0; }
+.s-hdata__fig--wide { grid-column: span 2; }
+.s-hdata__pic { position: relative; overflow: hidden; aspect-ratio: 4 / 3; border-radius: var(--r-3); background: var(--page); box-shadow: var(--shadow-1); }
+.s-hdata__fig--wide .s-hdata__pic { aspect-ratio: 2.7467; }
+@supports (height: 1cqw) {
+  /* exactly as tall as a one-column box of the same row */
+  .s-hdata__fig--wide .s-hdata__pic { aspect-ratio: auto; height: calc((100cqw - (var(--cols) - 1) * 20px) / var(--cols) * .75); }
+}
+.s-hdata__pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.s-hdata__fig figcaption { padding-top: var(--sp-3); }
+.s-hdata__fig figcaption b { display: block; font-weight: 600; font-size: var(--fs-1); line-height: 1.4; color: var(--ink); }
+.s-hdata__fig figcaption span { display: block; margin-top: .15rem; font-size: var(--fs-0); line-height: 1.5; color: var(--text); }
+
+/* one quoted question and its answer, under the grid at the column's width (inside a figure it made its row lopsided) */
+.s-hdata__example { margin-top: var(--sp-6); }
+.s-hdata__example > p { font-size: var(--fs-0); color: var(--muted); }
+.s-hdata__quote { display: grid; gap: var(--sp-2); margin-top: var(--sp-2); padding: var(--sp-4) var(--sp-5); border-radius: var(--r-3); background: var(--page); box-shadow: var(--shadow-1);
+                  font-size: var(--fs-0); line-height: 1.5; }
+.s-hdata__quote > div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--sp-3); }
+.s-hdata__quote dt { font-weight: 600; color: var(--ink); }
+.s-hdata__quote dd { color: var(--text); }
+.s-hdata__quote code { font-size: .92em; color: var(--ink); }
+
+/* operator video: the two figures, set calmly on the pale ground */
+.s-hdata__panel { display: flex; align-items: center; justify-content: center; gap: clamp(1.5rem, .5rem + 3cqw, 2.75rem); }
+.s-hdata__panel p { display: grid; justify-items: center; gap: .2rem; }
+.s-hdata__panel b { font-weight: 600; font-size: var(--fs-5); line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.s-hdata__panel span { font-size: var(--fs-0); color: var(--text); }
+
+.s-hdata__more { margin-top: var(--sp-5); }
+
+@media (max-width: 900px) {
+  .s-hdata__grid { --cols: 2; }
+}
+@media (max-width: 560px) {
+  .s-hdata__grid { --cols: 1; gap: 28px; }
+  .s-hdata__fig--wide { grid-column: auto; }
+  .s-hdata__fig--wide .s-hdata__pic { aspect-ratio: 2.7467; height: auto; }
+}

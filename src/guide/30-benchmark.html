@@ -1,0 +1,134 @@
+<section id="guide-benchmark" class="g-sec s-benchmark" data-section="guide-benchmark" aria-labelledby="guide-benchmark-h">
+    {% set det = site.benchmark.detection %}
+    {% set qa = site.benchmark.qa %}
+    {% set n = site.numbers %}
+    <header class="s-benchmark__head">
+      <h2 id="guide-benchmark-h" data-reveal>Benchmark: tasks and scoring</h2>
+      <p class="s-benchmark__lead" data-reveal>Each track fixes the input, the output, the metric and the evaluation set. A track with a released kit can be run now from the repository; the others come with a later release.</p>
+    </header>
+
+    <ol class="s-benchmark__tracks">
+
+      <li class="s-benchmark__track" id="guide-track-detection" data-reveal>
+        <p class="s-benchmark__top"><span class="chip chip--accent">Kit released</span></p>
+        <h3 class="s-benchmark__name">Detection and instance segmentation</h3>
+        <p class="s-benchmark__def">Find every part in a top-down scanner image and give its class, box and mask.</p>
+        <dl class="spec s-benchmark__spec">
+          <div><dt>Input</dt><dd>One scanner image, {{ det.frame_px }} &times; {{ det.frame_px }} pixels, taken after a step.</dd></div>
+          <div><dt>Output</dt><dd>Class, score, box and mask of each part, over {{ n.classes | num }} part classes. Masks are scored either as visible masks (a part in place but fully covered is an ignore region) or as complete (amodal) masks.</dd></div>
+          <div><dt>Metric</dt><dd>COCO AP averaged over IoU 0.50:0.95, for masks and boxes; also AP50, AP75, AP by size, AR, per-class AP and AP by occlusion. Mean AP is taken over the {{ det.classes_with_test | num }} classes that have test instances.</dd></div>
+          <div><dt>Evaluation set</dt><dd>The test split: {{ det.desktops.test | num }} desktops, {{ det.images.test | num }} images, {{ det.instances.test | num }} instances. Splits are by whole desktop (<a href="#bench-detection">split and counts</a>).</dd></div>
+          <div><dt>Kit</dt><dd><code>benchmarks/level1/</code>: COCO split builder, scorer with a self-check, training and prediction scripts for a YOLO segmentation model and a Mask R-CNN.</dd></div>
+        </dl>
+        <p class="s-benchmark__go"><a class="arrow" href="#start-eval-det">Run it: get started, evaluate</a></p>
+      </li>
+
+      <li class="s-benchmark__track" id="guide-track-qa" data-reveal>
+        <p class="s-benchmark__top"><span class="chip chip--accent">Kit released</span></p>
+        <h3 class="s-benchmark__name">Visual question answering</h3>
+        <p class="s-benchmark__def">Answer a question about a teardown from its images, as one JSON object.</p>
+        <dl class="spec s-benchmark__spec">
+          <div><dt>Input</dt><dd>The images of a step from one or more cameras (two moments for questions about a change), with the parts in question outlined, and the question.</dd></div>
+          <div><dt>Output</dt><dd>A strict JSON answer in the task's format, e.g. a list of boxes, a state, a yes or no, or a removal plan.</dd></div>
+          <div><dt>Metric</dt><dd>Set per task: accuracy, exact match, F1, a box hit at IoU 0.5, or a replay of a plan on the relations (<a href="#bench-qa">task table</a>).</dd></div>
+          <div><dt>Evaluation set</dt><dd><code>eval_v3</code>: {{ qa.eval | num }} questions over {{ n.qa_tasks | num }} tasks, drawn from all {{ n.desktops | num }} desktops; no desktop holds more than a fifth of a task. Each record also carries its desktop's train / test split in <code>label.split</code>.</dd></div>
+          <div><dt>Kit</dt><dd><code>vlm/vlmpack_2026-11-05/tools/</code>: self-check, chat converter (OpenAI, Qwen-VL and InternVL formats), scorer with reference lines (chance, most frequent answer, question without its image).</dd></div>
+        </dl>
+        <p class="s-benchmark__go"><a class="arrow" href="#start-eval-qa">Run it: get started, evaluate</a></p>
+      </li>
+
+      <li class="s-benchmark__track" id="guide-track-depth" data-reveal>
+        <p class="s-benchmark__top"><span class="chip">Later release</span></p>
+        <h3 class="s-benchmark__name">Metric depth from a single image</h3>
+        <p class="s-benchmark__def">Predict the depth of every pixel of one image, in millimetres.</p>
+        <dl class="spec s-benchmark__spec">
+          <div><dt>Input</dt><dd>One image.</dd></div>
+          <div><dt>Output</dt><dd>A depth map in millimetres.</dd></div>
+          <div><dt>Metric</dt><dd>Compared with the depth the scanner measured: absolute relative error, RMSE and threshold accuracy.</dd></div>
+          <div><dt>Evaluation set</dt><dd>The reference depth maps come with a later release.</dd></div>
+          <div><dt>Kit</dt><dd>Comes with a later release.</dd></div>
+        </dl>
+        <p class="s-benchmark__go s-benchmark__go--off">Kit not in the repository yet</p>
+      </li>
+
+      <li class="s-benchmark__track" id="guide-track-robot" data-reveal>
+        <p class="s-benchmark__top"><span class="chip">Later release</span></p>
+        <h3 class="s-benchmark__name">Robot manipulation</h3>
+        <p class="s-benchmark__def">Remove a named part with a robot, with a policy learned from the robot demonstrations.</p>
+        <dl class="spec s-benchmark__spec">
+          <div><dt>Input</dt><dd>The part to remove. Policies learn from {{ n.robot_demos | num }} robot demonstrations in two settings: Fixtured ({{ n.robot_fixtured | num }}) and On motherboard ({{ n.robot_on_board | num }}).</dd></div>
+          <div><dt>Output</dt><dd>Robot actions that take the part out.</dd></div>
+          <div><dt>Metric</dt><dd>Task success over repeated trials on the real robot.</dd></div>
+          <div><dt>Evaluation set</dt><dd>Comes with a later release.</dd></div>
+          <div><dt>Kit</dt><dd>The demonstrations are in the repository, under <code>raw/robot/</code>. The evaluation kit comes with a later release.</dd></div>
+        </dl>
+        <p class="s-benchmark__go s-benchmark__go--off">Data released, kit to follow</p>
+      </li>
+    </ol>
+
+    <section id="bench-detection" class="s-benchmark__detail" aria-labelledby="bench-detection-h" data-reveal>
+      <header class="s-benchmark__detail-head">
+        <p class="s-benchmark__kicker">Detection and instance segmentation</p>
+        <h3 id="bench-detection-h">Split and counts</h3>
+      </header>
+      <div class="s-benchmark__split">
+        <div class="s-benchmark__scroll">
+        <table class="s-benchmark__table s-benchmark__counts">
+          <caption class="vh">Desktops, images and instances per split</caption>
+          <thead>
+            <tr><th scope="col">Split</th><th scope="col">Desktops</th><th scope="col">Images</th><th scope="col">Instances</th></tr>
+          </thead>
+          <tbody>
+            {% for key, name in [('train', 'Train'), ('val', 'Validation'), ('test', 'Test')] %}
+            <tr{% if key == 'test' %} class="is-test"{% endif %}>
+              <th scope="row">{{ name }}</th>
+              <td>{{ det.desktops[key] | num }}</td>
+              <td>{{ det.images[key] | num }}</td>
+              <td>{{ det.instances[key] | num }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+        <dl class="spec s-benchmark__facts">
+          <div><dt>Test desktops</dt><dd class="s-benchmark__desks">{% for d in det.test_desktops %}<span>{{ d | e }}</span>{% endfor %}</dd></div>
+          <div><dt>Validation desktops</dt><dd><span class="s-benchmark__desks">{% for d in det.val_desktops %}<span>{{ d | e }}</span>{% endfor %}</span> The default, drawn from the train desktops with a fixed seed. It shares model platforms with train, so use it to choose checkpoints and report the test split.</dd></div>
+          <div><dt>Train desktops</dt><dd>All the others. Train and test share no model platform.</dd></div>
+          <div><dt>Instances</dt><dd>Visible ground truth. Parts in place but fully covered are ignore regions and are not counted.</dd></div>
+          <div><dt>Predictions</dt><dd>A COCO results list on the full {{ det.frame_px }} &times; {{ det.frame_px }} frame, with the pack's category ids.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="bench-qa" class="s-benchmark__detail" aria-labelledby="bench-qa-h" data-reveal>
+      <header class="s-benchmark__detail-head">
+        <p class="s-benchmark__kicker">Visual question answering</p>
+        <h3 id="bench-qa-h">Tasks of the evaluation set</h3>
+      </header>
+      <div class="s-benchmark__scroll">
+      <table class="s-benchmark__table s-benchmark__tasks">
+        <caption class="vh">The question-answer tasks: what is asked, how it is scored and how many questions the evaluation set holds</caption>
+        <thead>
+          <tr><th scope="col">Task</th><th scope="col">What is asked</th><th scope="col">Scored by</th><th scope="col" class="s-benchmark__n">Questions</th></tr>
+        </thead>
+        {% for g in qa.groups %}
+        <tbody>
+          <tr class="s-benchmark__group"><th scope="rowgroup" colspan="4">{{ g | e }}</th></tr>
+          {% for t in qa.tasks if t.group == g %}
+          <tr>
+            <th scope="row" class="s-benchmark__task"><span class="s-benchmark__id">{{ t.id | e }}</span> <span class="s-benchmark__tname">{{ t.name | e }}</span></th>
+            <td class="s-benchmark__asks">{{ t.asks | e }}</td>
+            <td class="s-benchmark__scored">{{ t.scored | e }}</td>
+            <td class="s-benchmark__n"><span class="vh">Questions: </span>{{ t.n | num }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        {% endfor %}
+        <tfoot>
+          <tr><th scope="row" colspan="3">All {{ n.qa_tasks | num }} tasks</th><td class="s-benchmark__n"><span class="vh">Questions: </span>{{ qa.eval | num }}</td></tr>
+        </tfoot>
+      </table>
+      </div>
+      <p class="s-benchmark__note">A task's count covers all its forms: V3 is asked without a hint, with a hint box and over a span of steps; V6 open, as multiple choice and under an added rule; V7 free and under an added rule; V12 for neighbouring steps and over a span. Replies are parsed strictly (one JSON object) and leniently, and both are reported.</p>
+    </section>
+</section>

@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EoL3D: Step-by-step teardowns of end-of-life desktop computers</title>
+  <meta name="description" content="EoL3D is a dataset of 66 end-of-life desktop computers disassembled step by step: 2,748 steps, 11,221 images from four views, 84,225 instance annotations, 184,263 question-answer pairs, operator video and robot demonstrations.">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EoL3D: Step-by-step teardowns of end-of-life desktop computers">
+  <meta property="og:description" content="EoL3D is a dataset of 66 end-of-life desktop computers disassembled step by step: 2,748 steps, 11,221 images from four views, 84,225 instance annotations, 184,263 question-answer pairs, operator video and robot demonstrations.">
+  <meta property="og:url" content="https://eol3d.github.io/">
+  <meta property="og:image" content="https://eol3d.github.io/assets/img/og-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EoL3D: Step-by-step teardowns of end-of-life desktop computers, over a wall of the dataset's desktops">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=a2d476e9">
+  <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=b7b04bb3">
+  <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css?v=ef36cc95">
+  <script>
+    // Motion is switched on here and switched off again if the page script has not started within three seconds,
+    // so a script that fails to load can never leave the content hidden.
+    document.documentElement.className = 'js';
+    setTimeout(function () { if (!window.__eolStarted) document.documentElement.className = 'no-js'; }, 3000);
+  </script>
+  <script type="importmap">
+{
+ "imports": {
+  "./assets/js/lib/dom.js": "./assets/js/lib/dom.js?v=dcf2fb31",
+  "./assets/js/main.js": "./assets/js/main.js?v=12707ed2",
+  "./assets/js/sections/cite.js": "./assets/js/sections/cite.js?v=e1b7bc53",
+  "./assets/js/sections/explore.js": "./assets/js/sections/explore.js?v=96871964",
+  "./assets/js/sections/get.js": "./assets/js/sections/get.js?v=354126ab",
+  "./assets/js/sections/hero.js": "./assets/js/sections/hero.js?v=783cd614",
+  "./assets/js/sections/numbers.js": "./assets/js/sections/numbers.js?v=e3b25e90",
+  "./assets/js/sections/start.js": "./assets/js/sections/start.js?v=331f2bda",
+  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=03bbe54e",
+  "./assets/js/sections/team.js": "./assets/js/sections/team.js?v=c896bfb4",
+  "./assets/js/teardown/gl.js": "./assets/js/teardown/gl.js?v=7839b5fe",
+  "./assets/js/teardown/shaders.js": "./assets/js/teardown/shaders.js?v=15212227",
+  "./assets/js/teardown/store.js": "./assets/js/teardown/store.js?v=229d5514",
+  "./assets/js/teardown/view.js": "./assets/js/teardown/view.js?v=98d5665f"
+ }
+}
+  </script>
+  <script type="module" src="assets/js/main.js?v=12707ed2"></script>
+</head>
+<body id="top" class="page--home">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <main id="main">
+<section id="hero" class="s-hero" data-section="hero" data-module="hero" aria-labelledby="hero-h">
+  <div class="band band--wall">
+    <div class="band__wall" aria-hidden="true"></div>
+    <div class="wrap band__in s-hero__in">
+      <h1 id="hero-h" class="s-hero__name">EoL3D</h1>
+      <p class="s-hero__title">Step-by-step teardowns of <span class="s-hero__nw">end-of-life</span> desktop computers</p>
+      <ul class="s-hero__authors" aria-label="Authors">
+        <li>Chang Liu<sup>1</sup></li>
+        <li>Haiyang Zhao<sup>2</sup></li>
+        <li>Jiurun Song<sup>1</sup></li>
+        <li>Badrinath Balasubramaniam<sup>2</sup></li>
+        <li>Jiachen Li<sup>3</sup></li>
+        <li>Zhiwen Fan<sup>1</sup></li>
+        <li>Sara Behdad<sup>4</sup></li>
+        <li>Yu She<sup>5</sup></li>
+        <li>Beiwen Li<sup>2</sup></li>
+        <li>Xiao Liang<sup>1</sup></li>
+        <li>Minghui Zheng<sup>1*</sup><span class="vh"> (corresponding author)</span></li>
+      </ul>
+      <p class="band__btns s-hero__btns">
+        <a class="btn btn--primary" href="https://huggingface.co/datasets/ChangChrisLiu/E3D-Desktop-Disassembly" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.75"/><path d="M5 5.5v6.5c0 1.5 3.1 2.75 7 2.75s7-1.25 7-2.75V5.5"/><path d="M5 12v6.5c0 1.5 3.1 2.75 7 2.75s7-1.25 7-2.75V12"/></svg>Dataset</a>
+        <a class="btn btn--band" href="https://github.com/EoL3D" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></svg>Code</a>
+        <a class="btn btn--band" href="guide.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.5c2.8-.9 5.6-.6 8.5 1.2v13c-2.9-1.8-5.7-2.1-8.5-1.2z"/><path d="M20.5 5.5c-2.8-.9-5.6-.6-8.5 1.2v13c2.9-1.8 5.7-2.1 8.5-1.2z"/></svg>Guide</a>
+        <a class="btn btn--band" href="#benchmark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 16.5v-5"/><path d="M12 16.5V6.5"/><path d="M17 16.5v-8"/></svg>Benchmark</a>
+        <a class="btn btn--band" href="#explore"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5"/><path d="M12 12v9"/></svg>Explorer</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap s-hero__below">
+    <ul class="s-hero__affs" aria-label="Affiliations">
+      <li class="s-hero__aff">
+        <sup class="s-hero__aff-n">1</sup>
+        <img class="s-hero__logo s-hero__logo--tamu" src="assets/img/logos/tamu.png?v=36b10175" alt="Texas A&amp;M University" width="500" height="112">
+      </li>
+      <li class="s-hero__aff">
+        <sup class="s-hero__aff-n">2</sup>
+        <img class="s-hero__logo s-hero__logo--uga" src="assets/img/logos/uga.png?v=38aa6741" alt="University of Georgia" width="2400" height="788">
+      </li>
+      <li class="s-hero__aff">
+        <sup class="s-hero__aff-n">3</sup>
+        <img class="s-hero__logo s-hero__logo--gatech" src="assets/img/logos/gatech.png?v=83b1c80b" alt="Georgia Institute of Technology" width="348" height="60">
+      </li>
+      <li class="s-hero__aff">
+        <sup class="s-hero__aff-n">4</sup>
+        <img class="s-hero__logo s-hero__logo--uf" src="assets/img/logos/uf.png?v=86647b62" alt="University of Florida" width="768" height="789">
+      </li>
+      <li class="s-hero__aff">
+        <sup class="s-hero__aff-n">5</sup>
+        <img class="s-hero__logo s-hero__logo--purdue" src="assets/img/logos/purdue.svg?v=5443d07a" alt="Purdue University" width="248" height="45">
+      </li>
+    </ul>
+    <p class="s-hero__corr"><sup>*</sup>Corresponding author</p>
+
+    <figure class="s-hero__teaser" data-reveal>
+      <video class="s-hero__video" width="1280" height="720" muted playsinline loop preload="none" controls
+             poster="assets/img/teaser-poster.webp?v=fe3ca3ba" aria-label="Eight of the 66 desktops taken apart in step, as the scanner saw them after every step" data-hero-video>
+        <source src="assets/video/teaser.mp4?v=232d060a" type="video/mp4">
+      </video>
+      <figcaption class="s-hero__cap">
+        <span>Eight of the 66 desktops, taken apart in step, as the scanner saw them after every step.</span>
+        <button class="s-hero__toggle" type="button" aria-pressed="false" aria-label="Play video" hidden data-hero-toggle>
+          <svg class="s-hero__icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5v14l12-7z"/></svg>
+          <svg class="s-hero__icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          <span data-hero-toggle-text>Play</span>
+        </button>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="numbers" class="sec s-numbers" data-section="numbers" data-module="numbers" aria-labelledby="numbers-h">
+  <div class="wrap">
+    <h2 id="numbers-h" class="vh">About the dataset</h2>
+    <p class="s-numbers__intro" data-reveal><strong>EoL3D</strong> is a dataset of 66 end-of-life desktop computers, each taken apart by hand, one step at a time. After every step the machine is recorded from 4 fixed views. Instance masks, part states, removal relations, question-answer pairs, operator video and robot demonstrations are built on those records.</p>
+
+    <ul class="s-numbers__row" aria-label="EoL3D in numbers" data-reveal>
+      <li class="s-numbers__cell">
+        <span class="s-numbers__value" aria-hidden="true" data-value="66">66</span>
+        <span class="vh">66</span>
+        <span class="s-numbers__label">end-of-life desktops</span>
+      </li>
+      <li class="s-numbers__cell">
+        <span class="s-numbers__value" aria-hidden="true" data-value="2748">2,748</span>
+        <span class="vh">2,748</span>
+        <span class="s-numbers__label">disassembly steps</span>
+      </li>
+      <li class="s-numbers__cell">
+        <span class="s-numbers__value" aria-hidden="true" data-value="84225">84,225</span>
+        <span class="vh">84,225</span>
+        <span class="s-numbers__label">instance annotations</span>
+      </li>
+      <li class="s-numbers__cell">
+        <span class="s-numbers__value" aria-hidden="true" data-value="184263">184,263</span>
+        <span class="vh">184,263</span>
+        <span class="s-numbers__label">question-answer pairs</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="updates" class="sec s-updates" data-section="updates" aria-labelledby="updates-h">
+  <div class="wrap">
+    <h2 id="updates-h" class="s-updates__h" data-reveal>Updates</h2>
+    <ol class="s-updates__list" data-reveal>
+      <li class="s-updates__item is-new">
+        <time datetime="2026-11-20">Nov 20, 2026</time>
+        <p><span class="chip chip--accent">New</span> The scanner's 3D reconstructions: 2,764 point clouds of 65 desktops, one for every annotated step, each point labelled with its part. <a href="guide.html#data-3d">How to read them</a></p>
+      </li>
+      <li class="s-updates__item">
+        <time datetime="2026-11-05">Nov 5, 2026</time>
+        <p>Annotations of all 66 desktops in their final form, the question-answer pack (184,263 pairs), the detection kit and 1,808 robot demonstrations.</p>
+      </li>
+      <li class="s-updates__item">
+        <time datetime="2026-11-03">Nov 3, 2026</time>
+        <p>Operator video of the hands at work, faces masked (3,179 clips, 11.1 hours), and the components gallery.</p>
+      </li>
+      <li class="s-updates__item">
+        <time datetime="2026-10-28">Oct 28, 2026</time>
+        <p>Raw captures of the four views for every step of all 66 desktops.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="data" class="sec sec--sheet tint--rose s-hdata" data-section="data" aria-labelledby="data-h">
+  <div class="wrap">
+    <header class="s-hdata__head">
+      <h2 id="data-h" data-reveal>What is in the dataset</h2>
+      <p class="s-hdata__lead" data-reveal>Each of the 66 desktops is recorded after every step of its teardown and annotated part by part. These are the parts of the release, shown with the dataset's own pictures.</p>
+    </header>
+
+    <div class="s-hdata__grid">
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic"><img src="assets/img/uses/tile-masks.webp?v=f6f1bba9" width="1200" height="900" loading="lazy" decoding="async"
+             alt="Top-down scanner picture of an opened HP desktop; every part is filled and outlined in its class colour: power supply, drive cage, motherboard, CPU cooler, cover, memory, connectors and screws."></div>
+        <figcaption><b>Instance masks</b><span>Every part in every scanner frame, in 24 classes.</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic"><img src="assets/img/uses/tile-views.webp?v=d01fbf27" width="1200" height="900" loading="lazy" decoding="async"
+             alt="The same desktop after one step from four views: the scanner straight down (top left), an OAK camera nearly overhead (top right), a second OAK camera and a RealSense camera at an angle (bottom)."></div>
+        <figcaption><b>Four views</b><span>The 3D scanner and three cameras, after every step.</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic"><img src="assets/img/uses/tile-points.webp?v=372ae355" width="1200" height="900" loading="lazy" decoding="async"
+             alt="The measured points of one step of a Dell desktop, turned in 3D, each point coloured by the class of its part and the parts lifted slightly apart."></div>
+        <figcaption><b>3D points</b><span>A labelled point cloud for every step, in millimetres.</span></figcaption>
+      </figure>
+
+      <figure class="s-hdata__fig s-hdata__fig--wide" data-reveal>
+        <div class="s-hdata__pic"><img src="assets/img/uses/tile-extent.webp?v=c56a9de6" width="1600" height="583" loading="lazy" decoding="async"
+             alt="Two copies of a CPU cooler close-up. Left: only the parts of the heatsink that show around the fan are filled. Right: the heatsink's complete outline, dashed, with the part hidden under the fan hatched."></div>
+        <figcaption><b>Visible region and complete extent</b><span>Two masks per part: what the scanner sees (left) and the whole part, its hidden area hatched (right).</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig s-hdata__fig--qa" data-reveal>
+        <div class="s-hdata__pic"><img src="assets/img/uses/tile-qa.webp?v=c4afd167" width="1040" height="780" loading="lazy" decoding="async"
+             alt="Scanner view of an HP motherboard in its case: the CPU in its socket with the lever closed, one memory module with both latches open. The question below is asked about this machine."></div>
+        <figcaption><b>Question-answer pairs</b><span>184,263 pairs in 11 tasks, each with its reasoning.</span></figcaption>
+      </figure>
+
+      <figure class="s-hdata__fig s-hdata__fig--wide" data-reveal>
+        <div class="s-hdata__pic"><img src="assets/img/uses/tile-states.webp?v=a25cc960" width="1600" height="583" loading="lazy" decoding="async"
+             alt="Three crops of the same corner of a desktop at steps 1, 10 and 20. The power supply, outlined in pink, is installed, then swung up out of the way, then gone, a dashed line marking its last place."></div>
+        <figcaption><b>Part states</b><span>A state for every part at every step: here the power supply installed, swung out, removed.</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic"><img src="assets/img/uses/tile-order.webp?v=7a9a2399" width="1200" height="900" loading="lazy" decoding="async"
+             alt="Close-up of a Dell desktop around its CPU cooler. The hidden CPU is filled in yellow; the parts dealt with first are outlined in white and numbered 1 to 8 in the order the operator handled them."></div>
+        <figcaption><b>Relations and removal order</b><span>What has to come off before the CPU, in recorded order.</span></figcaption>
+      </figure>
+
+      <figure class="s-hdata__fig s-hdata__fig--wide" data-reveal>
+        <div class="s-hdata__pic"><img src="assets/img/uses/tile-robot.webp?v=a3af6edb" width="1600" height="583" loading="lazy" decoding="async"
+             alt="Three robot camera frames during memory module removal: the base camera over a memory slot on a perforated plate, the wrist camera between the gripper fingers, and the base camera over the memory slots of a whole motherboard."></div>
+        <figcaption><b>Robot demonstrations</b><span>1,808 episodes of a robot arm taking parts out, filmed by a base and a wrist camera.</span></figcaption>
+      </figure>
+      <figure class="s-hdata__fig" data-reveal>
+        <div class="s-hdata__pic s-hdata__panel" role="img" aria-label="3,179 paired clips, 11.1 hours of operator video">
+          <p><b>3,179</b><span>paired clips</span></p>
+          <p><b>11.1</b><span>hours</span></p>
+        </div>
+        <figcaption><b>Operator video</b><span>Two synchronised video cameras film the bench at an angle from two sides; faces masked.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="s-hdata__example" data-reveal>
+      <p>One question-answer record, asked about the machine in the picture above:</p>
+      <dl class="s-hdata__quote">
+        <div><dt>Question</dt><dd>Looking at the machine in these pictures, which one of the following actions is possible right now?</dd></div>
+        <div><dt>Options</dt><dd>take out the RAM module; take out the motherboard; take out the CPU</dd></div>
+        <div><dt>Answer</dt><dd><code>{"verb": "remove", "target": "RAM module"}</code></dd></div>
+      </dl>
+    </div>
+
+    <p class="s-hdata__more" data-reveal><a class="arrow" href="guide.html#guide-data">Files and fields</a></p>
+  </div>
+</section>
+
+<section id="stats" class="sec s-stats" data-section="stats" data-module="stats" aria-labelledby="stats-h">
+  <div class="wrap">
+    <header class="sec__head s-stats__head">
+      <h2 id="stats-h" data-reveal>The teardowns in numbers</h2>
+      <p class="lead" data-reveal>Counted over all 66 desktops and every step of their teardowns.</p>
+    </header>
+
+    <div class="s-stats__grid">
+      <figure class="s-stats__card s-stats__card--progress" data-reveal>
+        <figcaption class="s-stats__title"><b>As a machine comes apart</b><span>Mean over the desktops; each teardown runs from its first picture (0&nbsp;%) to its last (100&nbsp;%).</span></figcaption>
+        <ul class="s-stats__legend" aria-hidden="true">
+          <li><i class="s-stats__key s-stats__key--1"></i>Parts still in the machine</li>
+          <li><i class="s-stats__key s-stats__key--2"></i>Of those, mostly in view</li>
+          <li><i class="s-stats__key s-stats__key--3"></i>Of those, hidden</li>
+        </ul>
+        <div class="lc" data-lc tabindex="0" role="img"
+             aria-label="Line chart. Parts still in the machine fall from 100 % to 8 %; the share of those in view rises from 67 % to 98 %; the share hidden falls from 22 % to under 1 %. The numbers are in the table below."
+             data-grid="0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0,40.0,45.0,50.0,55.0,60.0,65.0,70.0,75.0,80.0,85.0,90.0,95.0,100.0" data-a="100.0,97.76,96.09,90.91,85.21,81.07,75.73,70.76,67.35,63.51,60.04,56.31,53.35,50.58,47.37,44.03,40.27,36.01,31.64,25.75,7.65" data-b="66.54,69.89,71.49,73.55,79.15,84.33,90.95,92.16,92.56,93.01,92.92,92.68,92.75,92.71,92.3,92.21,92.93,93.58,93.35,93.22,98.03" data-c="22.35,20.5,19.22,17.58,13.58,8.91,3.26,2.05,1.79,1.52,1.63,1.63,1.58,1.68,1.68,1.72,1.17,0.48,0.2,0.21,0.86">
+          <div class="lc__plot">
+            <span class="lc__ytick" style="top: 100%">0&nbsp;%</span>
+            <span class="lc__grid" style="top: 100%"></span>
+            <span class="lc__xtick lc__xtick--first" style="left: 0%">0&nbsp;%</span>
+            <span class="lc__ytick" style="top: 75%">25&nbsp;%</span>
+            <span class="lc__grid" style="top: 75%"></span>
+            <span class="lc__xtick" style="left: 25%">25&nbsp;%</span>
+            <span class="lc__ytick" style="top: 50%">50&nbsp;%</span>
+            <span class="lc__grid" style="top: 50%"></span>
+            <span class="lc__xtick" style="left: 50%">50&nbsp;%</span>
+            <span class="lc__ytick" style="top: 25%">75&nbsp;%</span>
+            <span class="lc__grid" style="top: 25%"></span>
+            <span class="lc__xtick" style="left: 75%">75&nbsp;%</span>
+            <span class="lc__ytick" style="top: 0%">100&nbsp;%</span>
+            <span class="lc__grid" style="top: 0%"></span>
+            <span class="lc__xtick lc__xtick--last" style="left: 100%">100&nbsp;%</span>
+            <svg class="lc__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <polyline class="lc__line lc__line--1" vector-effect="non-scaling-stroke"
+                        points="0.0,0.0 5.0,2.24 10.0,3.91 15.0,9.09 20.0,14.79 25.0,18.93 30.0,24.27 35.0,29.24 40.0,32.65 45.0,36.49 50.0,39.96 55.0,43.69 60.0,46.65 65.0,49.42 70.0,52.63 75.0,55.97 80.0,59.73 85.0,63.99 90.0,68.36 95.0,74.25 100.0,92.35 "/>
+              <polyline class="lc__line lc__line--2" vector-effect="non-scaling-stroke"
+                        points="0.0,33.46 5.0,30.11 10.0,28.51 15.0,26.45 20.0,20.85 25.0,15.67 30.0,9.05 35.0,7.84 40.0,7.44 45.0,6.99 50.0,7.08 55.0,7.32 60.0,7.25 65.0,7.29 70.0,7.7 75.0,7.79 80.0,7.07 85.0,6.42 90.0,6.65 95.0,6.78 100.0,1.97 "/>
+              <polyline class="lc__line lc__line--3" vector-effect="non-scaling-stroke"
+                        points="0.0,77.65 5.0,79.5 10.0,80.78 15.0,82.42 20.0,86.42 25.0,91.09 30.0,96.74 35.0,97.95 40.0,98.21 45.0,98.48 50.0,98.37 55.0,98.37 60.0,98.42 65.0,98.32 70.0,98.32 75.0,98.28 80.0,98.83 85.0,99.52 90.0,99.8 95.0,99.79 100.0,99.14 "/>
+            </svg>
+            <span class="lc__label" style="left: 50%; top: 39.96%">In the machine</span>
+            <span class="lc__label lc__label--above" style="left: 70%; top: 7.700000000000003%">In view</span>
+            <span class="lc__label" style="left: 6%; top: 79.5%">Hidden</span>
+            <span class="lc__cross" data-lc-cross hidden></span>
+            <span class="lc__dot lc__dot--1" data-lc-dot="a" hidden></span>
+            <span class="lc__dot lc__dot--2" data-lc-dot="b" hidden></span>
+            <span class="lc__dot lc__dot--3" data-lc-dot="c" hidden></span>
+            <span class="s-stats__tip" data-lc-tip hidden></span>
+          </div>
+        </div>
+        <details class="s-stats__table">
+          <summary>Show the numbers</summary>
+          <table class="table">
+            <thead><tr><th scope="col">Progress</th><th scope="col">In the machine</th><th scope="col">In view</th><th scope="col">Hidden</th></tr></thead>
+            <tbody>
+              <tr><td>0&nbsp;%</td><td>100.0&nbsp;%</td><td>66.5&nbsp;%</td><td>22.4&nbsp;%</td></tr>
+              <tr><td>10&nbsp;%</td><td>96.1&nbsp;%</td><td>71.5&nbsp;%</td><td>19.2&nbsp;%</td></tr>
+              <tr><td>20&nbsp;%</td><td>85.2&nbsp;%</td><td>79.2&nbsp;%</td><td>13.6&nbsp;%</td></tr>
+              <tr><td>30&nbsp;%</td><td>75.7&nbsp;%</td><td>91.0&nbsp;%</td><td>3.3&nbsp;%</td></tr>
+              <tr><td>40&nbsp;%</td><td>67.3&nbsp;%</td><td>92.6&nbsp;%</td><td>1.8&nbsp;%</td></tr>
+              <tr><td>50&nbsp;%</td><td>60.0&nbsp;%</td><td>92.9&nbsp;%</td><td>1.6&nbsp;%</td></tr>
+              <tr><td>60&nbsp;%</td><td>53.4&nbsp;%</td><td>92.8&nbsp;%</td><td>1.6&nbsp;%</td></tr>
+              <tr><td>70&nbsp;%</td><td>47.4&nbsp;%</td><td>92.3&nbsp;%</td><td>1.7&nbsp;%</td></tr>
+              <tr><td>80&nbsp;%</td><td>40.3&nbsp;%</td><td>92.9&nbsp;%</td><td>1.2&nbsp;%</td></tr>
+              <tr><td>90&nbsp;%</td><td>31.6&nbsp;%</td><td>93.3&nbsp;%</td><td>0.2&nbsp;%</td></tr>
+              <tr><td>100&nbsp;%</td><td>7.7&nbsp;%</td><td>98.0&nbsp;%</td><td>0.9&nbsp;%</td></tr>
+            </tbody>
+          </table>
+          <p class="s-stats__note">In view: less than 30&nbsp;% of the part is covered. Hidden: 95&nbsp;% or more is covered.</p>
+        </details>
+      </figure>
+
+      <div class="s-stats__side">
+        <figure class="s-stats__card" data-reveal>
+          <figcaption class="s-stats__title"><b>Makers</b><span>The 66 desktops by maker.</span></figcaption>
+          <div class="seg-bar" role="img" aria-label="Dell 34, HP 29, other 3 (Apple, Lenovo and a custom build).">
+            <span class="seg-bar__part seg-bar__part--1" style="flex: 34">34</span>
+            <span class="seg-bar__part seg-bar__part--2" style="flex: 29">29</span>
+            <span class="seg-bar__part seg-bar__part--3" style="flex: 3"></span>
+          </div>
+          <ul class="s-stats__legend s-stats__legend--seg" aria-hidden="true">
+            <li><i class="s-stats__key s-stats__key--1"></i>Dell</li>
+            <li><i class="s-stats__key s-stats__key--2"></i>HP</li>
+            <li><i class="s-stats__key s-stats__key--3"></i>Other: 3 (Apple, Lenovo and a custom build)</li>
+          </ul>
+        </figure>
+
+        <figure class="s-stats__card" data-reveal>
+          <figcaption class="s-stats__title"><b>Steps per desktop</b><span>Most teardowns take 35 to 49 steps.</span></figcaption>
+          <div class="hist" role="img" aria-label="Histogram of steps per desktop: 10 to 14 steps, 1 desktop; 20 to 24 steps, 1 desktop; 30 to 34 steps, 2 desktops; 35 to 39 steps, 13 desktops; 40 to 44 steps, 22 desktops; 45 to 49 steps, 24 desktops; 50 to 54 steps, 2 desktops; 55 to 59 steps, 1 desktop; ">
+            <span class="hist__col" data-tip="10–14 steps: 1 desktop">
+              <i style="height: 4.2%"></i>
+            </span>
+            <span class="hist__col" data-tip="15–19 steps: 0 desktops">
+              <i style="height: 0.0%"></i>
+            </span>
+            <span class="hist__col" data-tip="20–24 steps: 1 desktop">
+              <i style="height: 4.2%"></i>
+            </span>
+            <span class="hist__col" data-tip="25–29 steps: 0 desktops">
+              <i style="height: 0.0%"></i>
+            </span>
+            <span class="hist__col" data-tip="30–34 steps: 2 desktops">
+              <i style="height: 8.3%"></i>
+            </span>
+            <span class="hist__col" data-tip="35–39 steps: 13 desktops">
+              <i style="height: 54.2%"></i>
+            </span>
+            <span class="hist__col" data-tip="40–44 steps: 22 desktops">
+              <i style="height: 91.7%"></i>
+            </span>
+            <span class="hist__col" data-tip="45–49 steps: 24 desktops">
+              <i style="height: 100.0%"></i>
+<b style="bottom: calc(100.0% + 4px)">24</b>            </span>
+            <span class="hist__col" data-tip="50–54 steps: 2 desktops">
+              <i style="height: 8.3%"></i>
+            </span>
+            <span class="hist__col" data-tip="55–59 steps: 1 desktop">
+              <i style="height: 4.2%"></i>
+            </span>
+          </div>
+          <div class="hist__axis" aria-hidden="true"><span>10</span><span>35</span><span>60 steps</span></div>
+        </figure>
+      </div>
+
+      <figure class="s-stats__card s-stats__card--wide" data-reveal>
+        <figcaption class="s-stats__title"><b>Annotations by part class</b><span>Mask annotations over all scanner frames: one per part per frame it appears in.</span></figcaption>
+        <ol class="bars bars--two">
+          <li class="bars__row"><span class="bars__name">Screw</span><span class="bars__track"><i style="width: 100.0%"></i></span><span class="bars__val">20,920</span></li>
+          <li class="bars__row"><span class="bars__name">RAM latch</span><span class="bars__track"><i style="width: 96.77%"></i></span><span class="bars__val">20,245</span></li>
+          <li class="bars__row"><span class="bars__name">Connector</span><span class="bars__track"><i style="width: 88.48%"></i></span><span class="bars__val">18,510</span></li>
+          <li class="bars__row"><span class="bars__name">RAM module</span><span class="bars__track"><i style="width: 15.42%"></i></span><span class="bars__val">3,225</span></li>
+          <li class="bars__row"><span class="bars__name">Chassis</span><span class="bars__track"><i style="width: 13.38%"></i></span><span class="bars__val">2,800</span></li>
+          <li class="bars__row"><span class="bars__name">Motherboard</span><span class="bars__track"><i style="width: 12.97%"></i></span><span class="bars__val">2,714</span></li>
+          <li class="bars__row"><span class="bars__name">CPU socket lever</span><span class="bars__track"><i style="width: 12.88%"></i></span><span class="bars__val">2,694</span></li>
+          <li class="bars__row"><span class="bars__name">CPU</span><span class="bars__track"><i style="width: 8.86%"></i></span><span class="bars__val">1,854</span></li>
+          <li class="bars__row"><span class="bars__name">Power supply</span><span class="bars__track"><i style="width: 8.65%"></i></span><span class="bars__val">1,810</span></li>
+          <li class="bars__row"><span class="bars__name">Cover</span><span class="bars__track"><i style="width: 8.65%"></i></span><span class="bars__val">1,809</span></li>
+          <li class="bars__row"><span class="bars__name">Drive cage</span><span class="bars__track"><i style="width: 7.69%"></i></span><span class="bars__val">1,609</span></li>
+          <li class="bars__row"><span class="bars__name">Expansion card</span><span class="bars__track"><i style="width: 5.07%"></i></span><span class="bars__val">1,060</span></li>
+          <li class="bars__row"><span class="bars__name">Cable clip</span><span class="bars__track"><i style="width: 4.85%"></i></span><span class="bars__val">1,014</span></li>
+          <li class="bars__row"><span class="bars__name">CPU cooler</span><span class="bars__track"><i style="width: 3.74%"></i></span><span class="bars__val">783</span></li>
+          <li class="bars__row"><span class="bars__name">Storage drive</span><span class="bars__track"><i style="width: 3.59%"></i></span><span class="bars__val">752</span></li>
+          <li class="bars__row"><span class="bars__name">Power supply latch</span><span class="bars__track"><i style="width: 3.51%"></i></span><span class="bars__val">735</span></li>
+          <li class="bars__row"><span class="bars__name">Card latch</span><span class="bars__track"><i style="width: 2.7%"></i></span><span class="bars__val">564</span></li>
+          <li class="bars__row"><span class="bars__name">Screw hole</span><span class="bars__track"><i style="width: 2.44%"></i></span><span class="bars__val">510</span></li>
+          <li class="bars__row"><span class="bars__name">Optical drive</span><span class="bars__track"><i style="width: 1.33%"></i></span><span class="bars__val">279</span></li>
+          <li class="bars__row"><span class="bars__name">Drive latch</span><span class="bars__track"><i style="width: 1.2%"></i></span><span class="bars__val">251</span></li>
+          <li class="bars__row"><span class="bars__name">Case fan</span><span class="bars__track"><i style="width: 0.22%"></i></span><span class="bars__val">45</span></li>
+          <li class="bars__row"><span class="bars__name">Misc part</span><span class="bars__track"><i style="width: 0.11%"></i></span><span class="bars__val">23</span></li>
+          <li class="bars__row"><span class="bars__name">Cooler bracket</span><span class="bars__track"><i style="width: 0.06%"></i></span><span class="bars__val">13</span></li>
+          <li class="bars__row"><span class="bars__name">Cooler latch</span><span class="bars__track"><i style="width: 0.03%"></i></span><span class="bars__val">6</span></li>
+        </ol>
+      </figure>
+
+      <figure class="s-stats__card" data-reveal>
+        <figcaption class="s-stats__title"><b>What a step does</b><span>Actions in the operation log, by verb.</span></figcaption>
+        <ol class="bars">
+          <li class="bars__row"><span class="bars__name">Disconnect</span><span class="bars__track"><i style="width: 100.0%"></i></span><span class="bars__val">1,006</span></li>
+          <li class="bars__row"><span class="bars__name">Unscrew</span><span class="bars__track"><i style="width: 78.03%"></i></span><span class="bars__val">785</span></li>
+          <li class="bars__row"><span class="bars__name">Remove</span><span class="bars__track"><i style="width: 59.05%"></i></span><span class="bars__val">594</span></li>
+          <li class="bars__row"><span class="bars__name">Open</span><span class="bars__track"><i style="width: 34.69%"></i></span><span class="bars__val">349</span></li>
+          <li class="bars__row"><span class="bars__name">Displace</span><span class="bars__track"><i style="width: 3.18%"></i></span><span class="bars__val">32</span></li>
+          <li class="bars__row"><span class="bars__name">Release</span><span class="bars__track"><i style="width: 3.18%"></i></span><span class="bars__val">32</span></li>
+          <li class="bars__row"><span class="bars__name">Reorient</span><span class="bars__track"><i style="width: 0.99%"></i></span><span class="bars__val">10</span></li>
+        </ol>
+      </figure>
+
+      <figure class="s-stats__card" data-reveal>
+        <figcaption class="s-stats__title"><b>Tools</b><span>The tool each action needed.</span></figcaption>
+        <ol class="bars">
+          <li class="bars__row"><span class="bars__name">No tool</span><span class="bars__track"><i style="width: 100.0%"></i></span><span class="bars__val">2,020</span></li>
+          <li class="bars__row"><span class="bars__name">Phillips #2</span><span class="bars__track"><i style="width: 18.27%"></i></span><span class="bars__val">369</span></li>
+          <li class="bars__row"><span class="bars__name">Torx T15</span><span class="bars__track"><i style="width: 17.57%"></i></span><span class="bars__val">355</span></li>
+          <li class="bars__row"><span class="bars__name">Not recorded</span><span class="bars__track"><i style="width: 1.98%"></i></span><span class="bars__val">40</span></li>
+          <li class="bars__row"><span class="bars__name">By hand</span><span class="bars__track"><i style="width: 0.94%"></i></span><span class="bars__val">19</span></li>
+          <li class="bars__row"><span class="bars__name">Phillips #1</span><span class="bars__track"><i style="width: 0.25%"></i></span><span class="bars__val">5</span></li>
+        </ol>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="explore" class="sec sec--sheet tint--lilac s-explore" data-section="explore" data-module="explore" aria-labelledby="explore-h">
+  <div class="wrap">
+    <header class="s-explore__head">
+      <h2 id="explore-h" data-reveal>Take one apart</h2>
+      <p class="s-explore__lead" data-reveal>Step through a teardown as the scanner saw it, with its masks, or as the measured points behind the picture: turn them, colour them by class or by depth, and pull the parts apart.</p>
+    </header>
+
+    <div class="s-explore__pick" data-x="pick" data-reveal hidden>
+      <span class="s-explore__pick-label" id="explore-desks-l">Desktop</span>
+      <div class="s-explore__desks" data-x="desks" role="group" aria-labelledby="explore-desks-l"></div>
+    </div>
+
+    <div class="s-explore__panel" data-reveal>
+      <div class="s-explore__main">
+        <div class="s-explore__stage" data-x="stage" tabindex="0" role="group" aria-label="Teardown view. Left and right arrow keys change the step; drag to turn the 3D view.">
+          <img class="s-explore__poster" data-x="poster" src="assets/data/explorer/d13/S01_c.webp?v=a0d1fb15" width="814" height="972" loading="lazy" decoding="async" alt="Scanner picture of a Dell desktop computer before disassembly">
+          <p class="s-explore__tip" data-x="tip" hidden></p>
+        </div>
+        <div class="s-explore__keys">
+          <ul class="s-explore__legend" data-x="legend" aria-label="Component classes of this desktop" hidden></ul>
+          <p class="s-explore__scale" data-x="scale" hidden><span data-x="near"></span><i aria-hidden="true"></i><span data-x="far"></span></p>
+        </div>
+        <p class="s-explore__hint" data-x="hint" aria-hidden="true" hidden>Drag to turn</p>
+        <p class="s-explore__note" data-x="note" hidden></p>
+        <noscript><p class="s-explore__note">The interactive view needs JavaScript. The picture shows the first step of one desktop.</p></noscript>
+      </div>
+
+      <div class="s-explore__bar">
+        <div class="s-explore__transport">
+          <button class="s-explore__btn" type="button" data-x="prev" aria-label="Previous step" disabled><span aria-hidden="true">&#8249;</span></button>
+          <button class="s-explore__btn s-explore__play" type="button" data-x="play" aria-label="Play" disabled><span aria-hidden="true" data-x="playicon">&#9654;</span></button>
+          <button class="s-explore__btn" type="button" data-x="next" aria-label="Next step" disabled><span aria-hidden="true">&#8250;</span></button>
+        </div>
+
+        <div class="s-explore__progress">
+          <p class="s-explore__now"><span data-x="stepword">Step 1 of 42</span><span aria-hidden="true"> &mdash; </span><span class="s-explore__action" data-x="action" aria-live="polite">Initial state</span></p>
+          <p class="s-explore__log" data-x="log"></p>
+          <label class="vh" for="explore-step">Step</label>
+          <input class="s-explore__range" id="explore-step" data-x="step" type="range" min="1" max="42" step="0.01" value="1" disabled>
+        </div>
+
+        <div class="s-explore__switches">
+          <div class="s-explore__seg" data-x="colour" role="group" aria-label="Colour">
+            <button type="button" data-v="scanner" aria-pressed="true" disabled>Photo</button>
+            <button type="button" data-v="class" aria-pressed="false" disabled>Classes</button>
+            <button type="button" data-v="depth" aria-pressed="false" disabled>Depth</button>
+          </div>
+          <div class="s-explore__seg" data-x="view" role="group" aria-label="View">
+            <button type="button" data-v="scanner" aria-pressed="true" disabled>Scanner</button>
+            <button type="button" data-v="tilted" aria-pressed="false" disabled>3D</button>
+          </div>
+          <div class="s-explore__apart">
+            <label for="explore-apart">Pull the parts apart</label>
+            <input class="s-explore__range" id="explore-apart" data-x="apart" type="range" min="0" max="1" step="0.01" value="0" disabled>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="s-explore__badge" data-x="badge">D13, Dell OptiPlex 7020</p>
+  </div>
+</section>
+
+<section id="benchmark" class="sec sec--sheet tint--peach s-hbench" data-section="benchmark" aria-labelledby="benchmark-h">
+  <div class="wrap">
+    <header class="s-hbench__head">
+      <h2 id="benchmark-h" data-reveal>Benchmark</h2>
+      <p class="s-hbench__lead" data-reveal>Four tracks on the same teardowns. Each fixes the input, the output, the metric and the evaluation set; two kits are in the repository now, the other two come with a later release.</p>
+    </header>
+
+    <div class="s-hbench__cards">
+      <article class="s-hbench__card" id="track-detection" aria-labelledby="track-detection-h" data-reveal>
+        <img class="s-hbench__pic" src="assets/img/uses/bench-detect.webp?v=7a0c2698" width="1280" height="720" loading="lazy" decoding="async"
+             alt="A top-down scanner picture with every part filled and outlined in its class colour: the masks a detector has to find.">
+        <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+        <h3 class="s-hbench__name" id="track-detection-h">Detection and instance segmentation</h3>
+        <p class="s-hbench__def">Find every part in a top-down scanner image and give its class, box and mask.</p>
+        <dl class="s-hbench__spec">
+          <div><dt>Input</dt><dd>One scanner image, 1600 &times; 1600 px</dd></div>
+          <div><dt>Output</dt><dd>Class, box and mask of each part, 24 classes</dd></div>
+          <div><dt>Metric</dt><dd>COCO mask and box AP over IoU 0.50:0.95</dd></div>
+        </dl>
+        <a class="arrow s-hbench__go" href="guide.html#start-eval-det">Run it</a>
+      </article>
+
+      <article class="s-hbench__card" id="track-qa" aria-labelledby="track-qa-h" data-reveal>
+        <img class="s-hbench__pic" src="assets/img/uses/qa-change.webp?v=c4467b8d" width="900" height="666" loading="lazy" decoding="async"
+             alt="The drive bay of an HP desktop before and after one step, the two pictures of a question about a change: a drive sits in the bay before and is gone after.">
+        <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+        <h3 class="s-hbench__name" id="track-qa-h">Visual question answering</h3>
+        <p class="s-hbench__def">Answer a question about a teardown from its images, as one JSON object.</p>
+        <dl class="s-hbench__spec">
+          <div><dt>Input</dt><dd>The images of a step and the question</dd></div>
+          <div><dt>Output</dt><dd>A strict JSON answer in the task's format</dd></div>
+          <div><dt>Metric</dt><dd>Set per task: accuracy, exact match, F1, box hits, plan replay</dd></div>
+        </dl>
+        <a class="arrow s-hbench__go" href="guide.html#start-eval-qa">Run it</a>
+      </article>
+
+      <article class="s-hbench__card" id="track-depth" aria-labelledby="track-depth-h" data-reveal>
+        <img class="s-hbench__pic" src="assets/img/uses/depth.webp?v=720a2971" width="1280" height="720" loading="lazy" decoding="async"
+             alt="The depth the scanner measured over one step of a Dell desktop, seen straight down: near surfaces such as the power supply and the case rim in red and orange, the motherboard further away in blue.">
+        <p class="s-hbench__status"><span class="chip">Later release</span></p>
+        <h3 class="s-hbench__name" id="track-depth-h">Metric depth from a single image</h3>
+        <p class="s-hbench__def">Predict the depth of every pixel of one image, in millimetres.</p>
+        <dl class="s-hbench__spec">
+          <div><dt>Input</dt><dd>One image</dd></div>
+          <div><dt>Output</dt><dd>A depth map in millimetres</dd></div>
+          <div><dt>Metric</dt><dd>Absolute relative error, RMSE and threshold accuracy against the scanner's depth</dd></div>
+        </dl>
+      </article>
+
+      <article class="s-hbench__card" id="track-robot" aria-labelledby="track-robot-h" data-reveal>
+        <img class="s-hbench__pic" src="assets/img/uses/bench-robot.webp?v=c1ff799d" width="1280" height="720" loading="lazy" decoding="async"
+             alt="Two frames of the robot's base camera: the gripper over a memory slot on a perforated plate, and over the memory slots of a whole motherboard.">
+        <p class="s-hbench__status"><span class="chip">Later release</span></p>
+        <h3 class="s-hbench__name" id="track-robot-h">Robot manipulation</h3>
+        <p class="s-hbench__def">Remove a named part with a robot; the 1,808 demonstrations are already in <code>raw/robot/</code>.</p>
+        <dl class="s-hbench__spec">
+          <div><dt>Input</dt><dd>The part to remove</dd></div>
+          <div><dt>Output</dt><dd>Robot actions that take the part out</dd></div>
+          <div><dt>Metric</dt><dd>Task success over repeated trials on the real robot</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <p class="s-hbench__more" data-reveal><a class="arrow" href="guide.html#guide-benchmark">Tasks and scoring</a></p>
+  </div>
+</section>
+
+<section id="get" class="sec sec--sheet tint--sand s-get" data-section="get" data-module="get" aria-labelledby="get-h">
+  <div class="wrap">
+    <header class="sec__head" data-reveal>
+      <h2 id="get-h">Download</h2>
+      <p class="lead">The data is on Hugging Face. One command fetches all of it; the guide shows how to take only the folders a task needs, read them and score a model.</p>
+    </header>
+
+    <div class="code s-get__cmd" data-copy-box data-reveal>
+      <pre class="s-get__code" tabindex="0" aria-label="Download command" data-copy-src>hf download ChangChrisLiu/E3D-Desktop-Disassembly --repo-type dataset --local-dir EoL3D</pre>
+      <button class="code__copy" type="button" hidden data-copy aria-label="Copy the download command">Copy</button>
+    </div>
+
+    <p class="s-get__actions" data-reveal>
+      <a class="btn btn--primary" href="https://huggingface.co/datasets/ChangChrisLiu/E3D-Desktop-Disassembly" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M5 19.5h14"/></svg>Open on Hugging Face</a>
+      <a class="btn" href="guide.html#guide-start"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.5c2.8-.9 5.6-.6 8.5 1.2v13c-2.9-1.8-5.7-2.1-8.5-1.2z"/><path d="M20.5 5.5c-2.8-.9-5.6-.6-8.5 1.2v13c2.9-1.8 5.7-2.1 8.5-1.2z"/></svg>Read the guide</a>
+      <a class="btn" href="https://github.com/EoL3D" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></svg>GitHub</a>
+    </p>
+    <p class="s-get__note" data-reveal>The repository still carries the dataset's earlier name, E3D-Desktop-Disassembly; it holds the same data as EoL3D.</p>
+    <span class="vh" aria-live="polite" data-copy-status></span>
+  </div>
+</section>
+
+<section id="cite" class="sec sec--sheet tint--lilac s-cite" data-section="cite" data-module="cite" aria-labelledby="cite-h">
+  <div class="wrap">
+    <header class="sec__head" data-reveal>
+      <h2 id="cite-h">Citation</h2>
+      <p class="lead">Until a formal citation is published, please cite this page.</p>
+    </header>
+
+    <div class="code s-cite__bib" data-copy-box data-reveal>
+      <pre class="s-cite__pre" tabindex="0" aria-label="BibTeX entry" data-copy-src>@misc{eol3d2026,
+  title        = {EoL3D: Step-by-step teardowns of end-of-life desktop computers},
+  author       = {Chang Liu and Haiyang Zhao and Jiurun Song and Badrinath Balasubramaniam and Jiachen Li and Zhiwen Fan and Sara Behdad and Yu She and Beiwen Li and Xiao Liang and Minghui Zheng},
+  year         = {2026},
+  howpublished = {\url{https://eol3d.github.io}}
+}</pre>
+      <button class="code__copy" type="button" hidden data-copy aria-label="Copy the BibTeX entry">Copy</button>
+    </div>
+
+    <p class="s-cite__licence" data-reveal>Pre-release: provided for inspection and research evaluation. A licence comes with the first tagged release. <a href="guide.html#guide-licence">Terms of use</a></p>
+    <span class="vh" aria-live="polite" data-copy-status></span>
+  </div>
+</section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <p>Texas A&amp;M University · University of Georgia · Georgia Institute of Technology · University of Florida · Purdue University</p>
+      <p>Contact: Minghui Zheng, <a href="mailto:mhzheng@tamu.edu">mhzheng@tamu.edu</a> · EoL3D, 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

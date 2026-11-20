@@ -1,0 +1,136 @@
+{# The teardowns in numbers: charts drawn from assets/data/stats.json, as HTML and inline SVG (no script needed to read
+   them; assets/js/sections/stats.js adds the hover and keyboard read-out of the line chart and the histogram). Bars of
+   one series are one colour; the three-series charts use the validated set --series-1..3. #}
+{% set p = stats.progress %}
+{% set cmax = stats.classes | map(attribute='annotations') | max %}
+{% set vmax = stats.verbs | map(attribute='count') | max %}
+{% set tmax = stats.tools | map(attribute='count') | max %}
+{% set steps = stats.steps_per_desktop %}
+{% set ns = namespace(hmax=0) %}
+{% set bins = [] %}
+{% for b in range(10, 60, 5) %}
+  {% set n = steps | select('ge', b) | select('lt', b + 5) | list | length %}
+  {% set _ = bins.append({'lo': b, 'hi': b + 4, 'n': n}) %}
+  {% if n > ns.hmax %}{% set ns.hmax = n %}{% endif %}
+{% endfor %}
+{% set dell = (stats.brands | selectattr('brand', 'equalto', 'Dell') | first).desktops %}
+{% set hp = (stats.brands | selectattr('brand', 'equalto', 'HP') | first).desktops %}
+{% set others = stats.brands | rejectattr('brand', 'in', ['Dell', 'HP']) | list %}
+{% set other = others | map(attribute='desktops') | sum %}
+{% set total = dell + hp + other %}
+{% set named = others | rejectattr('brand', 'equalto', 'Custom build') | map(attribute='brand') | list %}
+{% set custom = others | selectattr('brand', 'equalto', 'Custom build') | list | length %}
+{% set other_words = (named | join(', ')) ~ ((' and a custom build' if named else 'a custom build') if custom else '') %}
+{% set tool_names = {'none': 'No tool', 'PH2': 'Phillips #2', 'T15': 'Torx T15', 'unknown': 'Not recorded', 'hand': 'By hand', 'PH1': 'Phillips #1'} %}
+<section id="stats" class="sec s-stats" data-section="stats" data-module="stats" aria-labelledby="stats-h">
+  <div class="wrap">
+    <header class="sec__head s-stats__head">
+      <h2 id="stats-h" data-reveal>The teardowns in numbers</h2>
+      <p class="lead" data-reveal>Counted over all {{ site.numbers.desktops | num }} desktops and every step of their teardowns.</p>
+    </header>
+
+    <div class="s-stats__grid">
+      <figure class="s-stats__card s-stats__card--progress" data-reveal>
+        <figcaption class="s-stats__title"><b>As a machine comes apart</b><span>Mean over the desktops; each teardown runs from its first picture (0&nbsp;%) to its last (100&nbsp;%).</span></figcaption>
+        <ul class="s-stats__legend" aria-hidden="true">
+          <li><i class="s-stats__key s-stats__key--1"></i>Parts still in the machine</li>
+          <li><i class="s-stats__key s-stats__key--2"></i>Of those, mostly in view</li>
+          <li><i class="s-stats__key s-stats__key--3"></i>Of those, hidden</li>
+        </ul>
+        <div class="lc" data-lc tabindex="0" role="img"
+             aria-label="Line chart. Parts still in the machine fall from 100 % to {{ p.present[-1] | round | int }} %; the share of those in view rises from {{ p.visible[0] | round | int }} % to {{ p.visible[-1] | round | int }} %; the share hidden falls from {{ p.full[0] | round | int }} % to under 1 %. The numbers are in the table below."
+             data-grid="{{ p.grid | join(',') }}" data-a="{{ p.present | join(',') }}" data-b="{{ p.visible | join(',') }}" data-c="{{ p.full | join(',') }}">
+          <div class="lc__plot">
+            {% for t in [0, 25, 50, 75, 100] %}
+            <span class="lc__ytick" style="top: {{ 100 - t }}%">{{ t }}&nbsp;%</span>
+            <span class="lc__grid" style="top: {{ 100 - t }}%"></span>
+            <span class="lc__xtick{{ ' lc__xtick--first' if t == 0 }}{{ ' lc__xtick--last' if t == 100 }}" style="left: {{ t }}%">{{ t }}&nbsp;%</span>
+            {% endfor %}
+            <svg class="lc__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              {% for key, series in [('1', p.present), ('2', p.visible), ('3', p.full)] %}
+              <polyline class="lc__line lc__line--{{ key }}" vector-effect="non-scaling-stroke"
+                        points="{% for v in series %}{{ p.grid[loop.index0] }},{{ (100 - v) | round(2) }} {% endfor %}"/>
+              {% endfor %}
+            </svg>
+            <span class="lc__label" style="left: 50%; top: {{ 100 - p.present[10] }}%">In the machine</span>
+            <span class="lc__label lc__label--above" style="left: 70%; top: {{ 100 - p.visible[14] }}%">In view</span>
+            <span class="lc__label" style="left: 6%; top: {{ 100 - p.full[1] }}%">Hidden</span>
+            <span class="lc__cross" data-lc-cross hidden></span>
+            <span class="lc__dot lc__dot--1" data-lc-dot="a" hidden></span>
+            <span class="lc__dot lc__dot--2" data-lc-dot="b" hidden></span>
+            <span class="lc__dot lc__dot--3" data-lc-dot="c" hidden></span>
+            <span class="s-stats__tip" data-lc-tip hidden></span>
+          </div>
+        </div>
+        <details class="s-stats__table">
+          <summary>Show the numbers</summary>
+          <table class="table">
+            <thead><tr><th scope="col">Progress</th><th scope="col">In the machine</th><th scope="col">In view</th><th scope="col">Hidden</th></tr></thead>
+            <tbody>
+              {% for g in p.grid %}{% if loop.index0 % 2 == 0 %}
+              <tr><td>{{ g | int }}&nbsp;%</td><td>{{ p.present[loop.index0] | round(1) }}&nbsp;%</td><td>{{ p.visible[loop.index0] | round(1) }}&nbsp;%</td><td>{{ p.full[loop.index0] | round(1) }}&nbsp;%</td></tr>
+              {% endif %}{% endfor %}
+            </tbody>
+          </table>
+          <p class="s-stats__note">In view: less than 30&nbsp;% of the part is covered. Hidden: 95&nbsp;% or more is covered.</p>
+        </details>
+      </figure>
+
+      <div class="s-stats__side">
+        <figure class="s-stats__card" data-reveal>
+          <figcaption class="s-stats__title"><b>Makers</b><span>The {{ total | num }} desktops by maker.</span></figcaption>
+          <div class="seg-bar" role="img" aria-label="Dell {{ dell }}, HP {{ hp }}, other {{ other }} ({{ other_words }}).">
+            <span class="seg-bar__part seg-bar__part--1" style="flex: {{ dell }}">{{ dell }}</span>
+            <span class="seg-bar__part seg-bar__part--2" style="flex: {{ hp }}">{{ hp }}</span>
+            <span class="seg-bar__part seg-bar__part--3" style="flex: {{ other }}"></span>
+          </div>
+          <ul class="s-stats__legend s-stats__legend--seg" aria-hidden="true">
+            <li><i class="s-stats__key s-stats__key--1"></i>Dell</li>
+            <li><i class="s-stats__key s-stats__key--2"></i>HP</li>
+            <li><i class="s-stats__key s-stats__key--3"></i>Other: {{ other }} ({{ other_words }})</li>
+          </ul>
+        </figure>
+
+        <figure class="s-stats__card" data-reveal>
+          <figcaption class="s-stats__title"><b>Steps per desktop</b><span>Most teardowns take 35 to 49 steps.</span></figcaption>
+          <div class="hist" role="img" aria-label="Histogram of steps per desktop: {% for b in bins %}{% if b.n %}{{ b.lo }} to {{ b.hi }} steps, {{ b.n }} desktop{{ 's' if b.n > 1 }}; {% endif %}{% endfor %}">
+            {% for b in bins %}
+            <span class="hist__col" data-tip="{{ b.lo }}–{{ b.hi }} steps: {{ b.n }} desktop{{ 's' if b.n != 1 }}">
+              <i style="height: {{ (b.n / ns.hmax * 100) | round(1) }}%"></i>
+              {% if b.n == ns.hmax %}<b style="bottom: calc({{ (b.n / ns.hmax * 100) | round(1) }}% + 4px)">{{ b.n }}</b>{% endif %}
+            </span>
+            {% endfor %}
+          </div>
+          <div class="hist__axis" aria-hidden="true"><span>10</span><span>35</span><span>60 steps</span></div>
+        </figure>
+      </div>
+
+      <figure class="s-stats__card s-stats__card--wide" data-reveal>
+        <figcaption class="s-stats__title"><b>Annotations by part class</b><span>Mask annotations over all scanner frames: one per part per frame it appears in.</span></figcaption>
+        <ol class="bars bars--two">
+          {% for c in stats.classes %}
+          <li class="bars__row"><span class="bars__name">{{ c.label }}</span><span class="bars__track"><i style="width: {{ (c.annotations / cmax * 100) | round(2) }}%"></i></span><span class="bars__val">{{ c.annotations | num }}</span></li>
+          {% endfor %}
+        </ol>
+      </figure>
+
+      <figure class="s-stats__card" data-reveal>
+        <figcaption class="s-stats__title"><b>What a step does</b><span>Actions in the operation log, by verb.</span></figcaption>
+        <ol class="bars">
+          {% for v in stats.verbs %}
+          <li class="bars__row"><span class="bars__name">{{ v.verb | capitalize }}</span><span class="bars__track"><i style="width: {{ (v.count / vmax * 100) | round(2) }}%"></i></span><span class="bars__val">{{ v.count | num }}</span></li>
+          {% endfor %}
+        </ol>
+      </figure>
+
+      <figure class="s-stats__card" data-reveal>
+        <figcaption class="s-stats__title"><b>Tools</b><span>The tool each action needed.</span></figcaption>
+        <ol class="bars">
+          {% for t in stats.tools %}
+          <li class="bars__row"><span class="bars__name">{{ tool_names.get(t.tool, t.tool) }}</span><span class="bars__track"><i style="width: {{ (t.count / tmax * 100) | round(2) }}%"></i></span><span class="bars__val">{{ t.count | num }}</span></li>
+          {% endfor %}
+        </ol>
+      </figure>
+    </div>
+  </div>
+</section>

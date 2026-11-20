@@ -1,0 +1,184 @@
+<section id="guide-start" class="g-sec s-start" data-section="guide-start" data-module="start" aria-labelledby="guide-start-h">
+    <header class="g-sec__head">
+      <h2 id="guide-start-h">Download, load, evaluate</h2>
+      <p class="lead">The data is hosted on Hugging Face in the repository <code>{{ site.links.hf_repo | e }}</code>. The repository still carries the dataset's earlier name, {{ site.links.hf_name | e }}; it holds the same data as {{ site.name | e }}.</p>
+      <p class="s-start__open"><a class="btn btn--primary" href="{{ site.links.hf | e }}" rel="noopener">Open on Hugging Face</a></p>
+    </header>
+
+    {% set repo = site.links.hf_repo | e %}
+    {% set px = site.benchmark.detection.frame_px %}
+    <ol class="s-start__steps">
+
+      <li id="start-download" class="s-start__step" data-reveal>
+        <div class="s-start__key">
+          <h3 id="start-download-h" class="s-start__name">Download</h3>
+          <p class="s-start__gist">Fetch the whole repository, or only the folders one task needs.</p>
+        </div>
+        <div class="s-start__body">
+          <p class="s-start__text">The <code>hf</code> command comes with the <code>huggingface_hub</code> Python package. The repository is public: no account or token is needed to read it. The commands are for a Unix shell; <code>$DATA</code> is the folder the data goes to.</p>
+
+          <figure class="s-start__sheet" data-copy-box>
+            <figcaption class="s-start__bar"><span>Install the command</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the install commands">Copy</button></figcaption>
+            <pre class="code s-start__code" tabindex="0" data-copy-src>pip install "huggingface_hub&gt;=1.0"     <span class="c"># provides the hf command</span>
+export DATA=$PWD/e3d                   <span class="c"># any folder</span></pre>
+          </figure>
+
+          <figure class="s-start__sheet" data-copy-box>
+            <figcaption class="s-start__bar"><span>Everything</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the command that downloads everything">Copy</button></figcaption>
+            <pre class="code s-start__code" tabindex="0" data-copy-src>hf download {{ repo }} --repo-type dataset --local-dir "$DATA"</pre>
+          </figure>
+
+          <figure class="s-start__sheet" data-copy-box>
+            <figcaption class="s-start__bar"><span>Scanner annotations and the detection kit</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the command that downloads the scanner annotations and the detection kit">Copy</button></figcaption>
+            <pre class="code s-start__code" tabindex="0" data-copy-src>hf download {{ repo }} --repo-type dataset --local-dir "$DATA" \
+    --include "annotations/scanner/*" --include "splits.json" --include "benchmarks/level1/*"</pre>
+          </figure>
+
+          <figure class="s-start__sheet" data-copy-box>
+            <figcaption class="s-start__bar"><span>3D reconstructions of one desktop</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the command that downloads the 3D reconstructions of one desktop">Copy</button></figcaption>
+            <pre class="code s-start__code" tabindex="0" data-copy-src>hf download {{ repo }} --repo-type dataset --local-dir "$DATA" \
+    --include "reconstructions/scanner/D13/*" --include "reconstructions/scanner/README.md"</pre>
+          </figure>
+
+          <figure class="s-start__sheet" data-copy-box>
+            <figcaption class="s-start__bar"><span>Question-answer pack</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the command that downloads the question-answer pack">Copy</button></figcaption>
+            <pre class="code s-start__code" tabindex="0" data-copy-src>hf download {{ repo }} --repo-type dataset --local-dir "$DATA" \
+    --include "vlm/vlmpack_2026-11-05/*"</pre>
+          </figure>
+
+          <p class="s-start__note">With <code>huggingface_hub</code> older than 1.0, use <code>huggingface-cli download</code> in place of <code>hf download</code>, with one <code>--include</code> followed by all the patterns.</p>
+
+          <div class="s-start__map">
+            <h4 class="s-start__sub" id="start-folders-h">Which folder holds what</h4>
+            <table class="s-start__table" aria-labelledby="start-folders-h">
+              <thead>
+                <tr><th scope="col">Contents</th><th scope="col">Folders</th><th scope="col" class="s-start__size">Size</th></tr>
+              </thead>
+              <tbody>
+                {% for f in site.download %}
+                <tr>
+                  <td class="s-start__use">{{ f.use | e }}</td>
+                  <td class="s-start__paths">{% for p in f.paths %}<code>{{ p | e }}</code>{% endfor %}</td>
+                  <td class="s-start__size">{% if f.size_gb is not none %}<span class="vh">Size: </span>{% if f.about %}about {% endif %}{{ f.size_gb }} GB{% else %}<span class="vh">Size: small</span><span aria-hidden="true">&ndash;</span>{% endif %}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <p class="s-start__note">Sizes are approximate, in decimal gigabytes.</p>
+          </div>
+        </div>
+      </li>
+
+      <li id="start-load" class="s-start__step" data-reveal>
+        <div class="s-start__key">
+          <h3 id="start-load-h" class="s-start__name">Load</h3>
+          <p class="s-start__gist">Read one desktop of the scanner annotations, and the question-answer records.</p>
+        </div>
+        <div class="s-start__body">
+          <h4 class="s-start__sub">Scanner annotations</h4>
+          <p class="s-start__text">One folder per desktop, <code>annotations/scanner/D&lt;nn&gt;/</code>. Step <code>S01</code> is the untouched machine; every other image is taken after that step's operation.</p>
+          <dl class="s-start__files">
+            <div><dt><code>images/S&lt;nn&gt;.png</code></dt><dd>The scanner image of step <i>nn</i>, {{ px }} &times; {{ px }} pixels.</dd></div>
+            <div><dt><code>labels/S&lt;nn&gt;.png</code></dt><dd>The label map: the instance id of each pixel (0 is background). Take a part's pixels from here; where two masks overlap, it gives each pixel to one part.</dd></div>
+            <div><dt><code>annotations.json</code></dt><dd>COCO: one annotation per part and step, with class, box, the visible and the complete (amodal) mask as RLE, visibility and occlusion. A part in place but fully covered has <code>iscrowd</code> 1 and an empty visible mask.</dd></div>
+            <div><dt><code>instances.json</code></dt><dd>Each part: key, class, relations, its state at every step and the step it leaves.</dd></div>
+            <div><dt><code>sequence.json</code>, <code>frames.json</code></dt><dd>Step names and operations, each part's state timeline, the source file of each image.</dd></div>
+          </dl>
+          <figure class="s-start__sheet" data-copy-box>
+            <figcaption class="s-start__bar"><span>Python: one desktop</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the Python code that reads one desktop">Copy</button></figcaption>
+            <pre class="code s-start__code" tabindex="0" data-copy-src><span class="c"># pip install numpy pillow pycocotools</span>
+import json
+import numpy as np
+from PIL import Image
+from pycocotools import mask as mask_utils
+
+desk = "e3d/annotations/scanner/D01"                              <span class="c"># $DATA/annotations/scanner/D01</span>
+coco = json.load(open(f"{desk}/annotations.json"))
+parts = json.load(open(f"{desk}/instances.json"))["instances"]    <span class="c"># keys are strings</span>
+img = coco["images"][0]                                           <span class="c"># the first step</span>
+picture = Image.open(f"{desk}/{img['file_name']}")                <span class="c"># the scanner image</span>
+labels = np.array(Image.open(f"{desk}/{img['label_file']}"))      <span class="c"># instance id per pixel</span>
+for ann in coco["annotations"]:
+    if ann["image_id"] != img["id"] or ann["iscrowd"]:            <span class="c"># iscrowd: fully covered</span>
+        continue
+    part = parts[str(ann["instance_id"])]
+    pixels = labels == ann["instance_id"]                         <span class="c"># its visible pixels</span>
+    whole = mask_utils.decode(ann["amodal_segmentation"]) &gt; 0     <span class="c"># its complete (amodal) mask</span>
+    print(part["key"], part["class"], ann["visibility"], pixels.sum(), whole.sum())</pre>
+          </figure>
+
+          <h4 class="s-start__sub">Question-answer records</h4>
+          <p class="s-start__text">JSON lines, one question per line: one file per camera (<code>scan</code>, <code>oak1</code>, <code>oak2</code>) and one for the questions about operations and plans (<code>multi</code>). <code>prompt</code> is what a model is shown; <code>label</code> holds the answer, how it is checked and the desktop's train / test split. Images are referenced by id; the <code>.images_manifest.jsonl</code> beside each file gives their paths. Standard library only.</p>
+          <figure class="s-start__sheet" data-copy-box>
+            <figcaption class="s-start__bar"><span>Python: question-answer records</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the Python code that reads question-answer records">Copy</button></figcaption>
+            <pre class="code s-start__code" tabindex="0" data-copy-src>import json
+
+pack = "e3d/vlm/vlmpack_2026-11-05"                               <span class="c"># $DATA/vlm/vlmpack_2026-11-05</span>
+paths = {}                                                        <span class="c"># image id -&gt; file</span>
+with open(f"{pack}/eval_v3/scan.images_manifest.jsonl", encoding="utf-8") as f:
+    for line in f:
+        row = json.loads(line)
+        if "image" in row:                                        <span class="c"># the first line is a header</span>
+            paths[row["image"]] = f"{pack}/images/{row['path']}"
+with open(f"{pack}/eval_v3/scan.jsonl", encoding="utf-8") as f:
+    records = [json.loads(line) for line in f]
+rec = records[0]
+print(rec["prompt"]["task"], rec["prompt"]["question"])          <span class="c"># what a model is shown</span>
+print([paths[i] for i in rec["prompt"]["images"]])
+print(rec["label"]["answer"], rec["label"]["split"])             <span class="c"># the truth, never shown</span></pre>
+          </figure>
+          <p class="s-start__note">To put the questions to a model, convert them with <code>vlm_to_chat.py</code> (step 3): it draws the outlined parts on the images and adds each task's answer format.</p>
+        </div>
+      </li>
+
+      <li id="start-evaluate" class="s-start__step" data-reveal>
+        <div class="s-start__key">
+          <h3 id="start-evaluate-h" class="s-start__name">Evaluate</h3>
+          <p class="s-start__gist">Score a file of predictions with the kit of a <a href="{{ home }}#benchmark">benchmark track</a>.</p>
+        </div>
+        <div class="s-start__body">
+          <div id="start-eval-det" class="s-start__kit">
+            <h4 class="s-start__sub">Detection and instance segmentation <a class="s-start__more" href="#guide-benchmark">What is measured</a></h4>
+            <p class="s-start__text">Scoring needs numpy and pycocotools; the baselines need the pinned versions in <code>requirements.txt</code> (install torch and torchvision for your CUDA first, as the kit's README says). The self-check scores the ground truth against itself and must give a perfect score.</p>
+            <figure class="s-start__sheet" data-copy-box>
+              <figcaption class="s-start__bar"><span>Shell: benchmarks/level1</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the detection evaluation commands">Copy</button></figcaption>
+              <pre class="code s-start__code" tabindex="0" data-copy-src>cd $DATA/benchmarks/level1
+W=$DATA/../level1_work                                              <span class="c"># outputs, outside the download</span>
+python make_coco.py --data-root $DATA --out $W/coco_visible          <span class="c"># COCO train / val / test</span>
+python eval_coco.py --gt $W/coco_visible/test.json --selftest        <span class="c"># must print SELFTEST PASSED</span>
+<span class="c"># predict: your model, or a baseline of the kit (train_yolo.py + predict_yolo.py,</span>
+<span class="c"># train_maskrcnn.py + predict_maskrcnn.py), writes COCO results for test.json</span>
+python eval_coco.py --gt $W/coco_visible/test.json --pred $W/preds_test.json --out $W/eval_test</pre>
+            </figure>
+            <p class="s-start__note">Predictions are a COCO results list: <code>image_id</code>, <code>category_id</code> (the pack's ids), <code>score</code>, <code>bbox</code> <code>[x, y, w, h]</code> and / or <code>segmentation</code> as COCO RLE, on the full {{ px }} &times; {{ px }} frame. For complete (amodal) masks, build the files with <code>--masks amodal</code> into another folder. <code>eval_coco.py</code> writes <code>metrics.md</code> and <code>metrics.json</code>.</p>
+          </div>
+
+          <div id="start-eval-qa" class="s-start__kit">
+            <h4 class="s-start__sub">Question answering <a class="s-start__more" href="#guide-benchmark">What is measured</a></h4>
+            <p class="s-start__text">The tools need Python 3.11 or later and PyYAML (Pillow for crops and marks). The self-check sends every gold answer through the scorer and must give a perfect score on every task.</p>
+            <figure class="s-start__sheet" data-copy-box>
+              <figcaption class="s-start__bar"><span>Shell: vlm/vlmpack_2026-11-05</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the question-answer evaluation commands">Copy</button></figcaption>
+              <pre class="code s-start__code" tabindex="0" data-copy-src>cd $DATA/vlm/vlmpack_2026-11-05
+pip install -r tools/requirements.txt                <span class="c"># PyYAML (+ Pillow for crops and marks)</span>
+
+<span class="c"># 0. the pack stands alone and the truth is consistent: every gold reply scores 1.0</span>
+python tools/vlm_selfcheck.py --truth eval_v3/scan.jsonl eval_v3/oak1.jsonl eval_v3/oak2.jsonl eval_v3/multi.jsonl \
+    --out runs/selfcheck
+
+<span class="c"># 1. chat requests for one unit's subset (OpenAI-style; also qwen, internvl)</span>
+python tools/vlm_to_chat.py --export eval_v3/multi.jsonl --format openai \
+    --image-root images --out runs/multi.openai.jsonl
+
+<span class="c"># 2. run your model: one line per request, {"id": ..., "raw_text": "&lt;the reply&gt;"}</span>
+
+<span class="c"># 3. score</span>
+python tools/vlm_score.py --truth eval_v3/multi.jsonl --pred runs/&lt;model&gt;.multi.jsonl \
+    --chat runs/multi.openai.jsonl --out runs/scores --name &lt;model&gt;-multi</pre>
+            </figure>
+            <p class="s-start__note">Do the same for <code>scan</code>, <code>oak1</code> and <code>oak2</code>, and score each file separately. <code>vlm_score.py</code> writes <code>&lt;name&gt;.score.md</code> and <code>.score.json</code>: every task with strict and lenient parsing, intervals from a bootstrap over desktops, and reference lines beside each task.</p>
+          </div>
+        </div>
+      </li>
+    </ol>
+    <span class="vh" aria-live="polite" data-copy-status></span>
+</section>

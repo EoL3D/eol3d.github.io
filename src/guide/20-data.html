@@ -1,0 +1,341 @@
+<section id="guide-data" class="g-sec s-data" data-section="guide-data" aria-labelledby="guide-data-h">
+    {# the size of a released folder, read from site.download by one of its paths ("" when the list does not hold it) #}
+    {% macro size(path) -%}
+      {%- for d in site.download if path in d.paths -%}
+        {%- if d.size_gb is none -%}
+        {%- elif d.size_gb < 1 -%}{{ (d.size_gb * 1000) | round | int }} MB
+        {%- else -%}{% if d.about %}~{% endif %}{{ d.size_gb | num }} GB{%- endif -%}
+      {%- endfor -%}
+    {%- endmacro %}
+    {% set n = site.numbers %}
+
+    <header class="s-data__head">
+      <h2 id="guide-data-h" data-reveal>The dataset, file by file</h2>
+      <p class="s-data__lead" data-reveal>{{ site.name | e }} is built from {{ n.desktops | num }} real desktop computers, used and retired from service. An operator takes each one apart step by step; after every step the remaining assembly is recorded from four fixed views, and an operation log names the part and the action of the step. Below: what each part of the release holds, where it lives in the repository and how to read it.</p>
+    </header>
+
+    {# ------------------------------------------------------------------ at a glance #}
+    <div class="s-data__glance" data-reveal>
+      <h3 class="s-data__sub" id="data-glance-h">At a glance</h3>
+      <div class="s-data__scroll">
+      <table class="s-data__table" aria-labelledby="data-glance-h">
+        <thead>
+          <tr>
+            <th scope="col">Part</th>
+            <th scope="col">How much</th>
+            <th scope="col">Format</th>
+            <th scope="col">Folder</th>
+            <th scope="col" class="s-data__num">Size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a href="#data-masks">Scanner images with annotations</a><span>Top-down pictures from the 3D scanner, one per step, with instance masks, part states and relations</span></th>
+            <td data-label="How much"><div>{{ n.scanner_frames | num }} frames<br>{{ n.parts | num }} parts<br>{{ n.annotations | num }} annotations<br>{{ n.classes | num }} classes</div></td>
+            <td data-label="Format"><div>PNG, 16-bit label maps, COCO JSON</div></td>
+            <td data-label="Folder"><div><code>annotations/<wbr>scanner/<wbr></code></div></td>
+            <td data-label="Size" class="s-data__num"><div>{{ size('annotations/scanner/') }}<small>with <code>benchmarks/<wbr>level1/<wbr></code></small></div></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#data-capture">Camera views, raw captures</a><span>Every capture of the four views as the rigs wrote it: the scanner's colour bursts; colour, depth and point clouds from two OAK cameras and a RealSense camera. Not annotated.</span></th>
+            <td data-label="How much"><div>{{ n.images | num }} images over the {{ n.views | num }} views</div></td>
+            <td data-label="Format"><div>PNG, JPEG, NumPy depth, PLY</div></td>
+            <td data-label="Folder"><div><code>raw/<wbr>scanner/<wbr></code><br><code>raw/<wbr>oak/<wbr></code><br><code>raw/<wbr>realsense/<wbr></code></div></td>
+            <td data-label="Size" class="s-data__num"><div>{{ size('raw/scanner/') }}</div></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#data-components">Component pictures</a><span>The removed parts laid out on the bench after the teardown, each one masked</span></th>
+            <td data-label="How much"><div>{{ n.component_shots | num }} shots<br>{{ n.component_annotations | num }} annotations</div></td>
+            <td data-label="Format"><div>PNG, JPEG, COCO JSON</div></td>
+            <td data-label="Folder"><div><code>annotations/<wbr>components/<wbr></code></div></td>
+            <td data-label="Size" class="s-data__num"><div>{{ size('annotations/components/') }}</div></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#data-video">Operator video</a><span>The hands at work, from two synchronised video cameras; faces masked</span></th>
+            <td data-label="How much"><div>{{ n.clips | num }} paired clips<br>{{ n.clip_hours | num }} hours<br>{{ n.clip_desktops | num }} desktops</div></td>
+            <td data-label="Format"><div>MP4, CSV</div></td>
+            <td data-label="Folder"><div><code>video/<wbr>hand_<wbr>work_<wbr>selected/<wbr></code></div></td>
+            <td data-label="Size" class="s-data__num"><div>{{ size('video/hand_work_selected/') }}</div></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#data-qa">Question-answer pairs</a><span>Questions about the pictures, generated from the annotations, each with its answer and reasoning</span></th>
+            <td data-label="How much"><div>{{ n.qa_pairs | num }} records<br>{{ n.qa_tasks | num }} tasks<br>{{ n.qa_eval | num }} in the evaluation subset</div></td>
+            <td data-label="Format"><div>JSONL, PNG, JPEG</div></td>
+            <td data-label="Folder"><div><code>vlm/<wbr>vlmpack_<wbr>2026-11-05/<wbr></code></div></td>
+            <td data-label="Size" class="s-data__num"><div>{{ size('vlm/vlmpack_2026-11-05/') }}</div></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#data-3d">3D</a><span>Scanner reconstructions: measured points in millimetres, each labelled with its part</span></th>
+            <td data-label="How much"><div>{{ site.numbers.recon_files | num }} point clouds<br>{{ site.numbers.recon_desktops | num }} desktops</div></td>
+            <td data-label="Format"><div>PLY</div></td>
+            <td data-label="Folder"><div><code>reconstructions/<wbr>scanner/<wbr></code></div></td>
+            <td data-label="Size" class="s-data__num"><div>{{ site.numbers.recon_gb }} GB</div></td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="#data-robot">Robot demonstrations</a><span>A robot arm taking single components out, filmed by a base camera and a wrist camera, with the robot's state</span></th>
+            <td data-label="How much"><div>{{ n.robot_demos | num }} episodes<br>{{ n.robot_fixtured | num }} Fixtured<br>{{ n.robot_on_board | num }} On motherboard</div></td>
+            <td data-label="Format"><div>One ZIP per episode: pickled frames, JSON</div></td>
+            <td data-label="Folder"><div><code>raw/<wbr>robot/<wbr></code></div></td>
+            <td data-label="Size" class="s-data__num"><div>{% set robot_size = size('raw/robot/') %}{% if robot_size %}{{ robot_size }}{% else %}<small>per episode, in the catalog</small>{% endif %}</div></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="s-data__foot">Beside them, at the top of the repository: <code>taxonomy.yaml</code> (part classes, states and verbs) and <code>splits.json</code> (the train and test desktops).</p>
+    </div>
+
+    {# ------------------------------------------------------------------ contents #}
+    {% set parts = [
+      ('capture', 'One step, four views, the log'),
+      ('masks', 'Instance masks'),
+      ('extent', 'Visible region and complete extent'),
+      ('states', 'Part states'),
+      ('relations', 'Relations and removal order'),
+      ('components', 'Component pictures'),
+      ('3d', '3D'),
+      ('qa', 'Question-answer pairs'),
+      ('video', 'Operator video'),
+      ('robot', 'Robot demonstrations'),
+    ] %}
+    <nav class="s-data__index" aria-label="Parts of the dataset" data-reveal>
+      <ul>
+        {% for id, name in parts %}
+        <li><a href="#data-{{ id }}">{{ name }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    {# ------------------------------------------------------------------ the parts, one by one #}
+    <div class="s-data__list">
+
+      <article id="data-capture" class="s-data__item" aria-labelledby="data-capture-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-capture-h">One step, four views, the log</h3>
+          <p class="s-data__body">Step 1 is the machine before any action. After every later step, the 3D scanner looking straight down and three cameras record what is left: two OAK cameras, one nearly overhead and one at an angle, and a RealSense camera at an angle. The operation log gives each step its name and its actions: verb, part and tool.</p>
+          <dl class="spec s-data__spec">
+            <div><dt>Scanner</dt><dd><code>raw/scanner/&lt;batch&gt;/&lt;batch&gt;/&lt;NN&gt;/RGB&lt;n&gt;1/</code>: a burst of colour images per step, <code>P_0.png</code>, <code>P_1.png</code>, &hellip;</dd></div>
+            <div><dt>OAK</dt><dd><code>raw/oak/Desktop NN/Disassemble/Camera_1|2/&lt;step&gt;/</code>: colour JPEG, colour aligned to depth (PNG), raw depth (<code>.npy</code>, <code>.png</code>), point cloud (<code>.ply</code>)</dd></div>
+            <div><dt>RealSense</dt><dd><code>raw/realsense/Desktop NN/Disassemble/&lt;step&gt;/</code>: colour, raw depth (<code>.npy</code>), point cloud (<code>.ply</code>)</dd></div>
+            <div><dt>Calibration</dt><dd><code>Calibration/</code> in each desktop folder of the cameras</dd></div>
+            <div><dt>Log</dt><dd><code>annotations/scanner/D&lt;nn&gt;/sequence.json</code>: per step its name, type and actions; verbs: unscrew, disconnect, open, release, remove, displace, reorient</dd></div>
+          </dl>
+          <pre class="s-data__log" aria-label="The log entry of the step in the picture"><code>{"step": 10, "name": "Open Power Module",
+ "actions": [{"verb": "displace", "target": "psu.01", "tool": "none"}]}</code></pre>
+          <p class="s-data__trap"><b>Read it right</b> Every picture of a step is taken after that step's action: on <code>S05</code> the part removed at step 5 is already gone. Of each scanner burst, <code>frames.json</code> names the image the masks were drawn on.</p>
+        </div>
+        <figure class="frame s-data__fig" data-reveal>
+          <img src="{{ 'assets/img/uses/tile-views.webp' | v }}" width="1200" height="900" loading="lazy" decoding="async"
+               alt="The same HP desktop after step 10, when its power supply was swung out of the case, seen from four views: the scanner straight down (top left), OAK 1 nearly overhead (top right), OAK 2 and the RealSense camera at an angle (bottom). Each view is cropped to the machine.">
+          <figcaption class="frame__cap">D24 / Step 10 / Scanner and OAK 1 (top), OAK 2 and RealSense (bottom)</figcaption>
+        </figure>
+      </article>
+
+      <article id="data-masks" class="s-data__item" aria-labelledby="data-masks-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-masks-h">Instance masks</h3>
+          <p class="s-data__body">Every scanner frame carries an instance mask for every part it shows, in {{ n.classes | num }} classes, and every frame was confirmed by a human annotator: {{ n.scanner_frames | num }} frames, {{ n.parts | num }} parts, {{ n.annotations | num }} annotations.</p>
+          <dl class="spec s-data__spec">
+            <div><dt>Folder</dt><dd><code>annotations/scanner/D&lt;nn&gt;/</code>, one per desktop</dd></div>
+            <div><dt>Pictures</dt><dd><code>images/S&lt;nn&gt;.png</code>: the scanner picture of step &lt;nn&gt;, the raw file byte for byte</dd></div>
+            <div><dt>Label maps</dt><dd><code>labels/S&lt;nn&gt;.png</code>: 16-bit instance ids, 0 = background</dd></div>
+            <div><dt>COCO</dt><dd><code>annotations.json</code>: <code>segmentation</code> (visible mask, RLE), <code>amodal_segmentation</code>, <code>amodal_bbox</code>, <code>visibility</code>, <code>occlusion_ratio</code>, <code>occluders</code>, <code>clean</code>, <code>iscrowd</code>, <code>attributes</code> (instance key, state, placement)</dd></div>
+            <div><dt>Per desktop</dt><dd><code>frames.json</code> (per step), <code>instances.json</code> (per part), <code>sequence.json</code> (steps and state timeline)</dd></div>
+          </dl>
+          <p class="s-data__trap"><b>Read it right</b> Take pixels from the label map, not from <code>segmentation</code>: where two confirmed masks overlap, the map gives each pixel to one part. <code>instance_id</code> holds within one desktop; join on <code>key</code>.</p>
+        </div>
+        <figure class="frame s-data__fig" data-reveal>
+          <img src="{{ 'assets/img/uses/tile-masks.webp' | v }}" width="1200" height="900" loading="lazy" decoding="async"
+               alt="Top-down image of an opened HP small-form-factor desktop. Every annotated part is filled and outlined in its class colour: the power supply, drive cage, motherboard, CPU cooler, cover, RAM modules, connectors and screws.">
+          <figcaption class="frame__cap">D24 / Step 01 / Visible masks in class colours</figcaption>
+        </figure>
+      </article>
+
+      <article id="data-extent" class="s-data__item s-data__item--stack" aria-labelledby="data-extent-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-extent-h">Visible region and complete extent</h3>
+          <p class="s-data__body">Parts cover each other. Each annotation holds two masks: the region the scanner sees, and the complete extent of the part, including what other parts cover. It also says how much is hidden and by which parts.</p>
+          <dl class="spec s-data__spec">
+            <div><dt>Visible</dt><dd><code>segmentation</code>, <code>bbox</code>, <code>area</code></dd></div>
+            <div><dt>Complete extent</dt><dd><code>amodal_segmentation</code>, <code>amodal_bbox</code>, <code>amodal_area</code></dd></div>
+            <div><dt>Hidden</dt><dd><code>occlusion_ratio</code> (share of the complete extent hidden), <code>occluders</code> (<code>[{"id", "px"}]</code>, the parts that hide it)</dd></div>
+            <div><dt>Label</dt><dd><code>visibility</code>: visible, visible_tiny, too_small, occluded_partial, occluded_full; <code>clean</code>: not covered at all</dd></div>
+          </dl>
+          <p class="s-data__trap"><b>Read it right</b> A part labelled <code>visible</code> can still be partly covered; <code>clean</code> is the test for &ldquo;not covered&rdquo;. A crowd row (<code>iscrowd: 1</code>) is a part in place but fully covered: empty visible mask, complete extent kept.</p>
+        </div>
+        <figure class="frame s-data__fig" data-reveal>
+          <img src="{{ 'assets/img/uses/tile-extent.webp' | v }}" width="1600" height="583" loading="lazy" decoding="async"
+               alt="Two copies of the same close-up of a CPU cooler. Left: only the edges of the heatsink that show around the fan are filled. Right: the heatsink's complete outline, dashed, with the part hidden under the fan hatched.">
+          <figcaption class="frame__cap">D19 / Step 01 / Heatsink under the CPU fan: visible region (left), complete extent (right)</figcaption>
+        </figure>
+      </article>
+
+      <article id="data-states" class="s-data__item s-data__item--stack" aria-labelledby="data-states-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-states-h">Part states</h3>
+          <p class="s-data__body">Every part has a state and a placement at every step, so a part can be followed through the whole teardown, up to the step it leaves the case.</p>
+          <dl class="spec s-data__spec">
+            <div><dt>Per step</dt><dd><code>instances.json</code>: <code>states["&lt;step&gt;"]</code> = state and placement; <code>leaving</code>: the step the part leaves, and the frames before and after</dd></div>
+            <div><dt>Timeline</dt><dd><code>sequence.json</code>: <code>timeline</code>, runs of (from, to, state, placement) per part</dd></div>
+            <div><dt>States</dt><dd>closed, displaced, fastened, installed, loosened, open, plugged, present, removed, unplugged</dd></div>
+            <div><dt>Placements</dt><dd>in_chassis, on_bench</dd></div>
+          </dl>
+        </div>
+        <figure class="frame s-data__fig" data-reveal>
+          <img src="{{ 'assets/img/uses/tile-states.webp' | v }}" width="1600" height="583" loading="lazy" decoding="async"
+               alt="Three crops of the same corner of a desktop at steps 1, 10 and 20. The power supply is outlined: installed at step 1, swung up out of the way at step 10, gone at step 20, where a dashed line marks its last place.">
+          <figcaption class="frame__cap">D24 / Steps 01, 10, 20 / Power supply: installed, displaced, removed</figcaption>
+        </figure>
+      </article>
+
+      <article id="data-relations" class="s-data__item" aria-labelledby="data-relations-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-relations-h">Relations and removal order</h3>
+          <p class="s-data__body">Relations between parts (connected, fastened, covered, locked, blocked) say what has to come off before a part is free. With the states, they give the removal order. Before the CPU of this desktop could come out:</p>
+          <ol class="s-data__order" aria-label="Parts dealt with before the CPU, in recorded order">
+            <li><span class="s-data__n">1</span><span><b>Cover</b> covers the CPU fan</span></li>
+            <li><span class="s-data__n">2&ndash;5</span><span><b>Cooler screws</b> fasten the fan</span></li>
+            <li><span class="s-data__n">6</span><span><b>Fan connector</b> is unplugged</span></li>
+            <li><span class="s-data__n">7</span><span><b>CPU fan</b> covers the socket lever</span></li>
+            <li><span class="s-data__n">8</span><span><b>Socket lever</b> locks the CPU</span></li>
+            <li class="s-data__goal"><span class="s-data__t">Goal</span><span><b>CPU</b> is free to come out</span></li>
+          </ol>
+          <dl class="spec s-data__spec">
+            <div><dt>Per part</dt><dd><code>instances.json</code>: <code>parent</code>, <code>attached</code>, <code>mounted_on</code>, <code>fastens</code>, <code>socket_host</code>, <code>captive</code>, <code>attrs.cable_owner</code></dd></div>
+            <div><dt>Graph</dt><dd><code>vlm/vlmpack_2026-11-05/data/vlm_&lt;unit&gt;.oracle.jsonl</code>, the lines of <code>"type": "desktop"</code>: <code>edges</code>, <code>groups</code>, <code>instances</code>, <code>log</code></dd></div>
+            <div><dt>Edge types</dt><dd>connected_to, fastened_by, covered_by, locked_by, blocked_by</dd></div>
+          </dl>
+          <p class="s-data__trap"><b>Read it right</b> An edge reads from the part that waits: <code>{"target": "cpu.01", "type": "locked_by", "blocker": "cpu_socket_lever.01"}</code> means the lever is dealt with before the CPU.</p>
+        </div>
+        <figure class="frame s-data__fig" data-reveal>
+          <img src="{{ 'assets/img/uses/tile-order.webp' | v }}" width="1200" height="900" loading="lazy" decoding="async"
+               alt="Close-up of a Dell desktop around its CPU cooler. The hidden CPU is filled in yellow. The parts that had to be dealt with first are outlined and numbered 1 to 8 in the order the operator handled them: the cover, four cooler screws, the fan connector, the fan and the socket lever.">
+          <figcaption class="frame__cap">D13 / Step 01 / What comes off before the CPU</figcaption>
+        </figure>
+      </article>
+
+      <article id="data-components" class="s-data__item s-data__item--brief" aria-labelledby="data-components-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-components-h">Component pictures</h3>
+          <p class="s-data__body">After the teardown, the removed parts were laid out on the bench and photographed, and each part was masked on its own, so a part can be recognised outside the machine too: {{ n.component_shots | num }} shots, {{ n.component_annotations | num }} annotations.</p>
+        </div>
+        <dl class="spec s-data__spec s-data__aside" data-reveal>
+          <div><dt>Folder</dt><dd><code>annotations/components/&lt;view&gt;/D&lt;nn&gt;/</code>, views <code>cmp_scan</code>, <code>cmp_oak1</code>, <code>cmp_oak2</code>, <code>cmp_rs</code></dd></div>
+          <div><dt>Files</dt><dd><code>images/C&lt;shot&gt;</code>, <code>labels/C&lt;shot&gt;.png</code>, <code>annotations.json</code> (COCO), <code>instances.json</code></dd></div>
+          <div><dt>Join</dt><dd>the same <code>instance_id</code> and <code>key</code> as the scanner annotations of that desktop</dd></div>
+          <div><dt>Labels</dt><dd>placement <code>on_bench</code>, state <code>removed</code>; <code>in_sequence: false</code> for a part only the bench shows</dd></div>
+        </dl>
+      </article>
+
+      <article id="data-3d" class="s-data__item" aria-labelledby="data-3d-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-3d-h">3D</h3>
+          <p class="s-data__body">The scanner measures depth at most of its pixels, so most of each visible mask is also a set of measured 3D points, in millimetres. Each annotated step has its reconstruction, named like its picture, and every point carries the instance and the class of the part it lies on. Nothing is filled in: a surface the scanner could not see has no points.</p>
+          <dl class="spec s-data__spec">
+            <div><dt>Scanner</dt><dd><code>reconstructions/scanner/D&lt;NN&gt;/S&lt;nn&gt;.ply</code>: <code>x y z</code> in millimetres in the scanner camera frame, <code>red green blue</code>, <code>instance</code> (the value of <code>labels/S&lt;nn&gt;.png</code> at the point's pixel, 0 = none) and <code>category</code> (the COCO class id); format, pixel mapping and checksums in its <code>README.md</code> and <code>manifest.csv</code>. D30's reconstructions are not available yet.</dd></div>
+            <div><dt>Parts</dt><dd>select a part's points with <code>instance</code>, or use <code>annotations/scanner/tools/parts3d.py</code>, which cuts each part out of a reconstruction with the masks; steps in <code>HOW_TO_EXTRACT_3D_PARTS.md</code>, route and best frame per part in <code>parts_3d_plan.csv</code></dd></div>
+            <div><dt>Cameras</dt><dd>Depth and point clouds of the OAK and RealSense cameras are in <code>raw/</code> (<code>.npy</code>, <code>.ply</code>)</dd></div>
+          </dl>
+          <p class="s-data__trap"><b>Read it right</b> The complete extent is a silhouette on the image, not a set of points: the hidden surface of a part was never measured.</p>
+        </div>
+        <figure class="frame s-data__fig" data-reveal>
+          <img src="{{ 'assets/img/uses/tile-points.webp' | v }}" width="1200" height="900" loading="lazy" decoding="async"
+               alt="The measured points of one step of a Dell desktop, turned in 3D, each point coloured by the class of its part and the parts lifted slightly apart.">
+          <figcaption class="frame__cap">D19 / Step 08 / Scanner points in class colours, parts lifted apart</figcaption>
+        </figure>
+      </article>
+
+      <article id="data-qa" class="s-data__item s-data__item--wide" aria-labelledby="data-qa-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-qa-h">Question-answer pairs</h3>
+          <p class="s-data__body">{{ n.qa_pairs | num }} records in {{ n.qa_tasks | num }} tasks are generated from the masks, states, relations and log. A record keeps what a model is shown (<code>prompt</code>) apart from the truth (<code>label</code>). {{ n.qa_eval | num }} records form the evaluation subset; the tasks and how they are scored are under <a href="#guide-benchmark">Benchmark</a>.</p>
+          <p class="s-data__trap"><b>Read it right</b> Show a model the <code>prompt</code> only. <code>images/</code> holds the frames of the evaluation subset; for any other record, the image manifest gives desktop, view and step of each frame.</p>
+        </div>
+        <dl class="spec s-data__spec s-data__aside" data-reveal>
+          <div><dt>Records</dt><dd><code>data/vlm_&lt;unit&gt;.jsonl</code>, units <code>scan</code>, <code>oak1</code>, <code>oak2</code>, <code>multi</code>; one JSON record per line</dd></div>
+          <div><dt>Prompt</dt><dd><code>task</code>, <code>images</code> (opaque ids), <code>question</code>, <code>options</code>, <code>marks</code></dd></div>
+          <div><dt>Label</dt><dd><code>answer</code>, <code>evidence</code>, <code>rationale</code>, <code>desktop</code>, <code>step</code>, <code>split</code></dd></div>
+          <div><dt>Frames</dt><dd><code>data/vlm_&lt;unit&gt;.images_manifest.jsonl</code> (id to file), <code>images/&lt;view&gt;/D&lt;nn&gt;/s&lt;nnn&gt;</code></dd></div>
+          <div><dt>Subset</dt><dd><code>eval_v3/</code>: the evaluation records per unit</dd></div>
+          <div><dt>Reasoning</dt><dd><code>reasoning/&lt;unit&gt;.jsonl</code>: question, answer and the reasoning in words, per record, for training</dd></div>
+        </dl>
+
+        <ul class="s-data__qa" aria-label="Three records from the question-answer set">
+          <li class="s-data__card" data-reveal>
+            <img src="{{ 'assets/img/uses/qa-perception.webp' | v }}" width="900" height="675" loading="lazy" decoding="async"
+                 alt="Scanner close-up of a CPU fan and the screws around it, the picture the question is asked about.">
+            <div class="s-data__card-body">
+              <p class="s-data__card-head"><span class="chip">Perception</span><span>D19 / Step 03</span></p>
+              <dl class="s-data__qa-dl">
+                <div><dt>Question</dt><dd>Count the cpu cooler screws that are still in place in this image.</dd></div>
+                <div><dt>Answer</dt><dd><code>{"count": 3}</code></dd></div>
+                <div><dt>Reasoning</dt><dd>The cpu cooler screws still in place are counted on the machine as it stands (a screw taken out leaves an empty hole): 3. So the count is 3.</dd></div>
+              </dl>
+            </div>
+          </li>
+          <li class="s-data__card" data-reveal>
+            <img src="{{ 'assets/img/uses/qa-change.webp' | v }}" width="900" height="666" loading="lazy" decoding="async"
+                 alt="The drive bay of an HP Z230 before and after one step: a drive sits in the bay before and is gone after.">
+            <div class="s-data__card-body">
+              <p class="s-data__card-head"><span class="chip">Change</span><span>D56 / Steps 12&ndash;13, before and after</span></p>
+              <dl class="s-data__qa-dl">
+                <div><dt>Question</dt><dd>Do the pictures before and after show the same machine state, or did something change?</dd></div>
+                <div><dt>Answer</dt><dd><code>{"changed": true, "events": [{"target": "SSD storage drive", "old": "installed", "new": "removed"}]}</code></dd></div>
+                <div><dt>Reasoning</dt><dd>Comparing the two pictures, the SSD storage drive changed between the two moments. So yes, the machine changed.</dd></div>
+              </dl>
+            </div>
+          </li>
+          <li class="s-data__card" data-reveal>
+            <img src="{{ 'assets/img/uses/qa-planning.webp' | v }}" width="900" height="674" loading="lazy" decoding="async"
+                 alt="Scanner view of an HP motherboard in its case: the CPU in its socket with the lever closed, one RAM module with both latches open.">
+            <div class="s-data__card-body">
+              <p class="s-data__card-head"><span class="chip">Planning</span><span>D34 / Step 24</span></p>
+              <dl class="s-data__qa-dl">
+                <div><dt>Question</dt><dd>Looking at the machine in these pictures, which one of the following actions is possible right now?
+                  <ul class="s-data__opts"><li>take out the RAM module</li><li>take out the motherboard</li><li>take out the CPU</li></ul></dd></div>
+                <div><dt>Answer</dt><dd><code>{"verb": "remove", "target": "RAM module"}</code></dd></div>
+                <div><dt>Reasoning</dt><dd>Take out the RAM module: both its RAM latches are open, so the RAM module can be taken out. Not yet take out the CPU: the CPU socket lever still locks the CPU. Not yet take out the motherboard: the CPU and the RAM module are still mounted on the motherboard and all 6 of its motherboard screws are still in. So the one possible now is: take out the RAM module.</dd></div>
+              </dl>
+            </div>
+          </li>
+        </ul>
+        <p class="s-data__note">Questions, answers and reasoning are quoted from the records. Only the scanner image is shown here; the change and planning records also show the three cameras of the same moment.</p>
+      </article>
+
+      <article id="data-video" class="s-data__item s-data__item--brief" aria-labelledby="data-video-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-video-h">Operator video</h3>
+          <p class="s-data__body">Two synchronised video cameras film the bench at an angle from two sides while the operator works. The recordings are cut to the moments of work and paired: {{ n.clips | num }} paired clips, {{ n.clip_hours | num }} hours from {{ n.clip_desktops | num }} desktops, no sound, faces masked. A clip shows the action itself; the scanner frame of the same step shows its result.</p>
+          <p class="s-data__trap"><b>Read it right</b> These two video cameras are not the cameras of <code>raw/</code>, which photograph the machine after each step. When the operator looks down, a face mask can overlap the hands.</p>
+        </div>
+        <dl class="spec s-data__spec s-data__aside" data-reveal>
+          <div><dt>Folder</dt><dd><code>video/hand_work_selected/desktop_NN/</code></dd></div>
+          <div><dt>Clips</dt><dd><code>clips/NNNN_video_camera_1.mp4</code> and <code>clips/NNNN_video_camera_2.mp4</code>, one pair per segment</dd></div>
+          <div><dt>Montage</dt><dd><code>video_camera_1.mp4</code>, <code>video_camera_2.mp4</code>: every segment of the desktop in one file per camera</dd></div>
+          <div><dt>Segments</dt><dd><code>selected_segments.csv</code> per desktop; <code>all_selected_segments.csv</code> at the top: start and end in each camera's video, duration, the step of the log</dd></div>
+          <div><dt>Player</dt><dd><code>index.html</code> plays the two cameras side by side, offline</dd></div>
+        </dl>
+      </article>
+
+      <article id="data-robot" class="s-data__item s-data__item--stack" aria-labelledby="data-robot-h">
+        <div class="s-data__text" data-reveal>
+          <h3 id="data-robot-h">Robot demonstrations</h3>
+          <p class="s-data__body">A robot arm takes single components out in two settings: Fixtured, with parts held in slots on a base plate ({{ n.robot_fixtured | num }} episodes), and On motherboard, with parts still mounted on a board ({{ n.robot_on_board | num }} episodes). A base camera and a wrist camera film each episode, recorded frame by frame with the robot's state. They are a separate recording, not the teardowns above.</p>
+          <dl class="spec s-data__spec">
+            <div><dt>Folders</dt><dd><code>raw/robot/on_fixture/raw_data/&lt;component&gt;/</code>, <code>raw/robot/on_motherboard/data/raw_data/&lt;component&gt;/</code>: one <code>episode_*.zip</code> per episode</dd></div>
+            <div><dt>Frames</dt><dd><code>frame_*.pkl</code>: timestamps, <code>joint_positions</code>, <code>tcp_pose</code>, <code>gripper_pos</code>, <code>base_rgb</code>, <code>wrist_rgb</code></dd></div>
+            <div><dt>Episode</dt><dd><code>episode_meta.json</code>, <code>control_trace.jsonl</code></dd></div>
+            <div><dt>Catalog</dt><dd><code>archive_catalog.jsonl</code>: every archive with its component, frames, bytes and SHA-256</dd></div>
+          </dl>
+          <p class="s-data__trap"><b>Read it right</b> <code>on_motherboard/data/stage_b_pre_sft_rollouts/</code> holds policy rollouts, not demonstrations. Frames are Python pickles: open them only from this repository, in an isolated environment. The archives are native recordings, not a LeRobot or RLDS conversion.</p>
+        </div>
+        <figure class="frame s-data__fig" data-reveal>
+          <img src="{{ 'assets/img/uses/tile-robot.webp' | v }}" width="1600" height="583" loading="lazy" decoding="async"
+               alt="Three robot camera frames during RAM module removal: in the fixtured setting the base camera sees the gripper over a RAM slot on a perforated plate and the wrist camera sees the gripper fingers; in the on-motherboard setting the base camera sees the gripper over a whole motherboard.">
+          <figcaption class="frame__cap">RAM module / Fixtured: base and wrist camera; on motherboard: base camera</figcaption>
+        </figure>
+      </article>
+
+    </div>
+
+    <p class="s-data__end" data-reveal>See the parts together: <a href="index.html#explore">step through one of them</a>. To download and load the files, <a href="#guide-start">get started</a>.</p>
+</section>

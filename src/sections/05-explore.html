@@ -1,0 +1,61 @@
+<section id="explore" class="sec sec--sheet tint--lilac s-explore" data-section="explore" data-module="explore" aria-labelledby="explore-h">
+  <div class="wrap">
+    <header class="s-explore__head">
+      <h2 id="explore-h" data-reveal>Take one apart</h2>
+      <p class="s-explore__lead" data-reveal>Step through a teardown as the scanner saw it, with its masks, or as the measured points behind the picture: turn them, colour them by class or by depth, and pull the parts apart.</p>
+    </header>
+
+    <div class="s-explore__pick" data-x="pick" data-reveal hidden>
+      <span class="s-explore__pick-label" id="explore-desks-l">Desktop</span>
+      <div class="s-explore__desks" data-x="desks" role="group" aria-labelledby="explore-desks-l"></div>
+    </div>
+
+    <div class="s-explore__panel" data-reveal>
+      <div class="s-explore__main">
+        <div class="s-explore__stage" data-x="stage" tabindex="0" role="group" aria-label="Teardown view. Left and right arrow keys change the step; drag to turn the 3D view.">
+          <img class="s-explore__poster" data-x="poster" src="{{ 'assets/data/explorer/d13/S01_c.webp' | v }}" width="814" height="972" loading="lazy" decoding="async" alt="Scanner picture of a Dell desktop computer before disassembly">
+          <p class="s-explore__tip" data-x="tip" hidden></p>
+        </div>
+        <div class="s-explore__keys">
+          <ul class="s-explore__legend" data-x="legend" aria-label="Component classes of this desktop" hidden></ul>
+          <p class="s-explore__scale" data-x="scale" hidden><span data-x="near"></span><i aria-hidden="true"></i><span data-x="far"></span></p>
+        </div>
+        <p class="s-explore__hint" data-x="hint" aria-hidden="true" hidden>Drag to turn</p>
+        <p class="s-explore__note" data-x="note" hidden></p>
+        <noscript><p class="s-explore__note">The interactive view needs JavaScript. The picture shows the first step of one desktop.</p></noscript>
+      </div>
+
+      <div class="s-explore__bar">
+        <div class="s-explore__transport">
+          <button class="s-explore__btn" type="button" data-x="prev" aria-label="Previous step" disabled><span aria-hidden="true">&#8249;</span></button>
+          <button class="s-explore__btn s-explore__play" type="button" data-x="play" aria-label="Play" disabled><span aria-hidden="true" data-x="playicon">&#9654;</span></button>
+          <button class="s-explore__btn" type="button" data-x="next" aria-label="Next step" disabled><span aria-hidden="true">&#8250;</span></button>
+        </div>
+
+        <div class="s-explore__progress">
+          <p class="s-explore__now"><span data-x="stepword">Step 1 of 42</span><span aria-hidden="true"> &mdash; </span><span class="s-explore__action" data-x="action" aria-live="polite">Initial state</span></p>
+          <p class="s-explore__log" data-x="log"></p>
+          <label class="vh" for="explore-step">Step</label>
+          <input class="s-explore__range" id="explore-step" data-x="step" type="range" min="1" max="42" step="0.01" value="1" disabled>
+        </div>
+
+        <div class="s-explore__switches">
+          <div class="s-explore__seg" data-x="colour" role="group" aria-label="Colour">
+            <button type="button" data-v="scanner" aria-pressed="true" disabled>Photo</button>
+            <button type="button" data-v="class" aria-pressed="false" disabled>Classes</button>
+            <button type="button" data-v="depth" aria-pressed="false" disabled>Depth</button>
+          </div>
+          <div class="s-explore__seg" data-x="view" role="group" aria-label="View">
+            <button type="button" data-v="scanner" aria-pressed="true" disabled>Scanner</button>
+            <button type="button" data-v="tilted" aria-pressed="false" disabled>3D</button>
+          </div>
+          <div class="s-explore__apart">
+            <label for="explore-apart">Pull the parts apart</label>
+            <input class="s-explore__range" id="explore-apart" data-x="apart" type="range" min="0" max="1" step="0.01" value="0" disabled>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="s-explore__badge" data-x="badge">D13, Dell OptiPlex 7020</p>
+  </div>
+</section>

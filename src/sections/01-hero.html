@@ -1,0 +1,53 @@
+{% from "icons.html" import icon %}
+<section id="hero" class="s-hero" data-section="hero" data-module="hero" aria-labelledby="hero-h">
+  <div class="band band--wall">
+    <div class="band__wall" aria-hidden="true"></div>
+    <div class="wrap band__in s-hero__in">
+      <h1 id="hero-h" class="s-hero__name">{{ site.name | e }}</h1>
+      <p class="s-hero__title">{{ site.title | e | replace('end-of-life', '<span class="s-hero__nw">end-of-life</span>') }}</p>
+      <ul class="s-hero__authors" aria-label="Authors">
+        {% for a in site.authors %}
+        <li>{{ a.name | e }}<sup>{{ a.aff | join(',') }}{% if a.corresponding %}*{% endif %}</sup>{% if a.corresponding %}<span class="vh"> (corresponding author)</span>{% endif %}</li>
+        {% endfor %}
+      </ul>
+      <p class="band__btns s-hero__btns">
+        <a class="btn btn--primary" href="{{ site.links.hf | e }}" rel="noopener">{{ icon("data") }}Dataset</a>
+        <a class="btn btn--band" href="{{ site.links.github | e }}" rel="noopener">{{ icon("code") }}Code</a>
+        <a class="btn btn--band" href="guide.html">{{ icon("book") }}Guide</a>
+        <a class="btn btn--band" href="#benchmark">{{ icon("chart") }}Benchmark</a>
+        <a class="btn btn--band" href="#explore">{{ icon("cube") }}Explorer</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap s-hero__below">
+    <ul class="s-hero__affs" aria-label="Affiliations">
+      {% for f in site.affiliations %}
+      <li class="s-hero__aff">
+        <sup class="s-hero__aff-n">{{ f.id }}</sup>
+        {% if f.logo %}
+        <img class="s-hero__logo s-hero__logo--{{ f.slug | e }}" src="{{ f.logo | v }}" alt="{{ f.name | e }}" width="{{ f.logo_w }}" height="{{ f.logo_h }}">
+        {% else %}
+        <span class="s-hero__aff-name">{{ f.name | e }}</span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="s-hero__corr"><sup>*</sup>Corresponding author</p>
+
+    <figure class="s-hero__teaser" data-reveal>
+      <video class="s-hero__video" width="1280" height="720" muted playsinline loop preload="none" controls
+             poster="{{ 'assets/img/teaser-poster.webp' | v }}" aria-label="Eight of the {{ site.numbers.desktops | num }} desktops taken apart in step, as the scanner saw them after every step" data-hero-video>
+        <source src="{{ 'assets/video/teaser.mp4' | v }}" type="video/mp4">
+      </video>
+      <figcaption class="s-hero__cap">
+        <span>Eight of the {{ site.numbers.desktops | num }} desktops, taken apart in step, as the scanner saw them after every step.</span>
+        <button class="s-hero__toggle" type="button" aria-pressed="false" aria-label="Play video" hidden data-hero-toggle>
+          <svg class="s-hero__icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5v14l12-7z"/></svg>
+          <svg class="s-hero__icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+          <span data-hero-toggle-text>Play</span>
+        </button>
+      </figcaption>
+    </figure>
+  </div>
+</section>

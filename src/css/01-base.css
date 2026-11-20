@@ -1,0 +1,141 @@
+/* 01 base (fifth build, soft): reset, type, the page's one column, the header band, sections, the guide's frame and
+   the footer. White page, calm grey words, regular-weight headings, one accent hue; no fixed bar. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0; background: var(--page); color: var(--text);
+  font: 400 var(--fs-2)/var(--lh) var(--font); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+img, video, canvas, svg { display: block; max-width: 100%; }
+img, video { height: auto; }
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, pre { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3, h4 { font-family: var(--font); color: var(--ink); letter-spacing: 0; text-wrap: balance; }
+h1 { font-size: var(--fs-6); font-weight: 700; line-height: 1.15; letter-spacing: -.01em; }
+h2 { font-size: var(--fs-5); font-weight: 400; line-height: 1.25; }
+h3 { font-size: var(--fs-3); font-weight: 600; line-height: 1.35; }
+h4 { font-size: var(--fs-1); font-weight: 600; line-height: 1.4; }
+p { text-wrap: pretty; }
+strong, b { font-weight: 600; color: var(--ink); }
+a { color: var(--accent-ink); text-decoration: none; transition: color .15s; }
+a:hover { text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: 1px; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+code, kbd, pre, samp { font-family: var(--mono); font-size: .875em; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+::selection { background: var(--accent-soft-2); color: var(--ink); }
+[hidden] { display: none !important; }      /* the attribute wins over any display value a class sets */
+
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: var(--sp-4); top: -100px; z-index: 100; padding: var(--sp-2) var(--sp-4); border-radius: var(--r-2); background: var(--accent); color: var(--on-accent); }
+.skip:focus { top: var(--sp-2); }
+
+/* small words */
+.label { font-size: var(--fs-0); line-height: 1.45; color: var(--muted); }
+.label--ink { color: var(--ink); }
+.label--accent { color: var(--accent-ink); }
+.muted { color: var(--muted); }
+.small { font-size: var(--fs-0); }
+.eyebrow, .stripe { display: none; }            /* retired: they render nothing */
+
+/* a text link that ends in an arrow */
+.arrow { display: inline-flex; align-items: center; gap: .35em; min-height: 44px; color: var(--accent-ink); font-weight: 600; font-size: var(--fs-1); }
+.arrow::after { content: "\2192"; }
+.arrow:hover { text-decoration: none; }
+.arrow:hover::after { transform: translateX(1px); }
+
+/* the page's one column; running text never wider than --measure */
+.wrap { width: min(var(--wrap), 100% - 2 * var(--gutter)); margin-inline: auto; }
+.sec { padding-top: var(--sp-sec); position: relative; }
+.sec--tint { background: transparent; }
+/* a section as a soft page: a large rounded sheet in a pale tint of its own, a little wider than the column; white
+   cards lie on it. The sheet's colour comes from a tint class. */
+.sec--sheet { --sheet-pad: clamp(1rem, .2rem + 3.6vw, 3.5rem); width: min(calc(var(--wrap) + 2 * var(--sheet-pad)), 100% - 16px);
+              margin: clamp(1.75rem, 1rem + 2.4vw, 3rem) auto 0; padding-block: clamp(2.25rem, 1.5rem + 2.6vw, 3.75rem); border-radius: var(--r-5);
+              background: var(--tint, var(--soft)); }
+.sec--sheet > .wrap { width: auto; margin-inline: var(--sheet-pad); }
+.tint--lilac { --tint: var(--tint-lilac); --swatch: var(--sw-lilac); }
+.tint--rose { --tint: var(--tint-rose); --swatch: var(--sw-rose); }
+.tint--peach { --tint: var(--tint-peach); --swatch: var(--sw-peach); }
+.tint--sand { --tint: var(--tint-sand); --swatch: var(--sw-sand); }
+/* the swatch before a section's heading */
+.sec--sheet h2::before, .g-sec h2::before { content: ""; display: inline-block; width: .52em; height: .52em; margin-right: .5em; border-radius: 30%;
+                                              background: var(--swatch, var(--sw-lilac)); vertical-align: .05em; }
+/* on a sheet: code and quiet buttons are white, so they read as things lying on it */
+.sec--sheet .code { background: var(--page); box-shadow: var(--shadow-1); }
+.sec--sheet .btn:not(.btn--primary) { background: var(--page); box-shadow: var(--shadow-1); }
+.sec--sheet .btn:not(.btn--primary):hover { background: var(--page); box-shadow: var(--shadow-2); }
+.sec__head { display: grid; gap: var(--sp-3); max-width: var(--measure); margin-bottom: var(--sp-5); }
+.sec__head--center { margin-inline: auto; text-align: center; justify-items: center; }
+.lead { max-width: var(--measure); font-size: var(--fs-2); line-height: var(--lh); color: var(--text); }
+/* parts fade up 10 px once (main.js staggers them 60 ms apart); only once the page script has started */
+.js [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .6s var(--ease), transform .6s var(--ease); transition-delay: var(--reveal-delay, 0ms); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+.js.is-shot [data-reveal] { transition: none; }          /* ?shot=1 (screenshots): everything in place at once */
+
+/* the header band (the home header and the guide's): a pale wash of the accent hue that dissolves into the page,
+   dark words on it, white buttons */
+.band { position: relative; overflow: hidden; background: linear-gradient(180deg, var(--band-a) 0%, var(--band-b) 66%, var(--page) 100%); color: var(--ink); text-align: center; }
+.band a:not(.btn) { color: var(--ink); }
+.band__in { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+/* the wall of desktops behind the words (pipeline/make_band.py): one picture that repeats seamlessly in both
+   directions, so it covers a band of any width; it shows at --band-art over the pale ground, fades out towards the
+   page below, and a soft light behind the words keeps them easy to read */
+.band__wall { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: var(--band-art);
+              background: url("../img/band-wall.webp") center -40px / 2304px 576px repeat;
+              -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 98%); mask-image: linear-gradient(180deg, #000 55%, transparent 98%); }
+.band--wall::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+                     background: radial-gradient(ellipse 46% 78% at 50% 47%, rgba(255, 255, 255, .96) 0%, rgba(255, 255, 255, .92) 52%, rgba(255, 255, 255, 0) 100%); }
+.band__btns { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--sp-3); }
+.band--short .band__in { padding-block: var(--sp-6) var(--sp-6); gap: var(--sp-2); }
+.band__name { font-size: var(--fs-3); font-weight: 700; }
+.band__title { color: var(--ink); font-size: var(--fs-5); font-weight: 400; margin-bottom: var(--sp-3); }
+
+/* the guide: a quiet sticky contents column, the text beside it */
+.guide { display: grid; grid-template-columns: minmax(12rem, 15rem) minmax(0, 1fr); column-gap: clamp(1.5rem, 1rem + 3vw, 3.5rem); padding-top: var(--sp-sec); }
+.guide__toc { align-self: start; position: sticky; top: 20px; max-height: calc(100vh - 40px); overflow-y: auto;
+              padding: var(--sp-5) var(--sp-5) var(--sp-5); border-radius: var(--r-4); background: var(--tint-lilac); font-size: var(--fs-0); line-height: 1.4; }
+.guide__toc-h { margin-bottom: var(--sp-2); color: var(--ink); font-weight: 600; }
+.guide__toc a { display: block; padding: .3rem 0; color: var(--text); }
+.guide__toc a:hover { color: var(--accent-ink); text-decoration: none; }
+.guide__toc a.is-current { color: var(--accent-ink); font-weight: 600; }
+.guide__toc > ol > li + li { margin-top: var(--sp-2); }
+.guide__toc > ol > li > a { color: var(--ink); }
+.guide__toc > ol > li > a.is-current { color: var(--accent-ink); }
+.guide__toc ol ol { padding-left: var(--sp-3); }
+.guide__body { min-width: 0; }
+.guide__lead { margin-bottom: var(--sp-sec); font-size: var(--fs-3); line-height: 1.5; }
+/* a guide partial: <section class="g-sec"> with its own h2; partials that bring .sec and .wrap fit in as well */
+.g-sec, .guide__body > .sec { padding-top: 0; scroll-margin-top: 20px; }
+.guide__body > section + section { margin-top: var(--sp-sec); }
+.guide__body .wrap { width: auto; margin: 0; }
+.g-sec__head { display: grid; gap: var(--sp-3); margin-bottom: var(--sp-5); }
+/* a guide section opens with a soft title card in the section's tint (the colours match the home page's sheets) */
+.g-sec > header { padding: clamp(1.25rem, .9rem + 1.4vw, 2rem) clamp(1.25rem, .9rem + 1.6vw, 2.25rem); border-radius: var(--r-4); background: var(--tint, var(--tint-lilac)); max-width: none; }
+#guide-start { --tint: var(--tint-sand); --swatch: var(--sw-sand); }
+#guide-data { --tint: var(--tint-rose); --swatch: var(--sw-rose); }
+#guide-benchmark { --tint: var(--tint-peach); --swatch: var(--sw-peach); }
+#guide-team { --tint: var(--tint-lilac); --swatch: var(--sw-lilac); }
+
+/* footer: a hairline, then small muted words */
+.foot { margin-top: var(--sp-sec); }
+.foot__in { display: grid; gap: var(--sp-1); padding-block: var(--sp-5) var(--sp-7); border-top: 1px solid var(--line); font-size: var(--fs-0); color: var(--muted); }
+.foot a { color: var(--accent-ink); }
+
+@media (max-width: 900px) {
+  .band--wall::after { background: radial-gradient(ellipse 62% 70% at 50% 47%, rgba(255, 255, 255, .96) 0%, rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, 0) 100%); }
+  .guide { grid-template-columns: minmax(0, 1fr); }
+  .guide__toc { position: static; max-height: none; margin-bottom: var(--sp-6); }
+  .guide__toc a { display: flex; align-items: center; min-height: 44px; padding: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+@media (max-width: 560px) {
+  .sec--sheet { border-radius: var(--r-4); }
+  .band__wall { background-size: 1728px 432px; background-position: center -30px; }
+  .band--wall::after { background: radial-gradient(ellipse 96% 62% at 50% 47%, rgba(255, 255, 255, .96) 0%, rgba(255, 255, 255, .92) 60%, rgba(255, 255, 255, 0) 100%); }
+}

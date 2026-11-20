@@ -1,0 +1,15 @@
+/* 11 numbers: the introduction. One paragraph that opens with the name in bold, then a pale panel with the four
+   figures in a row. */
+.s-numbers__intro { max-width: var(--measure); font-size: var(--fs-2); line-height: var(--lh); color: var(--text); }
+.s-numbers__row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-5); margin-top: var(--sp-6); padding: var(--sp-5) var(--sp-6);
+                  border-radius: var(--r-4); background: var(--tint-lilac); }
+.s-numbers__cell { display: grid; align-content: start; gap: .1rem; min-width: 0; text-align: center; }
+.s-numbers__value { font-size: 2rem; font-weight: 600; line-height: 1.2; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.s-numbers__label { font-size: var(--fs-0); line-height: 1.4; color: var(--text); }
+
+@media (max-width: 720px) {
+  .s-numbers__row { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--sp-5); padding: var(--sp-5) var(--sp-4); }
+}
+@media (max-width: 360px) {
+  .s-numbers__value { font-size: 1.6rem; }
+}

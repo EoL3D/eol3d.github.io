@@ -1,0 +1,29 @@
+/* 23 team (guide): the licence on a pale panel, the full BibTeX in a code block with its copy control, the questions
+   as rows that open, apart by hairlines */
+.s-team__block { display: grid; gap: var(--sp-3); min-width: 0; }
+.s-team__block + .s-team__block { margin-top: var(--sp-7); }
+.s-team__block h3 { font-size: var(--fs-4); font-weight: 400; scroll-margin-top: 20px; }
+.s-team__licence { display: grid; gap: var(--sp-3); max-width: var(--measure); padding: var(--sp-5); border-radius: var(--r-4); background: var(--tint-lilac); }
+.s-team__licence p { font-size: var(--fs-1); color: var(--text); }
+.s-team__kicker { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); }
+
+.s-team__sheet { position: relative; min-width: 0; }
+.s-team__bib { padding-right: 5rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.s-team__bib code { font-size: inherit; }
+.s-team__cite-note { max-width: var(--measure); font-size: var(--fs-0); color: var(--muted); }
+
+/* questions */
+.s-team__qs { max-width: var(--measure); border-top: 1px solid var(--line); }
+.s-team__qs details { border-bottom: 1px solid var(--line); }
+.s-team__qs summary { display: grid; grid-template-columns: minmax(0, 1fr) 1.25rem; align-items: center; gap: var(--sp-3); min-height: 52px; padding: .6rem 0;
+                      cursor: pointer; list-style: none; font-weight: 600; color: var(--ink); }
+.s-team__qs summary::-webkit-details-marker { display: none; }
+.s-team__qs summary::after { content: "+"; justify-self: end; font-size: 1.3rem; font-weight: 400; line-height: 1; color: var(--accent-ink); transition: transform .2s var(--ease); }
+.s-team__qs details[open] > summary::after { transform: rotate(45deg); }
+.s-team__qs summary:hover { color: var(--accent-ink); }
+.s-team__qs details > p { padding: 0 0 var(--sp-4); font-size: var(--fs-1); color: var(--text); }
+
+@media (max-width: 560px) {
+  .s-team__licence { padding: var(--sp-4); }
+  .s-team__bib { padding-top: 3.4rem; padding-right: var(--sp-4); }
+}

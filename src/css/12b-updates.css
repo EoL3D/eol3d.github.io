@@ -1,0 +1,16 @@
+/* 12b updates: a short dated list under the introduction. Each entry hangs on a thin line with a small dot; the
+   newest dot is the accent. Dates in the accent ink, the words in the running-text grey. */
+.s-updates { padding-top: clamp(2rem, 1.4rem + 2vw, 3rem); }
+.s-updates__h { margin-bottom: var(--sp-4); }
+.s-updates__list { position: relative; display: grid; gap: var(--sp-3); max-width: var(--measure); padding-left: 1.4rem; }
+.s-updates__list::before { content: ""; position: absolute; left: 4px; top: .7em; bottom: .7em; width: 2px; border-radius: 1px; background: var(--soft-2); }
+.s-updates__item { position: relative; display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: var(--sp-3); align-items: baseline; font-size: var(--fs-1); line-height: 1.55; }
+.s-updates__item::before { content: ""; position: absolute; left: calc(-1.4rem + 1px); top: .55em; width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); box-shadow: 0 0 0 3px var(--page); }
+.s-updates__item.is-new::before { background: var(--accent); }
+.s-updates__item time { color: var(--accent-ink); font-weight: 600; font-size: var(--fs-0); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.s-updates__item p { color: var(--text); }
+.s-updates__item .chip { margin-right: .35rem; vertical-align: .1em; font-size: var(--fs-00); font-weight: 600; }
+
+@media (max-width: 560px) {
+  .s-updates__item { grid-template-columns: minmax(0, 1fr); gap: .1rem; }
+}

@@ -1,0 +1,59 @@
+/* 12 start (guide): download, load, evaluate as calm text. Each step: a small accent numeral and its name, then the
+   text, the command sheets (code blocks with a quiet copy control), a list of files and the folder table. */
+.s-start .lead code, .s-start__text code, .s-start__note code, .s-start__files dd code, .s-start__gist code { padding: .05em .3em; border-radius: var(--r-1); background: var(--soft); color: var(--ink); overflow-wrap: anywhere; }
+.s-start code, .s-start pre { font-variant-ligatures: none; }      /* show ">=" as typed, the way it is copied */
+.s-start__open { margin-top: var(--sp-2); }
+
+.s-start__steps { counter-reset: step; display: grid; gap: var(--sp-sec); }
+.s-start__step { counter-increment: step; display: grid; gap: var(--sp-4); scroll-margin-top: 20px; }
+.s-start__key { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--sp-3); align-items: baseline; }
+.s-start__key::before { content: counter(step); grid-row: 1 / span 2; font-size: var(--fs-4); font-weight: 600; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
+.s-start__name { font-size: var(--fs-4); font-weight: 400; }
+.s-start__gist { font-size: var(--fs-1); color: var(--text); }
+.s-start__body { display: grid; gap: var(--sp-4); align-content: start; min-width: 0; }
+.s-start__text { max-width: var(--measure); font-size: var(--fs-2); color: var(--text); }
+.s-start__note { max-width: var(--measure); font-size: var(--fs-0); color: var(--muted); }
+
+.s-start__sub { margin-top: var(--sp-4); font-size: var(--fs-1); font-weight: 600; }
+.s-start__body > .s-start__sub:first-child, .s-start__kit > .s-start__sub:first-child { margin-top: 0; }
+.s-start__more { display: inline-flex; align-items: center; min-height: 32px; margin-left: var(--sp-3); font-size: var(--fs-0); font-weight: 400; white-space: nowrap; }
+.s-start__more::after { content: "\2192"; margin-left: .3em; }
+.s-start__kit { display: grid; gap: var(--sp-4); }
+.s-start__kit + .s-start__kit { margin-top: var(--sp-5); }
+
+/* a command sheet: its title in small words above, the code block under it with the copy control at the title's right */
+.s-start__sheet { display: grid; gap: var(--sp-2); margin: 0; min-width: 0; }
+.s-start__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); min-height: 32px; font-size: var(--fs-0); color: var(--muted); }
+.s-start__bar > span { min-width: 0; overflow-wrap: anywhere; }
+.s-start__bar .code__copy { position: static; }
+.s-start__code { white-space: pre; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
+.s-start__code:focus-visible { outline-offset: 2px; }
+
+/* the files of a desktop folder */
+.s-start__files { display: grid; gap: var(--sp-2); }
+.s-start__files > div { display: grid; grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr); gap: var(--sp-4); }
+.s-start__files dt code { font-size: .875rem; color: var(--ink); overflow-wrap: anywhere; }
+.s-start__files dd { font-size: var(--fs-0); color: var(--text); }
+
+/* the folder table: no outer box, hairlines between rows, a pale head row */
+.s-start__map { display: grid; gap: var(--sp-3); margin-top: var(--sp-2); }
+.s-start__table { width: 100%; border-collapse: collapse; font-size: var(--fs-0); }
+.s-start__table th { padding: .55rem var(--sp-3); background: var(--soft-2); color: var(--ink); font-weight: 600; text-align: left; }
+.s-start__table th:first-child { border-radius: var(--r-1) 0 0 var(--r-1); }
+.s-start__table th:last-child { border-radius: 0 var(--r-1) var(--r-1) 0; }
+.s-start__table td { padding: .6rem var(--sp-3); border-bottom: 1px solid var(--line); vertical-align: top; color: var(--text); }
+.s-start__use { width: 46%; }
+.s-start__paths code { display: block; color: var(--ink); font-size: .8125rem; line-height: 1.7; overflow-wrap: anywhere; }
+.s-start__table .s-start__size { width: 7rem; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 560px) {
+  .s-start__bar .code__copy { min-height: 44px; min-width: 56px; }
+  .s-start .lead code { white-space: normal; }
+  .s-start__files > div { grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); }
+  .s-start__more { display: flex; width: max-content; min-height: 44px; margin-left: 0; }
+  .s-start__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .s-start__table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--sp-3); padding: .7rem 0; border-bottom: 1px solid var(--line); }
+  .s-start__table td { display: block; padding: 0; border: 0; }
+  .s-start__use { grid-column: 1 / -1; width: auto; margin-bottom: var(--sp-1); }
+  .s-start__table .s-start__size { width: auto; }
+}

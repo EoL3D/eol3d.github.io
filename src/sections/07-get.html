@@ -1,0 +1,22 @@
+{% from "icons.html" import icon %}
+<section id="get" class="sec sec--sheet tint--sand s-get" data-section="get" data-module="get" aria-labelledby="get-h">
+  <div class="wrap">
+    <header class="sec__head" data-reveal>
+      <h2 id="get-h">Download</h2>
+      <p class="lead">The data is on Hugging Face. One command fetches all of it; the guide shows how to take only the folders a task needs, read them and score a model.</p>
+    </header>
+
+    <div class="code s-get__cmd" data-copy-box data-reveal>
+      <pre class="s-get__code" tabindex="0" aria-label="Download command" data-copy-src>hf download {{ site.links.hf_repo | e }} --repo-type dataset --local-dir EoL3D</pre>
+      <button class="code__copy" type="button" hidden data-copy aria-label="Copy the download command">Copy</button>
+    </div>
+
+    <p class="s-get__actions" data-reveal>
+      <a class="btn btn--primary" href="{{ site.links.hf | e }}" rel="noopener">{{ icon("download") }}Open on Hugging Face</a>
+      <a class="btn" href="guide.html#guide-start">{{ icon("book") }}Read the guide</a>
+      <a class="btn" href="{{ site.links.github | e }}" rel="noopener">{{ icon("code") }}GitHub</a>
+    </p>
+    <p class="s-get__note" data-reveal>The repository still carries the dataset's earlier name, {{ site.links.hf_name | e }}; it holds the same data as {{ site.name | e }}.</p>
+    <span class="vh" aria-live="polite" data-copy-status></span>
+  </div>
+</section>

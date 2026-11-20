@@ -1,0 +1,68 @@
+<section id="benchmark" class="sec sec--sheet tint--peach s-hbench" data-section="benchmark" aria-labelledby="benchmark-h">
+  <div class="wrap">
+    {% set det = site.benchmark.detection %}
+    {% set n = site.numbers %}
+    <header class="s-hbench__head">
+      <h2 id="benchmark-h" data-reveal>Benchmark</h2>
+      <p class="s-hbench__lead" data-reveal>Four tracks on the same teardowns. Each fixes the input, the output, the metric and the evaluation set; two kits are in the repository now, the other two come with a later release.</p>
+    </header>
+
+    <div class="s-hbench__cards">
+      <article class="s-hbench__card" id="track-detection" aria-labelledby="track-detection-h" data-reveal>
+        <img class="s-hbench__pic" src="{{ 'assets/img/uses/bench-detect.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
+             alt="A top-down scanner picture with every part filled and outlined in its class colour: the masks a detector has to find.">
+        <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+        <h3 class="s-hbench__name" id="track-detection-h">Detection and instance segmentation</h3>
+        <p class="s-hbench__def">Find every part in a top-down scanner image and give its class, box and mask.</p>
+        <dl class="s-hbench__spec">
+          <div><dt>Input</dt><dd>One scanner image, {{ det.frame_px }} &times; {{ det.frame_px }} px</dd></div>
+          <div><dt>Output</dt><dd>Class, box and mask of each part, {{ n.classes | num }} classes</dd></div>
+          <div><dt>Metric</dt><dd>COCO mask and box AP over IoU 0.50:0.95</dd></div>
+        </dl>
+        <a class="arrow s-hbench__go" href="guide.html#start-eval-det">Run it</a>
+      </article>
+
+      <article class="s-hbench__card" id="track-qa" aria-labelledby="track-qa-h" data-reveal>
+        <img class="s-hbench__pic" src="{{ 'assets/img/uses/qa-change.webp' | v }}" width="900" height="666" loading="lazy" decoding="async"
+             alt="The drive bay of an HP desktop before and after one step, the two pictures of a question about a change: a drive sits in the bay before and is gone after.">
+        <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+        <h3 class="s-hbench__name" id="track-qa-h">Visual question answering</h3>
+        <p class="s-hbench__def">Answer a question about a teardown from its images, as one JSON object.</p>
+        <dl class="s-hbench__spec">
+          <div><dt>Input</dt><dd>The images of a step and the question</dd></div>
+          <div><dt>Output</dt><dd>A strict JSON answer in the task's format</dd></div>
+          <div><dt>Metric</dt><dd>Set per task: accuracy, exact match, F1, box hits, plan replay</dd></div>
+        </dl>
+        <a class="arrow s-hbench__go" href="guide.html#start-eval-qa">Run it</a>
+      </article>
+
+      <article class="s-hbench__card" id="track-depth" aria-labelledby="track-depth-h" data-reveal>
+        <img class="s-hbench__pic" src="{{ 'assets/img/uses/depth.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
+             alt="The depth the scanner measured over one step of a Dell desktop, seen straight down: near surfaces such as the power supply and the case rim in red and orange, the motherboard further away in blue.">
+        <p class="s-hbench__status"><span class="chip">Later release</span></p>
+        <h3 class="s-hbench__name" id="track-depth-h">Metric depth from a single image</h3>
+        <p class="s-hbench__def">Predict the depth of every pixel of one image, in millimetres.</p>
+        <dl class="s-hbench__spec">
+          <div><dt>Input</dt><dd>One image</dd></div>
+          <div><dt>Output</dt><dd>A depth map in millimetres</dd></div>
+          <div><dt>Metric</dt><dd>Absolute relative error, RMSE and threshold accuracy against the scanner's depth</dd></div>
+        </dl>
+      </article>
+
+      <article class="s-hbench__card" id="track-robot" aria-labelledby="track-robot-h" data-reveal>
+        <img class="s-hbench__pic" src="{{ 'assets/img/uses/bench-robot.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
+             alt="Two frames of the robot's base camera: the gripper over a memory slot on a perforated plate, and over the memory slots of a whole motherboard.">
+        <p class="s-hbench__status"><span class="chip">Later release</span></p>
+        <h3 class="s-hbench__name" id="track-robot-h">Robot manipulation</h3>
+        <p class="s-hbench__def">Remove a named part with a robot; the {{ n.robot_demos | num }} demonstrations are already in <code>raw/robot/</code>.</p>
+        <dl class="s-hbench__spec">
+          <div><dt>Input</dt><dd>The part to remove</dd></div>
+          <div><dt>Output</dt><dd>Robot actions that take the part out</dd></div>
+          <div><dt>Metric</dt><dd>Task success over repeated trials on the real robot</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <p class="s-hbench__more" data-reveal><a class="arrow" href="guide.html#guide-benchmark">Tasks and scoring</a></p>
+  </div>
+</section>
