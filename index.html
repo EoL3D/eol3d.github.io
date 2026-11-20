@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=a2d476e9">
   <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=b7b04bb3">
   <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=ef36cc95">
+  <link rel="stylesheet" href="assets/css/site.css?v=7c569ff9">
   <script>
     // Motion is switched on here and switched off again if the page script has not started within three seconds,
     // so a script that fails to load can never leave the content hidden.
@@ -72,7 +72,7 @@
       </ul>
       <p class="band__btns s-hero__btns">
         <a class="btn btn--primary" href="https://huggingface.co/datasets/ChangChrisLiu/E3D-Desktop-Disassembly" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.75"/><path d="M5 5.5v6.5c0 1.5 3.1 2.75 7 2.75s7-1.25 7-2.75V5.5"/><path d="M5 12v6.5c0 1.5 3.1 2.75 7 2.75s7-1.25 7-2.75V12"/></svg>Dataset</a>
-        <a class="btn btn--band" href="https://github.com/EoL3D" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></svg>Code</a>
+        <a class="btn btn--band" href="https://github.com/EoL3D/EoL3D" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></svg>Code</a>
         <a class="btn btn--band" href="guide.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.5c2.8-.9 5.6-.6 8.5 1.2v13c-2.9-1.8-5.7-2.1-8.5-1.2z"/><path d="M20.5 5.5c-2.8-.9-5.6-.6-8.5 1.2v13c2.9-1.8 5.7-2.1 8.5-1.2z"/></svg>Guide</a>
         <a class="btn btn--band" href="#benchmark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 16.5v-5"/><path d="M12 16.5V6.5"/><path d="M17 16.5v-8"/></svg>Benchmark</a>
         <a class="btn btn--band" href="#explore"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5"/><path d="M12 12v9"/></svg>Explorer</a>
@@ -156,6 +156,10 @@
   <div class="wrap">
     <h2 id="updates-h" class="s-updates__h" data-reveal>Updates</h2>
     <ol class="s-updates__list" data-reveal>
+      <li class="s-updates__item is-new">
+        <time datetime="2026-11-20">Nov 20, 2026</time>
+        <p><span class="chip chip--accent">New</span> <a href="#benchmark">Benchmark results</a> for detection, question answering, depth and robot trials, and the <a href="https://github.com/EoL3D/EoL3D" rel="noopener">code repository</a> with the kits of the tracks.</p>
+      </li>
       <li class="s-updates__item is-new">
         <time datetime="2026-11-20">Nov 20, 2026</time>
         <p><span class="chip chip--accent">New</span> The scanner's 3D reconstructions: 2,764 point clouds of 65 desktops, one for every annotated step, each point labelled with its part. <a href="guide.html#data-3d">How to read them</a></p>
@@ -500,66 +504,214 @@
   <div class="wrap">
     <header class="s-hbench__head">
       <h2 id="benchmark-h" data-reveal>Benchmark</h2>
-      <p class="s-hbench__lead" data-reveal>Four tracks on the same teardowns. Each fixes the input, the output, the metric and the evaluation set; two kits are in the repository now, the other two come with a later release.</p>
+      <p class="s-hbench__lead" data-reveal>Four tracks on the same teardowns. Each fixes the input, the output, the metric and the evaluation set; the charts show how current models do on it.</p>
     </header>
 
-    <div class="s-hbench__cards">
-      <article class="s-hbench__card" id="track-detection" aria-labelledby="track-detection-h" data-reveal>
-        <img class="s-hbench__pic" src="assets/img/uses/bench-detect.webp?v=7a0c2698" width="1280" height="720" loading="lazy" decoding="async"
-             alt="A top-down scanner picture with every part filled and outlined in its class colour: the masks a detector has to find.">
-        <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
-        <h3 class="s-hbench__name" id="track-detection-h">Detection and instance segmentation</h3>
-        <p class="s-hbench__def">Find every part in a top-down scanner image and give its class, box and mask.</p>
-        <dl class="s-hbench__spec">
-          <div><dt>Input</dt><dd>One scanner image, 1600 &times; 1600 px</dd></div>
-          <div><dt>Output</dt><dd>Class, box and mask of each part, 24 classes</dd></div>
-          <div><dt>Metric</dt><dd>COCO mask and box AP over IoU 0.50:0.95</dd></div>
-        </dl>
-        <a class="arrow s-hbench__go" href="guide.html#start-eval-det">Run it</a>
+    <div class="s-hbench__tracks">
+
+      <article class="s-hbench__track" id="track-detection" aria-labelledby="track-detection-h" data-reveal>
+        <div class="s-hbench__what">
+          <img class="s-hbench__pic" src="assets/img/uses/bench-detect.webp?v=7a0c2698" width="1280" height="720" loading="lazy" decoding="async"
+               alt="A top-down scanner picture with every part filled and outlined in its class colour: the masks a detector has to find.">
+          <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+          <h3 class="s-hbench__name" id="track-detection-h">Detection and instance segmentation</h3>
+          <p class="s-hbench__def">Find every part in a top-down scanner image and give its class, box and mask.</p>
+          <dl class="s-hbench__spec">
+            <div><dt>Input</dt><dd>One scanner image, 1600 &times; 1600 px</dd></div>
+            <div><dt>Output</dt><dd>Class, box and mask of each part, 24 classes</dd></div>
+            <div><dt>Metric</dt><dd>COCO AP for boxes and masks, IoU 0.50:0.95</dd></div>
+          </dl>
+          <a class="arrow s-hbench__go" href="guide.html#start-eval-det">Run it</a>
+        </div>
+        <figure class="s-hbench__res">
+          <figcaption class="s-hbench__cap"><b>Mask AP on the held-out desktops</b><span>492 scanner images of 12 desktops, 12,930 parts. 0 to 100, higher is better.</span></figcaption>
+          <table class="rt">
+            <thead><tr><th scope="col">Model</th><th scope="col" class="rt__barhead">Mask AP</th><th scope="col" class="rt__num">Box AP</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">SAM 3, fine-tuned</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 54.7%"></i></span><b>54.7</b></span></td>
+                  <td class="rt__num">59.3</td></tr>
+              <tr><th scope="row">RF-DETR-Seg</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 49.6%"></i></span><b>49.6</b></span></td>
+                  <td class="rt__num">56.4</td></tr>
+              <tr><th scope="row">Mask R-CNN R50-FPN v2</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 44.9%"></i></span><b>44.9</b></span></td>
+                  <td class="rt__num">51.8</td></tr>
+              <tr><th scope="row">YOLO26m-seg</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 43.4%"></i></span><b>43.4</b></span></td>
+                  <td class="rt__num">45.0</td></tr>
+              <tr><th scope="row">DINOv3 + Mask R-CNN</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 38.2%"></i></span><b>38.2</b></span></td>
+                  <td class="rt__num">42.9</td></tr>
+              <tr><th scope="row">RF-DETR + frozen SAM 3</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 35.0%"></i></span><b>35.0</b></span></td>
+                  <td class="rt__num">56.4<sup>*</sup></td></tr>
+              <tr><th scope="row">RF-DETR + frozen SAM 2.1</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 34.6%"></i></span><b>34.6</b></span></td>
+                  <td class="rt__num">56.4<sup>*</sup></td></tr>
+              <tr><th scope="row">SAM 3, zero-shot</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 3.8%"></i></span><b>3.8</b></span></td>
+                  <td class="rt__num">4.8</td></tr>
+            </tbody>
+          </table>
+          <p class="s-hbench__note"><sup>*</sup>Masks from a frozen model on the boxes of RF-DETR-Seg. <a href="guide.html#bench-results-detection">All measures</a></p>
+        </figure>
       </article>
 
-      <article class="s-hbench__card" id="track-qa" aria-labelledby="track-qa-h" data-reveal>
-        <img class="s-hbench__pic" src="assets/img/uses/qa-change.webp?v=c4467b8d" width="900" height="666" loading="lazy" decoding="async"
-             alt="The drive bay of an HP desktop before and after one step, the two pictures of a question about a change: a drive sits in the bay before and is gone after.">
-        <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
-        <h3 class="s-hbench__name" id="track-qa-h">Visual question answering</h3>
-        <p class="s-hbench__def">Answer a question about a teardown from its images, as one JSON object.</p>
-        <dl class="s-hbench__spec">
-          <div><dt>Input</dt><dd>The images of a step and the question</dd></div>
-          <div><dt>Output</dt><dd>A strict JSON answer in the task's format</dd></div>
-          <div><dt>Metric</dt><dd>Set per task: accuracy, exact match, F1, box hits, plan replay</dd></div>
-        </dl>
-        <a class="arrow s-hbench__go" href="guide.html#start-eval-qa">Run it</a>
+      <article class="s-hbench__track" id="track-qa" aria-labelledby="track-qa-h" data-reveal>
+        <div class="s-hbench__what">
+          <img class="s-hbench__pic" src="assets/img/uses/qa-change.webp?v=c4467b8d" width="900" height="666" loading="lazy" decoding="async"
+               alt="The drive bay of an HP desktop before and after one step, the two pictures of a question about a change: a drive sits in the bay before and is gone after.">
+          <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+          <h3 class="s-hbench__name" id="track-qa-h">Visual question answering</h3>
+          <p class="s-hbench__def">Answer a question about a teardown from its images, as one JSON object.</p>
+          <dl class="s-hbench__spec">
+            <div><dt>Input</dt><dd>The images of a step and the question</dd></div>
+            <div><dt>Output</dt><dd>A strict JSON answer in the task's format</dd></div>
+            <div><dt>Metric</dt><dd>Set per task: accuracy, F1, a grounding score, plan replay</dd></div>
+          </dl>
+          <a class="arrow s-hbench__go" href="guide.html#start-eval-qa">Run it</a>
+        </div>
+        <figure class="s-hbench__res">
+          <figcaption class="s-hbench__cap"><b>Score per task on the held-out desktops</b><span>663 questions from 12 desktops, 0 to 100. Models as released, and after fine-tuning on the training desktops.</span></figcaption>
+          <div class="hm-wrap" data-scroll-x tabindex="0" role="group" aria-label="Table of scores per task and model; scrolls sideways on a narrow screen">
+            <table class="hm">
+              <colgroup><col class="hm__c-task"><col span="7"></colgroup>
+              <thead>
+                <tr><td></td><td></td><th scope="colgroup" colspan="4" class="hm__span">As released</th><th scope="colgroup" colspan="2" class="hm__span">Fine-tuned</th></tr>
+                <tr><th scope="col" class="hm__task">Task</th><th scope="col">Const.</th><th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">GPT-6</th><th scope="col">Opus</th><th scope="col">Qwen</th><th scope="col">InternVL</th></tr>
+              </thead>
+              <tbody>
+                <tr class="hm__group"><th scope="rowgroup" colspan="8">Perception</th></tr>
+                <tr><th scope="row" class="hm__task">Visible component boxes</th>
+                    <td class="hm__const" style="--v: 8.8">8.8</td>
+<td style="--v: 2.5">2.5<sup>&dagger;</sup></td><td style="--v: 0.6">0.6</td><td style="--v: 9.8">9.8</td><td style="--v: 8.6">8.6</td><td style="--v: 18.9">18.9</td><td style="--v: 17.9">17.9</td></tr>
+                <tr><th scope="row" class="hm__task">Component grounding</th>
+                    <td class="hm__const" style="--v: 2.1">2.1</td>
+<td style="--v: 2.1">2.1</td><td style="--v: 4.3">4.3</td><td style="--v: 52.1">52.1</td><td style="--v: 34.9">34.9<sup>&dagger;</sup></td><td style="--v: 51.1">51.1</td><td style="--v: 51.1">51.1</td></tr>
+                <tr><th scope="row" class="hm__task">Same step across views</th>
+                    <td class="hm__const" style="--v: 51.4">51.4</td>
+<td style="--v: 43.2">43.2</td><td style="--v: 48.6">48.6</td><td style="--v: 78.4">78.4</td><td style="--v: 70.3">70.3</td><td style="--v: 86.5">86.5</td><td style="--v: 83.8">83.8</td></tr>
+                <tr><th scope="row" class="hm__task">Component state or screw count</th>
+                    <td class="hm__const" style="--v: 27.8">27.8</td>
+<td style="--v: 35.2">35.2</td><td style="--v: 38.5">38.5</td><td style="--v: 71.9">71.9</td><td style="--v: 66.3">66.3</td><td style="--v: 83.3">83.3</td><td style="--v: 83.3">83.3</td></tr>
+              </tbody>
+              <tbody>
+                <tr class="hm__group"><th scope="rowgroup" colspan="8">Understanding</th></tr>
+                <tr><th scope="row" class="hm__task">Observed operation</th>
+                    <td class="hm__const" style="--v: 20.4">20.4</td>
+<td style="--v: 3.7">3.7</td><td style="--v: 3.7">3.7<sup>&dagger;</sup></td><td style="--v: 24.1">24.1</td><td style="--v: 25.9">25.9</td><td style="--v: 74.1">74.1</td><td style="--v: 74.1">74.1</td></tr>
+                <tr><th scope="row" class="hm__task">State change</th>
+                    <td class="hm__const" style="--v: 51.4">51.4</td>
+<td style="--v: 56.8">56.8</td><td style="--v: 56.8">56.8</td><td style="--v: 59.5">59.5</td><td style="--v: 77.0">77.0</td><td style="--v: 95.9">95.9</td><td style="--v: 89.2">89.2</td></tr>
+                <tr><th scope="row" class="hm__task">Completed operations</th>
+                    <td class="hm__const" style="--v: 13.9">13.9</td>
+<td style="--v: 5.2">5.2</td><td style="--v: 5.2">5.2</td><td style="--v: 28.3">28.3</td><td style="--v: 20.8">20.8</td><td style="--v: 75.1">75.1</td><td style="--v: 70.4">70.4</td></tr>
+              </tbody>
+              <tbody>
+                <tr class="hm__group"><th scope="rowgroup" colspan="8">Planning</th></tr>
+                <tr><th scope="row" class="hm__task">Proposed action feasibility</th>
+                    <td class="hm__const" style="--v: 46.5">46.5</td>
+<td style="--v: 46.5">46.5<sup>&dagger;</sup></td><td style="--v: 54.9">54.9</td><td style="--v: 70.4">70.4</td><td style="--v: 66.2">66.2</td><td style="--v: 73.2">73.2</td><td style="--v: 63.4">63.4</td></tr>
+                <tr><th scope="row" class="hm__task">Next feasible action categories</th>
+                    <td class="hm__const" style="--v: 46.5">46.5</td>
+<td style="--v: 3.3">3.3</td><td style="--v: 2.3">2.3</td><td style="--v: 8.4">8.4</td><td style="--v: 10.5">10.5</td><td style="--v: 71.2">71.2</td><td style="--v: 65.3">65.3</td></tr>
+                <tr><th scope="row" class="hm__task">Target removal plan</th>
+                    <td class="hm__const" style="--v: 66.0">66.0</td>
+<td style="--v: 0.0">0.0</td><td style="--v: 0.0">0.0</td><td style="--v: 0.0">0.0</td><td style="--v: 1.9">1.9</td><td style="--v: 98.1">98.1</td><td style="--v: 100.0">100.0</td></tr>
+                <tr><th scope="row" class="hm__task">Constrained removal plan</th>
+                    <td class="hm__const" style="--v: 5.9">5.9</td>
+<td style="--v: 0.0">0.0</td><td style="--v: 0.0">0.0</td><td style="--v: 2.0">2.0</td><td style="--v: 2.0">2.0</td><td style="--v: 49.0">49.0</td><td style="--v: 47.1">47.1</td></tr>
+                <tr><th scope="row" class="hm__task">Proposed plan validity</th>
+                    <td class="hm__const" style="--v: 50.9">50.9</td>
+<td style="--v: 54.4">54.4</td><td style="--v: 33.3">33.3<sup>&dagger;</sup></td><td style="--v: 68.4">68.4</td><td style="--v: 75.4">75.4</td><td style="--v: 87.7">87.7</td><td style="--v: 86.0">86.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="s-hbench__note s-hbench__swipe">Swipe the table sideways for all models.</p>
+          <p class="s-hbench__note">Const.: always the most frequent answer. Models: Qwen3-VL-8B, InternVL3.5-8B, GPT-6 Astra, Claude Opus 5.5. <sup>&dagger;</sup>At least 10&nbsp;% of the replies could not be parsed. <a href="guide.html#bench-results-qa">Metrics and all columns</a></p>
+        </figure>
       </article>
 
-      <article class="s-hbench__card" id="track-depth" aria-labelledby="track-depth-h" data-reveal>
-        <img class="s-hbench__pic" src="assets/img/uses/depth.webp?v=720a2971" width="1280" height="720" loading="lazy" decoding="async"
-             alt="The depth the scanner measured over one step of a Dell desktop, seen straight down: near surfaces such as the power supply and the case rim in red and orange, the motherboard further away in blue.">
-        <p class="s-hbench__status"><span class="chip">Later release</span></p>
-        <h3 class="s-hbench__name" id="track-depth-h">Metric depth from a single image</h3>
-        <p class="s-hbench__def">Predict the depth of every pixel of one image, in millimetres.</p>
-        <dl class="s-hbench__spec">
-          <div><dt>Input</dt><dd>One image</dd></div>
-          <div><dt>Output</dt><dd>A depth map in millimetres</dd></div>
-          <div><dt>Metric</dt><dd>Absolute relative error, RMSE and threshold accuracy against the scanner's depth</dd></div>
-        </dl>
+      <article class="s-hbench__track" id="track-depth" aria-labelledby="track-depth-h" data-reveal>
+        <div class="s-hbench__what">
+          <img class="s-hbench__pic" src="assets/img/uses/depth.webp?v=720a2971" width="1280" height="720" loading="lazy" decoding="async"
+               alt="The depth the scanner measured over one step of a Dell desktop, seen straight down: near surfaces such as the power supply and the case rim in red and orange, the motherboard further away in blue.">
+          <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+          <h3 class="s-hbench__name" id="track-depth-h">Depth from a single image</h3>
+          <p class="s-hbench__def">Predict depth from one scanner image; the scanner's own 3D measurement is the reference.</p>
+          <dl class="s-hbench__spec">
+            <div><dt>Input</dt><dd>One scanner image</dd></div>
+            <div><dt>Output</dt><dd>A depth map</dd></div>
+            <div><dt>Metric</dt><dd>MAE, RMSE, relative error and threshold accuracy, as predicted and after one scale factor per image</dd></div>
+          </dl>
+          <a class="arrow s-hbench__go" href="guide.html#start-eval-depth">Run it</a>
+        </div>
+        <figure class="s-hbench__res">
+          <figcaption class="s-hbench__cap"><b>Pixels within 5&nbsp;% of the measured depth</b><span>6 models as released, on the first step of 5 desktops, after one scale factor per image. Scale: predicted over measured depth before that (1 is exact).</span></figcaption>
+          <table class="rt">
+            <thead><tr><th scope="col">Model</th><th scope="col" class="rt__barhead">&delta; &lt; 1.05</th><th scope="col" class="rt__num">Scale</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">UniDepth V2</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 98.7%"></i></span><b>98.7&nbsp;%</b></span></td>
+                  <td class="rt__num">1.33&times;</td></tr>
+              <tr><th scope="row">DA3-BASE</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 90.6%"></i></span><b>90.6&nbsp;%</b></span></td>
+                  <td class="rt__num">0.76&times;<sup>&Dagger;</sup></td></tr>
+              <tr><th scope="row">Metric3D v2</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 86.7%"></i></span><b>86.7&nbsp;%</b></span></td>
+                  <td class="rt__num">2.75&times;</td></tr>
+              <tr><th scope="row">Depth Pro</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 72.4%"></i></span><b>72.4&nbsp;%</b></span></td>
+                  <td class="rt__num">1.86&times;</td></tr>
+              <tr><th scope="row">Depth Anything V2</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 71.5%"></i></span><b>71.5&nbsp;%</b></span></td>
+                  <td class="rt__num">1.65&times;</td></tr>
+              <tr><th scope="row">Pi3X</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 50.4%"></i></span><b>50.4&nbsp;%</b></span></td>
+                  <td class="rt__num">2.02&times;</td></tr>
+            </tbody>
+          </table>
+          <p class="s-hbench__note"><sup>&Dagger;</sup>This model gives relative depth; its factor only describes the output. <a href="guide.html#bench-results-depth">All measures</a></p>
+        </figure>
       </article>
 
-      <article class="s-hbench__card" id="track-robot" aria-labelledby="track-robot-h" data-reveal>
-        <img class="s-hbench__pic" src="assets/img/uses/bench-robot.webp?v=c1ff799d" width="1280" height="720" loading="lazy" decoding="async"
-             alt="Two frames of the robot's base camera: the gripper over a memory slot on a perforated plate, and over the memory slots of a whole motherboard.">
-        <p class="s-hbench__status"><span class="chip">Later release</span></p>
-        <h3 class="s-hbench__name" id="track-robot-h">Robot manipulation</h3>
-        <p class="s-hbench__def">Remove a named part with a robot; the 1,808 demonstrations are already in <code>raw/robot/</code>.</p>
-        <dl class="s-hbench__spec">
-          <div><dt>Input</dt><dd>The part to remove</dd></div>
-          <div><dt>Output</dt><dd>Robot actions that take the part out</dd></div>
-          <div><dt>Metric</dt><dd>Task success over repeated trials on the real robot</dd></div>
-        </dl>
+      <article class="s-hbench__track" id="track-robot" aria-labelledby="track-robot-h" data-reveal>
+        <div class="s-hbench__what">
+          <img class="s-hbench__pic" src="assets/img/uses/bench-robot.webp?v=c1ff799d" width="1280" height="720" loading="lazy" decoding="async"
+               alt="Two frames of the robot's base camera: the gripper over a memory slot on a perforated plate, and over the memory slots of a whole motherboard.">
+          <p class="s-hbench__status"><span class="chip chip--accent">Data released</span></p>
+          <h3 class="s-hbench__name" id="track-robot-h">Robot disassembly</h3>
+          <p class="s-hbench__def">Remove the part named in an instruction and put it in the sorting zone, on the real robot.</p>
+          <dl class="s-hbench__spec">
+            <div><dt>Input</dt><dd>The instruction, wrist and base camera images</dd></div>
+            <div><dt>Output</dt><dd>Arm and gripper actions</dd></div>
+            <div><dt>Metric</dt><dd>Trials completed within 150&nbsp;s</dd></div>
+          </dl>
+          <a class="arrow s-hbench__go" href="guide.html#data-robot">The 1,808 demonstrations</a>
+        </div>
+        <figure class="s-hbench__res">
+          <figcaption class="s-hbench__cap"><b>Trials completed on the real robot</b><span>Policies trained on the demonstrations; the part's position changes a little from trial to trial.</span></figcaption>
+          <table class="rt rt--wide">
+            <thead><tr><th scope="col">Policy and setting</th><th scope="col" class="rt__barhead">Completed</th><th scope="col" class="rt__num">Trials</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">&pi;<sub>0.5</sub><span>Parts on a fixture</span></th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 23.7%"></i></span><b>23.7&nbsp;%</b></span></td>
+                  <td class="rt__num">83 / 350</td></tr>
+              <tr><th scope="row">OpenVLA-OFT<span>Parts on a fixture</span></th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 0.0%"></i></span><b>0.0&nbsp;%</b></span></td>
+                  <td class="rt__num">0 / 350</td></tr>
+              <tr><th scope="row">&pi;<sub>0.5</sub><span>Parts on the motherboard</span></th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: 5.0%"></i></span><b>5.0&nbsp;%</b></span></td>
+                  <td class="rt__num">5 / 100</td></tr>
+            </tbody>
+          </table>
+          <p class="s-hbench__note"><a href="guide.html#bench-results-robot">How the trials were run</a></p>
+        </figure>
       </article>
     </div>
 
-    <p class="s-hbench__more" data-reveal><a class="arrow" href="guide.html#guide-benchmark">Tasks and scoring</a></p>
+    <p class="s-hbench__more" data-reveal><a class="arrow" href="guide.html#guide-benchmark">Tasks, scoring and full result tables</a></p>
   </div>
 </section>
 
@@ -578,7 +730,7 @@
     <p class="s-get__actions" data-reveal>
       <a class="btn btn--primary" href="https://huggingface.co/datasets/ChangChrisLiu/E3D-Desktop-Disassembly" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M5 19.5h14"/></svg>Open on Hugging Face</a>
       <a class="btn" href="guide.html#guide-start"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5.5c2.8-.9 5.6-.6 8.5 1.2v13c-2.9-1.8-5.7-2.1-8.5-1.2z"/><path d="M20.5 5.5c-2.8-.9-5.6-.6-8.5 1.2v13c2.9-1.8 5.7-2.1 8.5-1.2z"/></svg>Read the guide</a>
-      <a class="btn" href="https://github.com/EoL3D" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></svg>GitHub</a>
+      <a class="btn" href="https://github.com/EoL3D/EoL3D" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></svg>GitHub</a>
     </p>
     <p class="s-get__note" data-reveal>The repository still carries the dataset's earlier name, E3D-Desktop-Disassembly; it holds the same data as EoL3D.</p>
     <span class="vh" aria-live="polite" data-copy-status></span>

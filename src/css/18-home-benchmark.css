@@ -1,10 +1,15 @@
-/* 18 home / benchmark: the heading and a sentence, then four cards in a 2 x 2 grid (one column on a phone). A card:
-   a hairline, round corners, the track's picture, its status, name, definition, three quiet rows and a link. */
+/* 18 home / benchmark: the heading and a sentence, then one wide white card per track: on the left what the track is
+   (picture, status, name, definition, three quiet rows, a link), on the right how current models do on it (a bar
+   table or a shaded score table). Chart marks follow the data-viz specs of 20-stats.css: thin bars with a rounded
+   data end, one hue, numbers in text colours. */
+.s-hbench { --series-1: #6A55B8; --bar: var(--series-1); }
 .s-hbench__head { display: grid; gap: var(--sp-3); max-width: var(--measure); margin-bottom: var(--sp-6); }
 .s-hbench__lead { font-size: var(--fs-2); line-height: var(--lh); color: var(--text); }
 
-.s-hbench__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-.s-hbench__card { display: flex; flex-direction: column; min-width: 0; padding: 22px; border: 0; border-radius: var(--r-4); background: var(--page); box-shadow: var(--shadow-1); }
+.s-hbench__tracks { display: grid; gap: 20px; }
+.s-hbench__track { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1.25rem, .6rem + 2.4vw, 2.5rem); min-width: 0; padding: 22px;
+                   border-radius: var(--r-4); background: var(--page); box-shadow: var(--shadow-1); }
+.s-hbench__what { display: flex; flex-direction: column; min-width: 0; }
 .s-hbench__pic { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-2); background: var(--soft); }
 .s-hbench__status { margin-top: var(--sp-4); }
 .s-hbench__name { margin-top: var(--sp-2); font-size: var(--fs-3); font-weight: 600; line-height: 1.3; color: var(--ink); }
@@ -14,10 +19,57 @@
 .s-hbench__spec > div { display: grid; grid-template-columns: 4.25rem minmax(0, 1fr); gap: var(--sp-3); font-size: var(--fs-0); line-height: 1.5; }
 .s-hbench__spec dt { font-weight: 600; color: var(--ink); }
 .s-hbench__spec dd { color: var(--text); }
-.s-hbench__go { align-self: flex-start; margin-top: auto; padding-top: var(--sp-3); }
+.s-hbench__go { align-self: flex-start; margin-top: var(--sp-2); }
 .s-hbench__more { margin-top: var(--sp-5); }
 
+/* the results beside it */
+.s-hbench__res { min-width: 0; margin: 0; align-self: start; }
+.s-hbench__cap { display: grid; gap: .2rem; margin-bottom: var(--sp-4); }
+.s-hbench__cap b { font-size: var(--fs-1); font-weight: 600; color: var(--ink); }
+.s-hbench__cap span { font-size: var(--fs-0); line-height: 1.45; color: var(--muted); }
+.s-hbench__note { margin-top: var(--sp-3); font-size: var(--fs-00); line-height: 1.5; color: var(--muted); }
+.s-hbench__note sup, .rt sup, .hm sup { line-height: 0; }
+.s-hbench__swipe { display: none; }
+
+/* a result table whose middle column is a bar: name, bar with its value, one more number */
+.rt { width: 100%; border-collapse: collapse; font-size: var(--fs-0); }
+.rt thead th { padding: 0 0 .35rem; font-size: var(--fs-00); font-weight: 400; color: var(--muted); text-align: left; }
+.rt th[scope="row"] { width: 38%; padding: .32rem .75rem .32rem 0; font-weight: 400; color: var(--text); text-align: left; line-height: 1.35; }
+.rt th[scope="row"] span { display: block; font-size: var(--fs-00); color: var(--muted); }
+.rt--wide th[scope="row"] { color: var(--ink); font-weight: 600; }
+.rt--wide th[scope="row"] span { font-weight: 400; }
+.rt__bar { padding: .32rem 0; }
+.rt__cell { display: flex; align-items: center; gap: .6rem; }
+.rt__track { flex: 1 1 auto; min-width: 0; height: 8px; border-radius: 0 4px 4px 0; background: var(--soft); }      /* the 0 to 100 axis */
+.rt__track i { display: block; height: 100%; min-width: 2px; border-radius: 0 4px 4px 0; background: var(--bar); }
+.rt__bar b { flex: none; min-width: 3.4rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rt .rt__num { width: 4.6rem; padding-left: .5rem; text-align: right; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rt thead .rt__num { color: var(--muted); }
+
+/* a shaded score table: one soft cell per task and model, paler for a low score, the number always printed */
+.hm-wrap { position: relative; overflow-x: auto; border-radius: var(--r-2); }
+.hm-wrap:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.hm { width: 100%; min-width: 29rem; table-layout: fixed; border-collapse: separate; border-spacing: 2px; font-size: var(--fs-00); font-variant-numeric: tabular-nums; }
+.hm thead th { padding: 0 .1rem .2rem; font-weight: 400; color: var(--muted); text-align: center; white-space: nowrap; }
+.hm thead .hm__span { padding-bottom: .15rem; border-bottom: 1px solid var(--line-2); font-weight: 600; color: var(--ink); }
+.hm thead .hm__task, .hm .hm__task { text-align: left; }
+.hm tbody th[scope="row"] { padding: .26rem .5rem .26rem 0; font-weight: 400; color: var(--text); line-height: 1.3; }
+.hm__group th { padding: .55rem 0 .1rem; font-size: var(--fs-00); font-weight: 600; color: var(--ink); text-align: left; }
+.hm__c-task { width: 31%; }
+.hm td { padding: .26rem .1rem; border-radius: 6px; text-align: center; color: var(--ink);
+         background: color-mix(in srgb, var(--series-1) calc(var(--v, 0) * .5%), var(--page)); }
+.hm thead td { background: none; }
+.hm td.hm__const { color: var(--text); background: color-mix(in srgb, var(--muted) calc(var(--v, 0) * .28%), var(--page)); }
+
+@media (max-width: 900px) {
+  .s-hbench__track { grid-template-columns: minmax(0, 1fr); }
+  .s-hbench__res { align-self: stretch; padding-top: var(--sp-4); border-top: 1px solid var(--line); }
+}
 @media (max-width: 560px) {
-  .s-hbench__cards { grid-template-columns: minmax(0, 1fr); }
-  .s-hbench__card { padding: 18px; }
+  .s-hbench__track { padding: 18px; }
+  .hm tbody th[scope="row"], .hm thead .hm__task { position: sticky; left: 0; z-index: 1; background: var(--page); }
+  .hm__c-task { width: 34%; }
+  .s-hbench__swipe { display: block; }
+  .rt th[scope="row"] { width: 42%; padding-right: .5rem; }
+  .rt .rt__num { width: 3.9rem; }
 }

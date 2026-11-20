@@ -9,7 +9,7 @@
     "hf": "https://huggingface.co/datasets/ChangChrisLiu/E3D-Desktop-Disassembly",
     "hf_repo": "ChangChrisLiu/E3D-Desktop-Disassembly",
     "hf_name": "E3D-Desktop-Disassembly",
-    "github": "https://github.com/EoL3D",
+    "github": "https://github.com/EoL3D/EoL3D",
     "site": "https://eol3d.github.io"
   },
   "authors": [
@@ -405,6 +405,679 @@
           "asks": "Whether a proposed sequence of actions can be carried out, and the first step that cannot.",
           "scored": "Replayed step by step on the relations: accuracy of the validity and of the first wrong step.",
           "n": 300
+        }
+      ]
+    }
+  },
+  "results": {
+    "detection": {
+      "images": 492,
+      "instances": 12930,
+      "systems": [
+        {
+          "name": "YOLO26m-seg",
+          "box": {
+            "ap": 45.0,
+            "ci": [
+              41.9,
+              55.0
+            ],
+            "ap50": 62.9,
+            "f1": 76.0,
+            "ap_small": 14.6,
+            "ap_large": 53.3
+          },
+          "box_shared": false,
+          "mask": {
+            "ap": 43.4,
+            "ci": [
+              39.9,
+              52.8
+            ],
+            "ap50": 62.0,
+            "f1": 75.8,
+            "class_miou": 49.7,
+            "pixel_iou": 64.6
+          }
+        },
+        {
+          "name": "Mask R-CNN R50-FPN v2",
+          "box": {
+            "ap": 51.8,
+            "ci": [
+              49.3,
+              58.9
+            ],
+            "ap50": 71.6,
+            "f1": 76.4,
+            "ap_small": 13.4,
+            "ap_large": 63.3
+          },
+          "box_shared": false,
+          "mask": {
+            "ap": 44.9,
+            "ci": [
+              43.1,
+              53.0
+            ],
+            "ap50": 64.3,
+            "f1": 75.0,
+            "class_miou": 51.3,
+            "pixel_iou": 76.0
+          }
+        },
+        {
+          "name": "DINOv3 + Mask R-CNN",
+          "box": {
+            "ap": 42.9,
+            "ci": [
+              40.1,
+              52.0
+            ],
+            "ap50": 65.7,
+            "f1": 73.3,
+            "ap_small": 12.6,
+            "ap_large": 52.5
+          },
+          "box_shared": false,
+          "mask": {
+            "ap": 38.2,
+            "ci": [
+              35.7,
+              45.6
+            ],
+            "ap50": 63.1,
+            "f1": 72.4,
+            "class_miou": 47.7,
+            "pixel_iou": 70.4
+          }
+        },
+        {
+          "name": "RF-DETR-Seg",
+          "box": {
+            "ap": 56.4,
+            "ci": [
+              52.1,
+              63.7
+            ],
+            "ap50": 72.2,
+            "f1": 77.2,
+            "ap_small": 14.9,
+            "ap_large": 69.9
+          },
+          "box_shared": false,
+          "mask": {
+            "ap": 49.6,
+            "ci": [
+              47.5,
+              57.7
+            ],
+            "ap50": 70.8,
+            "f1": 75.2,
+            "class_miou": 57.3,
+            "pixel_iou": 83.1
+          }
+        },
+        {
+          "name": "RF-DETR + frozen SAM 2.1",
+          "box": {
+            "ap": 56.4,
+            "ci": [
+              52.1,
+              63.7
+            ],
+            "ap50": 72.2,
+            "f1": 77.2,
+            "ap_small": 14.9,
+            "ap_large": 69.9
+          },
+          "box_shared": true,
+          "mask": {
+            "ap": 34.6,
+            "ci": [
+              33.8,
+              40.5
+            ],
+            "ap50": 56.7,
+            "f1": 62.2,
+            "class_miou": 49.5,
+            "pixel_iou": 54.7
+          }
+        },
+        {
+          "name": "RF-DETR + frozen SAM 3",
+          "box": {
+            "ap": 56.4,
+            "ci": [
+              52.1,
+              63.7
+            ],
+            "ap50": 72.2,
+            "f1": 77.2,
+            "ap_small": 14.9,
+            "ap_large": 69.9
+          },
+          "box_shared": true,
+          "mask": {
+            "ap": 35.0,
+            "ci": [
+              33.6,
+              41.1
+            ],
+            "ap50": 57.9,
+            "f1": 64.6,
+            "class_miou": 49.5,
+            "pixel_iou": 54.7
+          }
+        },
+        {
+          "name": "SAM 3, zero-shot",
+          "box": {
+            "ap": 4.8,
+            "ci": [
+              4.5,
+              6.2
+            ],
+            "ap50": 5.7,
+            "f1": 7.0,
+            "ap_small": 0.4,
+            "ap_large": 6.0
+          },
+          "box_shared": false,
+          "mask": {
+            "ap": 3.8,
+            "ci": [
+              3.5,
+              5.2
+            ],
+            "ap50": 5.7,
+            "f1": 6.7,
+            "class_miou": 3.4,
+            "pixel_iou": 10.7
+          }
+        },
+        {
+          "name": "SAM 3, fine-tuned",
+          "box": {
+            "ap": 59.3,
+            "ci": [
+              56.8,
+              66.2
+            ],
+            "ap50": 75.3,
+            "f1": 76.2,
+            "ap_small": 16.1,
+            "ap_large": 72.4
+          },
+          "box_shared": false,
+          "mask": {
+            "ap": 54.7,
+            "ci": [
+              51.9,
+              61.9
+            ],
+            "ap50": 73.7,
+            "f1": 75.6,
+            "class_miou": 61.7,
+            "pixel_iou": 79.0
+          }
+        }
+      ]
+    },
+    "vqa": {
+      "questions": 663,
+      "desktops": 12,
+      "models": {
+        "qwen": "Qwen3-VL-8B",
+        "internvl": "InternVL3.5-8B",
+        "gpt": "GPT-6 Astra",
+        "opus": "Claude Opus 5.5"
+      },
+      "tasks": [
+        {
+          "group": "Perception",
+          "name": "Visible component boxes",
+          "metric": "Box-set F1",
+          "n": 55,
+          "const": 8.8,
+          "zero_shot": {
+            "qwen": 2.5,
+            "internvl": 0.6,
+            "gpt": 9.8,
+            "opus": 8.6
+          },
+          "zero_shot_no_image": {
+            "gpt": null
+          },
+          "fine_tuned": {
+            "qwen": 18.9,
+            "internvl": 17.9
+          },
+          "fine_tuned_no_image": {
+            "qwen": null,
+            "internvl": null
+          },
+          "parse_failures": [
+            "qwen"
+          ]
+        },
+        {
+          "group": "Perception",
+          "name": "Component grounding",
+          "metric": "Grounding score",
+          "n": 47,
+          "const": 2.1,
+          "zero_shot": {
+            "qwen": 2.1,
+            "internvl": 4.3,
+            "gpt": 52.1,
+            "opus": 34.9
+          },
+          "zero_shot_no_image": {
+            "gpt": null
+          },
+          "fine_tuned": {
+            "qwen": 51.1,
+            "internvl": 51.1
+          },
+          "fine_tuned_no_image": {
+            "qwen": null,
+            "internvl": null
+          },
+          "parse_failures": [
+            "opus"
+          ]
+        },
+        {
+          "group": "Perception",
+          "name": "Same step across views",
+          "metric": "Accuracy",
+          "n": 37,
+          "const": 51.4,
+          "zero_shot": {
+            "qwen": 43.2,
+            "internvl": 48.6,
+            "gpt": 78.4,
+            "opus": 70.3
+          },
+          "zero_shot_no_image": {
+            "gpt": null
+          },
+          "fine_tuned": {
+            "qwen": 86.5,
+            "internvl": 83.8
+          },
+          "fine_tuned_no_image": {
+            "qwen": null,
+            "internvl": null
+          },
+          "parse_failures": []
+        },
+        {
+          "group": "Perception",
+          "name": "Component state or screw count",
+          "metric": "State/count score",
+          "n": 54,
+          "const": 27.8,
+          "zero_shot": {
+            "qwen": 35.2,
+            "internvl": 38.5,
+            "gpt": 71.9,
+            "opus": 66.3
+          },
+          "zero_shot_no_image": {
+            "gpt": null
+          },
+          "fine_tuned": {
+            "qwen": 83.3,
+            "internvl": 83.3
+          },
+          "fine_tuned_no_image": {
+            "qwen": null,
+            "internvl": null
+          },
+          "parse_failures": []
+        },
+        {
+          "group": "Understanding",
+          "name": "Observed operation",
+          "metric": "Verb + target acc.",
+          "n": 54,
+          "const": 20.4,
+          "zero_shot": {
+            "qwen": 3.7,
+            "internvl": 3.7,
+            "gpt": 24.1,
+            "opus": 25.9
+          },
+          "zero_shot_no_image": {
+            "gpt": null
+          },
+          "fine_tuned": {
+            "qwen": 74.1,
+            "internvl": 74.1
+          },
+          "fine_tuned_no_image": {
+            "qwen": null,
+            "internvl": null
+          },
+          "parse_failures": [
+            "internvl"
+          ]
+        },
+        {
+          "group": "Understanding",
+          "name": "State change",
+          "metric": "Accuracy",
+          "n": 74,
+          "const": 51.4,
+          "zero_shot": {
+            "qwen": 56.8,
+            "internvl": 56.8,
+            "gpt": 59.5,
+            "opus": 77.0
+          },
+          "zero_shot_no_image": {
+            "gpt": null
+          },
+          "fine_tuned": {
+            "qwen": 95.9,
+            "internvl": 89.2
+          },
+          "fine_tuned_no_image": {
+            "qwen": null,
+            "internvl": null
+          },
+          "parse_failures": []
+        },
+        {
+          "group": "Understanding",
+          "name": "Completed operations",
+          "metric": "Set F1",
+          "n": 58,
+          "const": 13.9,
+          "zero_shot": {
+            "qwen": 5.2,
+            "internvl": 5.2,
+            "gpt": 28.3,
+            "opus": 20.8
+          },
+          "zero_shot_no_image": {
+            "gpt": null
+          },
+          "fine_tuned": {
+            "qwen": 75.1,
+            "internvl": 70.4
+          },
+          "fine_tuned_no_image": {
+            "qwen": null,
+            "internvl": null
+          },
+          "parse_failures": []
+        },
+        {
+          "group": "Planning",
+          "name": "Proposed action feasibility",
+          "metric": "Accuracy",
+          "n": 71,
+          "const": 46.5,
+          "zero_shot": {
+            "qwen": 46.5,
+            "internvl": 54.9,
+            "gpt": 70.4,
+            "opus": 66.2
+          },
+          "zero_shot_no_image": {
+            "gpt": 53.5
+          },
+          "fine_tuned": {
+            "qwen": 73.2,
+            "internvl": 63.4
+          },
+          "fine_tuned_no_image": {
+            "qwen": 45.1,
+            "internvl": 50.7
+          },
+          "parse_failures": [
+            "qwen"
+          ]
+        },
+        {
+          "group": "Planning",
+          "name": "Next feasible action categories",
+          "metric": "Set F1",
+          "n": 52,
+          "const": 46.5,
+          "zero_shot": {
+            "qwen": 3.3,
+            "internvl": 2.3,
+            "gpt": 8.4,
+            "opus": 10.5
+          },
+          "zero_shot_no_image": {
+            "gpt": null
+          },
+          "fine_tuned": {
+            "qwen": 71.2,
+            "internvl": 65.3
+          },
+          "fine_tuned_no_image": {
+            "qwen": null,
+            "internvl": null
+          },
+          "parse_failures": []
+        },
+        {
+          "group": "Planning",
+          "name": "Target removal plan",
+          "metric": "Replay success",
+          "n": 53,
+          "const": 66.0,
+          "zero_shot": {
+            "qwen": 0.0,
+            "internvl": 0.0,
+            "gpt": 0.0,
+            "opus": 1.9
+          },
+          "zero_shot_no_image": {
+            "gpt": 0.0
+          },
+          "fine_tuned": {
+            "qwen": 98.1,
+            "internvl": 100.0
+          },
+          "fine_tuned_no_image": {
+            "qwen": 67.9,
+            "internvl": 67.9
+          },
+          "parse_failures": []
+        },
+        {
+          "group": "Planning",
+          "name": "Constrained removal plan",
+          "metric": "Replay success",
+          "n": 51,
+          "const": 5.9,
+          "zero_shot": {
+            "qwen": 0.0,
+            "internvl": 0.0,
+            "gpt": 2.0,
+            "opus": 2.0
+          },
+          "zero_shot_no_image": {
+            "gpt": 0.0
+          },
+          "fine_tuned": {
+            "qwen": 49.0,
+            "internvl": 47.1
+          },
+          "fine_tuned_no_image": {
+            "qwen": 27.5,
+            "internvl": 27.5
+          },
+          "parse_failures": []
+        },
+        {
+          "group": "Planning",
+          "name": "Proposed plan validity",
+          "metric": "Accuracy",
+          "n": 57,
+          "const": 50.9,
+          "zero_shot": {
+            "qwen": 54.4,
+            "internvl": 33.3,
+            "gpt": 68.4,
+            "opus": 75.4
+          },
+          "zero_shot_no_image": {
+            "gpt": 63.2
+          },
+          "fine_tuned": {
+            "qwen": 87.7,
+            "internvl": 86.0
+          },
+          "fine_tuned_no_image": {
+            "qwen": 63.2,
+            "internvl": 78.9
+          },
+          "parse_failures": [
+            "internvl"
+          ]
+        }
+      ]
+    },
+    "depth": {
+      "desktops": [
+        "D03",
+        "D04",
+        "D10",
+        "D11",
+        "D13"
+      ],
+      "models": [
+        {
+          "name": "UniDepth V2",
+          "scale": "metric",
+          "raw": {
+            "mae": 0.398,
+            "rmse": 0.4,
+            "absrel": 0.33,
+            "d125": 2.96
+          },
+          "ratio": 1.334,
+          "aligned": {
+            "mae": 0.016,
+            "rmse": 0.021,
+            "absrel": 0.014,
+            "d105": 98.73
+          }
+        },
+        {
+          "name": "Depth Anything V2",
+          "scale": "metric",
+          "raw": {
+            "mae": 0.736,
+            "rmse": 0.748,
+            "absrel": 0.609,
+            "d125": 0.0
+          },
+          "ratio": 1.65,
+          "aligned": {
+            "mae": 0.046,
+            "rmse": 0.071,
+            "absrel": 0.04,
+            "d105": 71.49
+          }
+        },
+        {
+          "name": "Depth Pro",
+          "scale": "metric",
+          "raw": {
+            "mae": 0.98,
+            "rmse": 0.989,
+            "absrel": 0.811,
+            "d125": 0.0
+          },
+          "ratio": 1.862,
+          "aligned": {
+            "mae": 0.038,
+            "rmse": 0.061,
+            "absrel": 0.033,
+            "d105": 72.37
+          }
+        },
+        {
+          "name": "Metric3D v2",
+          "scale": "metric",
+          "raw": {
+            "mae": 2.073,
+            "rmse": 2.078,
+            "absrel": 1.718,
+            "d125": 0.0
+          },
+          "ratio": 2.754,
+          "aligned": {
+            "mae": 0.023,
+            "rmse": 0.034,
+            "absrel": 0.019,
+            "d105": 86.66
+          }
+        },
+        {
+          "name": "Pi3X",
+          "scale": "approximately metric",
+          "raw": {
+            "mae": 1.214,
+            "rmse": 1.218,
+            "absrel": 1.01,
+            "d125": 0.0
+          },
+          "ratio": 2.023,
+          "aligned": {
+            "mae": 0.062,
+            "rmse": 0.072,
+            "absrel": 0.052,
+            "d105": 50.37
+          }
+        },
+        {
+          "name": "DA3-BASE",
+          "scale": "relative",
+          "raw": {
+            "mae": null,
+            "rmse": null,
+            "absrel": null,
+            "d125": null
+          },
+          "ratio": 0.762,
+          "aligned": {
+            "mae": 0.029,
+            "rmse": 0.035,
+            "absrel": 0.024,
+            "d105": 90.58
+          }
+        }
+      ]
+    },
+    "robot": {
+      "rows": [
+        {
+          "policy": "pi0.5",
+          "setting": "Parts on a fixture",
+          "success": 83,
+          "trials": 350
+        },
+        {
+          "policy": "OpenVLA-OFT",
+          "setting": "Parts on a fixture",
+          "success": 0,
+          "trials": 350
+        },
+        {
+          "policy": "pi0.5",
+          "setting": "Parts on the motherboard",
+          "success": 5,
+          "trials": 100
         }
       ]
     }

@@ -22,7 +22,7 @@
 .s-benchmark__detail-head h3 { font-size: var(--fs-4); font-weight: 400; line-height: 1.3; color: var(--ink); }
 .s-benchmark__split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: var(--sp-6); align-items: start; }
 .s-benchmark__facts { display: grid; }
-.s-benchmark__scroll { overflow-x: auto; }
+.s-benchmark__scroll { position: relative; overflow-x: auto; }      /* relative: hidden helper text inside stays inside the scrolling box */
 
 .s-benchmark__table { width: 100%; border-collapse: collapse; font-size: var(--fs-0); line-height: 1.5; color: var(--text); font-variant-numeric: tabular-nums; }
 .s-benchmark__table thead th { padding: .6rem .75rem; background: var(--soft-2); font-weight: 600; color: var(--ink); text-align: left; white-space: nowrap; }
@@ -60,3 +60,22 @@
   .s-benchmark__track { padding: 18px; }
   .s-benchmark__spec > div, .s-benchmark__facts > div { grid-template-columns: minmax(0, 1fr); gap: .1rem; }
 }
+
+/* results: four tables under one heading; wide ones scroll sideways inside their own box */
+.s-benchmark__results { margin-top: var(--sp-7); }
+.s-benchmark__rh { margin-top: var(--sp-6); font-size: var(--fs-1); font-weight: 600; color: var(--ink); scroll-margin-top: 20px; }
+.s-benchmark__rp { margin: var(--sp-1) 0 var(--sp-3); font-size: var(--fs-0); color: var(--text); }
+.s-benchmark__scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.s-benchmark__res { min-width: 46rem; font-variant-numeric: tabular-nums; }
+.s-benchmark__res--narrow { min-width: 0; }
+.s-benchmark__res thead th { white-space: nowrap; }
+.s-benchmark__res thead td { background: none; border: 0; }
+.s-benchmark__res thead .s-benchmark__span { background: none; padding-bottom: .2rem; border-bottom: 1px solid var(--line-2); border-radius: 0; text-align: center; color: var(--ink); }
+.s-benchmark__res thead .s-benchmark__span--sub { font-weight: 400; color: var(--text); }
+.s-benchmark__res tbody th[scope="row"] { font-weight: 600; color: var(--ink); white-space: nowrap; }
+.s-benchmark__res td { white-space: nowrap; }
+.s-benchmark__res .s-benchmark__metric { color: var(--text); white-space: normal; min-width: 7rem; }
+.s-benchmark__ci { color: var(--muted); }
+.s-benchmark__same { color: var(--muted); text-align: center; }
+.s-benchmark__res sup { line-height: 0; }
+

@@ -1,68 +1,149 @@
+{# Benchmark: four tracks, each a wide card: what the track is (left) and how current models do on it (right). Every
+   number comes from site.results (assets/data/site.json); nothing is typed here. #}
+{% set det = site.benchmark.detection %}
+{% set n = site.numbers %}
+{% set res = site.results %}
 <section id="benchmark" class="sec sec--sheet tint--peach s-hbench" data-section="benchmark" aria-labelledby="benchmark-h">
   <div class="wrap">
-    {% set det = site.benchmark.detection %}
-    {% set n = site.numbers %}
     <header class="s-hbench__head">
       <h2 id="benchmark-h" data-reveal>Benchmark</h2>
-      <p class="s-hbench__lead" data-reveal>Four tracks on the same teardowns. Each fixes the input, the output, the metric and the evaluation set; two kits are in the repository now, the other two come with a later release.</p>
+      <p class="s-hbench__lead" data-reveal>Four tracks on the same teardowns. Each fixes the input, the output, the metric and the evaluation set; the charts show how current models do on it.</p>
     </header>
 
-    <div class="s-hbench__cards">
-      <article class="s-hbench__card" id="track-detection" aria-labelledby="track-detection-h" data-reveal>
-        <img class="s-hbench__pic" src="{{ 'assets/img/uses/bench-detect.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
-             alt="A top-down scanner picture with every part filled and outlined in its class colour: the masks a detector has to find.">
-        <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
-        <h3 class="s-hbench__name" id="track-detection-h">Detection and instance segmentation</h3>
-        <p class="s-hbench__def">Find every part in a top-down scanner image and give its class, box and mask.</p>
-        <dl class="s-hbench__spec">
-          <div><dt>Input</dt><dd>One scanner image, {{ det.frame_px }} &times; {{ det.frame_px }} px</dd></div>
-          <div><dt>Output</dt><dd>Class, box and mask of each part, {{ n.classes | num }} classes</dd></div>
-          <div><dt>Metric</dt><dd>COCO mask and box AP over IoU 0.50:0.95</dd></div>
-        </dl>
-        <a class="arrow s-hbench__go" href="guide.html#start-eval-det">Run it</a>
+    <div class="s-hbench__tracks">
+
+      <article class="s-hbench__track" id="track-detection" aria-labelledby="track-detection-h" data-reveal>
+        <div class="s-hbench__what">
+          <img class="s-hbench__pic" src="{{ 'assets/img/uses/bench-detect.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
+               alt="A top-down scanner picture with every part filled and outlined in its class colour: the masks a detector has to find.">
+          <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+          <h3 class="s-hbench__name" id="track-detection-h">Detection and instance segmentation</h3>
+          <p class="s-hbench__def">Find every part in a top-down scanner image and give its class, box and mask.</p>
+          <dl class="s-hbench__spec">
+            <div><dt>Input</dt><dd>One scanner image, {{ det.frame_px }} &times; {{ det.frame_px }} px</dd></div>
+            <div><dt>Output</dt><dd>Class, box and mask of each part, {{ n.classes | num }} classes</dd></div>
+            <div><dt>Metric</dt><dd>COCO AP for boxes and masks, IoU 0.50:0.95</dd></div>
+          </dl>
+          <a class="arrow s-hbench__go" href="guide.html#start-eval-det">Run it</a>
+        </div>
+        <figure class="s-hbench__res">
+          <figcaption class="s-hbench__cap"><b>Mask AP on the held-out desktops</b><span>{{ res.detection.images | num }} scanner images of {{ det.desktops.test | num }} desktops, {{ res.detection.instances | num }} parts. 0 to 100, higher is better.</span></figcaption>
+          <table class="rt">
+            <thead><tr><th scope="col">Model</th><th scope="col" class="rt__barhead">Mask AP</th><th scope="col" class="rt__num">Box AP</th></tr></thead>
+            <tbody>
+              {% for s in res.detection.systems | sort(attribute='mask.ap', reverse=true) %}
+              <tr><th scope="row">{{ s.name | e }}</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: {{ s.mask.ap | round(1) }}%"></i></span><b>{{ '%.1f' | format(s.mask.ap) }}</b></span></td>
+                  <td class="rt__num">{{ '%.1f' | format(s.box.ap) }}{% if s.box_shared %}<sup>*</sup>{% endif %}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p class="s-hbench__note"><sup>*</sup>Masks from a frozen model on the boxes of RF-DETR-Seg. <a href="guide.html#bench-results-detection">All measures</a></p>
+        </figure>
       </article>
 
-      <article class="s-hbench__card" id="track-qa" aria-labelledby="track-qa-h" data-reveal>
-        <img class="s-hbench__pic" src="{{ 'assets/img/uses/qa-change.webp' | v }}" width="900" height="666" loading="lazy" decoding="async"
-             alt="The drive bay of an HP desktop before and after one step, the two pictures of a question about a change: a drive sits in the bay before and is gone after.">
-        <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
-        <h3 class="s-hbench__name" id="track-qa-h">Visual question answering</h3>
-        <p class="s-hbench__def">Answer a question about a teardown from its images, as one JSON object.</p>
-        <dl class="s-hbench__spec">
-          <div><dt>Input</dt><dd>The images of a step and the question</dd></div>
-          <div><dt>Output</dt><dd>A strict JSON answer in the task's format</dd></div>
-          <div><dt>Metric</dt><dd>Set per task: accuracy, exact match, F1, box hits, plan replay</dd></div>
-        </dl>
-        <a class="arrow s-hbench__go" href="guide.html#start-eval-qa">Run it</a>
+      <article class="s-hbench__track" id="track-qa" aria-labelledby="track-qa-h" data-reveal>
+        <div class="s-hbench__what">
+          <img class="s-hbench__pic" src="{{ 'assets/img/uses/qa-change.webp' | v }}" width="900" height="666" loading="lazy" decoding="async"
+               alt="The drive bay of an HP desktop before and after one step, the two pictures of a question about a change: a drive sits in the bay before and is gone after.">
+          <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+          <h3 class="s-hbench__name" id="track-qa-h">Visual question answering</h3>
+          <p class="s-hbench__def">Answer a question about a teardown from its images, as one JSON object.</p>
+          <dl class="s-hbench__spec">
+            <div><dt>Input</dt><dd>The images of a step and the question</dd></div>
+            <div><dt>Output</dt><dd>A strict JSON answer in the task's format</dd></div>
+            <div><dt>Metric</dt><dd>Set per task: accuracy, F1, a grounding score, plan replay</dd></div>
+          </dl>
+          <a class="arrow s-hbench__go" href="guide.html#start-eval-qa">Run it</a>
+        </div>
+        <figure class="s-hbench__res">
+          <figcaption class="s-hbench__cap"><b>Score per task on the held-out desktops</b><span>{{ res.vqa.questions | num }} questions from {{ res.vqa.desktops | num }} desktops, 0 to 100. Models as released, and after fine-tuning on the training desktops.</span></figcaption>
+          <div class="hm-wrap" data-scroll-x tabindex="0" role="group" aria-label="Table of scores per task and model; scrolls sideways on a narrow screen">
+            <table class="hm">
+              <colgroup><col class="hm__c-task"><col span="7"></colgroup>
+              <thead>
+                <tr><td></td><td></td><th scope="colgroup" colspan="4" class="hm__span">As released</th><th scope="colgroup" colspan="2" class="hm__span">Fine-tuned</th></tr>
+                <tr><th scope="col" class="hm__task">Task</th><th scope="col">Const.</th><th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">GPT-6</th><th scope="col">Opus</th><th scope="col">Qwen</th><th scope="col">InternVL</th></tr>
+              </thead>
+              {% for group in ['Perception', 'Understanding', 'Planning'] %}
+              <tbody>
+                <tr class="hm__group"><th scope="rowgroup" colspan="8">{{ group }}</th></tr>
+                {% for t in res.vqa.tasks if t.group == group %}
+                <tr><th scope="row" class="hm__task">{{ t.name | e }}</th>
+                    <td class="hm__const" style="--v: {{ t.const }}">{{ '%.1f' | format(t.const) }}</td>
+                    {% for k in ['qwen', 'internvl', 'gpt', 'opus'] %}<td style="--v: {{ t.zero_shot[k] }}">{{ '%.1f' | format(t.zero_shot[k]) }}{% if k in t.parse_failures %}<sup>&dagger;</sup>{% endif %}</td>{% endfor %}
+                    {% for k in ['qwen', 'internvl'] %}<td style="--v: {{ t.fine_tuned[k] }}">{{ '%.1f' | format(t.fine_tuned[k]) }}</td>{% endfor %}</tr>
+                {% endfor %}
+              </tbody>
+              {% endfor %}
+            </table>
+          </div>
+          <p class="s-hbench__note s-hbench__swipe">Swipe the table sideways for all models.</p>
+          <p class="s-hbench__note">Const.: always the most frequent answer. Models: {{ res.vqa.models.qwen }}, {{ res.vqa.models.internvl }}, {{ res.vqa.models.gpt }}, {{ res.vqa.models.opus }}. <sup>&dagger;</sup>At least 10&nbsp;% of the replies could not be parsed. <a href="guide.html#bench-results-qa">Metrics and all columns</a></p>
+        </figure>
       </article>
 
-      <article class="s-hbench__card" id="track-depth" aria-labelledby="track-depth-h" data-reveal>
-        <img class="s-hbench__pic" src="{{ 'assets/img/uses/depth.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
-             alt="The depth the scanner measured over one step of a Dell desktop, seen straight down: near surfaces such as the power supply and the case rim in red and orange, the motherboard further away in blue.">
-        <p class="s-hbench__status"><span class="chip">Later release</span></p>
-        <h3 class="s-hbench__name" id="track-depth-h">Metric depth from a single image</h3>
-        <p class="s-hbench__def">Predict the depth of every pixel of one image, in millimetres.</p>
-        <dl class="s-hbench__spec">
-          <div><dt>Input</dt><dd>One image</dd></div>
-          <div><dt>Output</dt><dd>A depth map in millimetres</dd></div>
-          <div><dt>Metric</dt><dd>Absolute relative error, RMSE and threshold accuracy against the scanner's depth</dd></div>
-        </dl>
+      <article class="s-hbench__track" id="track-depth" aria-labelledby="track-depth-h" data-reveal>
+        <div class="s-hbench__what">
+          <img class="s-hbench__pic" src="{{ 'assets/img/uses/depth.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
+               alt="The depth the scanner measured over one step of a Dell desktop, seen straight down: near surfaces such as the power supply and the case rim in red and orange, the motherboard further away in blue.">
+          <p class="s-hbench__status"><span class="chip chip--accent">Kit released</span></p>
+          <h3 class="s-hbench__name" id="track-depth-h">Depth from a single image</h3>
+          <p class="s-hbench__def">Predict depth from one scanner image; the scanner's own 3D measurement is the reference.</p>
+          <dl class="s-hbench__spec">
+            <div><dt>Input</dt><dd>One scanner image</dd></div>
+            <div><dt>Output</dt><dd>A depth map</dd></div>
+            <div><dt>Metric</dt><dd>MAE, RMSE, relative error and threshold accuracy, as predicted and after one scale factor per image</dd></div>
+          </dl>
+          <a class="arrow s-hbench__go" href="guide.html#start-eval-depth">Run it</a>
+        </div>
+        <figure class="s-hbench__res">
+          <figcaption class="s-hbench__cap"><b>Pixels within 5&nbsp;% of the measured depth</b><span>{{ res.depth.models | length }} models as released, on the first step of {{ res.depth.desktops | length }} desktops, after one scale factor per image. Scale: predicted over measured depth before that (1 is exact).</span></figcaption>
+          <table class="rt">
+            <thead><tr><th scope="col">Model</th><th scope="col" class="rt__barhead">&delta; &lt; 1.05</th><th scope="col" class="rt__num">Scale</th></tr></thead>
+            <tbody>
+              {% for m in res.depth.models | sort(attribute='aligned.d105', reverse=true) %}
+              <tr><th scope="row">{{ m.name | e }}</th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: {{ m.aligned.d105 | round(1) }}%"></i></span><b>{{ '%.1f' | format(m.aligned.d105) }}&nbsp;%</b></span></td>
+                  <td class="rt__num">{{ '%.2f' | format(m.ratio) }}&times;{% if m.scale == 'relative' %}<sup>&Dagger;</sup>{% endif %}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p class="s-hbench__note"><sup>&Dagger;</sup>This model gives relative depth; its factor only describes the output. <a href="guide.html#bench-results-depth">All measures</a></p>
+        </figure>
       </article>
 
-      <article class="s-hbench__card" id="track-robot" aria-labelledby="track-robot-h" data-reveal>
-        <img class="s-hbench__pic" src="{{ 'assets/img/uses/bench-robot.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
-             alt="Two frames of the robot's base camera: the gripper over a memory slot on a perforated plate, and over the memory slots of a whole motherboard.">
-        <p class="s-hbench__status"><span class="chip">Later release</span></p>
-        <h3 class="s-hbench__name" id="track-robot-h">Robot manipulation</h3>
-        <p class="s-hbench__def">Remove a named part with a robot; the {{ n.robot_demos | num }} demonstrations are already in <code>raw/robot/</code>.</p>
-        <dl class="s-hbench__spec">
-          <div><dt>Input</dt><dd>The part to remove</dd></div>
-          <div><dt>Output</dt><dd>Robot actions that take the part out</dd></div>
-          <div><dt>Metric</dt><dd>Task success over repeated trials on the real robot</dd></div>
-        </dl>
+      <article class="s-hbench__track" id="track-robot" aria-labelledby="track-robot-h" data-reveal>
+        <div class="s-hbench__what">
+          <img class="s-hbench__pic" src="{{ 'assets/img/uses/bench-robot.webp' | v }}" width="1280" height="720" loading="lazy" decoding="async"
+               alt="Two frames of the robot's base camera: the gripper over a memory slot on a perforated plate, and over the memory slots of a whole motherboard.">
+          <p class="s-hbench__status"><span class="chip chip--accent">Data released</span></p>
+          <h3 class="s-hbench__name" id="track-robot-h">Robot disassembly</h3>
+          <p class="s-hbench__def">Remove the part named in an instruction and put it in the sorting zone, on the real robot.</p>
+          <dl class="s-hbench__spec">
+            <div><dt>Input</dt><dd>The instruction, wrist and base camera images</dd></div>
+            <div><dt>Output</dt><dd>Arm and gripper actions</dd></div>
+            <div><dt>Metric</dt><dd>Trials completed within 150&nbsp;s</dd></div>
+          </dl>
+          <a class="arrow s-hbench__go" href="guide.html#data-robot">The {{ n.robot_demos | num }} demonstrations</a>
+        </div>
+        <figure class="s-hbench__res">
+          <figcaption class="s-hbench__cap"><b>Trials completed on the real robot</b><span>Policies trained on the demonstrations; the part's position changes a little from trial to trial.</span></figcaption>
+          <table class="rt rt--wide">
+            <thead><tr><th scope="col">Policy and setting</th><th scope="col" class="rt__barhead">Completed</th><th scope="col" class="rt__num">Trials</th></tr></thead>
+            <tbody>
+              {% for r in res.robot.rows %}
+              <tr><th scope="row">{{ r.policy | replace('pi0.5', '&pi;<sub>0.5</sub>') }}<span>{{ r.setting | e }}</span></th>
+                  <td class="rt__bar"><span class="rt__cell"><span class="rt__track"><i style="width: {{ (r.success / r.trials * 100) | round(1) }}%"></i></span><b>{{ '%.1f' | format(r.success / r.trials * 100) }}&nbsp;%</b></span></td>
+                  <td class="rt__num">{{ r.success }} / {{ r.trials }}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p class="s-hbench__note"><a href="guide.html#bench-results-robot">How the trials were run</a></p>
+        </figure>
       </article>
     </div>
 
-    <p class="s-hbench__more" data-reveal><a class="arrow" href="guide.html#guide-benchmark">Tasks and scoring</a></p>
+    <p class="s-hbench__more" data-reveal><a class="arrow" href="guide.html#guide-benchmark">Tasks, scoring and full result tables</a></p>
   </div>
 </section>

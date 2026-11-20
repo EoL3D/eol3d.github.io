@@ -134,7 +134,7 @@ print(rec["label"]["answer"], rec["label"]["split"])             <span class="c"
       <li id="start-evaluate" class="s-start__step" data-reveal>
         <div class="s-start__key">
           <h3 id="start-evaluate-h" class="s-start__name">Evaluate</h3>
-          <p class="s-start__gist">Score a file of predictions with the kit of a <a href="{{ home }}#benchmark">benchmark track</a>.</p>
+          <p class="s-start__gist">Score a file of predictions with the kit of a <a href="{{ home }}#benchmark">benchmark track</a>. The kits are also in the <a href="{{ site.links.github | e }}" rel="noopener">code repository</a>.</p>
         </div>
         <div class="s-start__body">
           <div id="start-eval-det" class="s-start__kit">
@@ -176,6 +176,23 @@ python tools/vlm_score.py --truth eval_v3/multi.jsonl --pred runs/&lt;model&gt;.
     --chat runs/multi.openai.jsonl --out runs/scores --name &lt;model&gt;-multi</pre>
             </figure>
             <p class="s-start__note">Do the same for <code>scan</code>, <code>oak1</code> and <code>oak2</code>, and score each file separately. <code>vlm_score.py</code> writes <code>&lt;name&gt;.score.md</code> and <code>.score.json</code>: every task with strict and lenient parsing, intervals from a bootstrap over desktops, and reference lines beside each task.</p>
+          </div>
+
+          <div id="start-eval-depth" class="s-start__kit">
+            <h4 class="s-start__sub">Depth from a single image <a class="s-start__more" href="#guide-benchmark">What is measured</a></h4>
+            <p class="s-start__text">The two scripts need numpy alone. The reference is made from the scanner's point clouds; a model sees <code>annotations/scanner/D&lt;NN&gt;/images/S01.png</code> and writes its depth for that picture in metres.</p>
+            <figure class="s-start__sheet" data-copy-box>
+              <figcaption class="s-start__bar"><span>Shell: the code repository</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the depth evaluation commands">Copy</button></figcaption>
+              <pre class="code s-start__code" tabindex="0" data-copy-src>git clone {{ site.links.github | e }}.git && cd EoL3D
+for d in D03 D04 D10 D11 D13; do                                      <span class="c"># the five desktops of the track</span>
+  hf download {{ repo }} --repo-type dataset --local-dir "$DATA" \
+      --include "reconstructions/scanner/$d/S01.ply" --include "annotations/scanner/$d/images/S01.png"
+done
+python depth/make_reference.py --data "$DATA" --out work/depth_ref    <span class="c"># reference depth maps, in metres</span>
+<span class="c"># predict: your model writes work/&lt;model&gt;/D03_S01.npy ... D13_S01.npy</span>
+python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
+            </figure>
+            <p class="s-start__note">The scorer prints the errors as predicted, the median scale, and the errors after dividing each prediction by its scale; <code>--json</code> also writes them per image. Other desktops and steps work the same way (<code>--desktops</code>, <code>--step</code>).</p>
           </div>
         </div>
       </li>

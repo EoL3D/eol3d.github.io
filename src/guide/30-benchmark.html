@@ -2,9 +2,10 @@
     {% set det = site.benchmark.detection %}
     {% set qa = site.benchmark.qa %}
     {% set n = site.numbers %}
+    {% set res = site.results %}
     <header class="s-benchmark__head">
       <h2 id="guide-benchmark-h" data-reveal>Benchmark: tasks and scoring</h2>
-      <p class="s-benchmark__lead" data-reveal>Each track fixes the input, the output, the metric and the evaluation set. A track with a released kit can be run now from the repository; the others come with a later release.</p>
+      <p class="s-benchmark__lead" data-reveal>Each track fixes the input, the output, the metric and the evaluation set. Three tracks have a kit that runs now; the robot track is run on the physical system. The <a href="#bench-results">results</a> of current models follow the four tracks.</p>
     </header>
 
     <ol class="s-benchmark__tracks">
@@ -38,33 +39,123 @@
       </li>
 
       <li class="s-benchmark__track" id="guide-track-depth" data-reveal>
-        <p class="s-benchmark__top"><span class="chip">Later release</span></p>
-        <h3 class="s-benchmark__name">Metric depth from a single image</h3>
-        <p class="s-benchmark__def">Predict the depth of every pixel of one image, in millimetres.</p>
+        <p class="s-benchmark__top"><span class="chip chip--accent">Kit released</span></p>
+        <h3 class="s-benchmark__name">Depth from a single image</h3>
+        <p class="s-benchmark__def">Predict depth from one scanner image; the scanner's own 3D measurement is the reference.</p>
         <dl class="spec s-benchmark__spec">
-          <div><dt>Input</dt><dd>One image.</dd></div>
-          <div><dt>Output</dt><dd>A depth map in millimetres.</dd></div>
-          <div><dt>Metric</dt><dd>Compared with the depth the scanner measured: absolute relative error, RMSE and threshold accuracy.</dd></div>
-          <div><dt>Evaluation set</dt><dd>The reference depth maps come with a later release.</dd></div>
-          <div><dt>Kit</dt><dd>Comes with a later release.</dd></div>
+          <div><dt>Input</dt><dd>One scanner image, {{ det.frame_px }} &times; {{ det.frame_px }} pixels.</dd></div>
+          <div><dt>Output</dt><dd>A depth map of that image, in metres. A model that gives depth up to a scale is scored after alignment only.</dd></div>
+          <div><dt>Metric</dt><dd>As predicted: MAE, RMSE, absolute relative error, the share of pixels within a ratio of 1.25, and the median scale (predicted over measured depth). After dividing each prediction by its scale: MAE, RMSE, absolute relative error and the share within 1.05.</dd></div>
+          <div><dt>Evaluation set</dt><dd>The first step (<code>S01</code>) of {{ res.depth.desktops | join(', ') }}. The reference comes from <code>reconstructions/scanner/</code> and covers about half of the pixels of each picture; every desktop counts the same.</dd></div>
+          <div><dt>Kit</dt><dd><a href="{{ site.links.github | e }}/tree/main/depth" rel="noopener"><code>depth/</code> in the code repository</a>: reference maps from the point clouds, and the scorer.</dd></div>
         </dl>
-        <p class="s-benchmark__go s-benchmark__go--off">Kit not in the repository yet</p>
+        <p class="s-benchmark__go"><a class="arrow" href="#start-eval-depth">Run it: get started, evaluate</a></p>
       </li>
 
       <li class="s-benchmark__track" id="guide-track-robot" data-reveal>
-        <p class="s-benchmark__top"><span class="chip">Later release</span></p>
-        <h3 class="s-benchmark__name">Robot manipulation</h3>
-        <p class="s-benchmark__def">Remove a named part with a robot, with a policy learned from the robot demonstrations.</p>
+        <p class="s-benchmark__top"><span class="chip chip--accent">Data released</span></p>
+        <h3 class="s-benchmark__name">Robot disassembly</h3>
+        <p class="s-benchmark__def">Remove the part named in an instruction and put it in the sorting zone, on the real robot.</p>
         <dl class="spec s-benchmark__spec">
-          <div><dt>Input</dt><dd>The part to remove. Policies learn from {{ n.robot_demos | num }} robot demonstrations in two settings: Fixtured ({{ n.robot_fixtured | num }}) and On motherboard ({{ n.robot_on_board | num }}).</dd></div>
-          <div><dt>Output</dt><dd>Robot actions that take the part out.</dd></div>
-          <div><dt>Metric</dt><dd>Task success over repeated trials on the real robot.</dd></div>
-          <div><dt>Evaluation set</dt><dd>Comes with a later release.</dd></div>
-          <div><dt>Kit</dt><dd>The demonstrations are in the repository, under <code>raw/robot/</code>. The evaluation kit comes with a later release.</dd></div>
+          <div><dt>Input</dt><dd>The instruction, and the images of the wrist and base cameras. Policies learn from {{ n.robot_demos | num }} demonstrations in two settings: parts on a fixture ({{ n.robot_fixtured | num }}) and parts on a motherboard ({{ n.robot_on_board | num }}).</dd></div>
+          <div><dt>Output</dt><dd>Arm and gripper actions for the whole trial.</dd></div>
+          <div><dt>Metric</dt><dd>Trials completed. A trial fails when it reaches 150&nbsp;s or when the operator judges that the robot cannot finish.</dd></div>
+          <div><dt>Evaluation</dt><dd>On the system the demonstrations were recorded with (a UR5e arm with a Robotiq 2F-85 gripper), with the same instructions and home pose. Fixture: seven part categories, five fixture configurations each, ten trials per configuration ({{ res.robot.rows[0].trials | num }} trials). Motherboard: {{ res.robot.rows[2].trials | num }} trials.</dd></div>
+          <div><dt>Data</dt><dd>The demonstrations are in <code>raw/robot/</code> (<a href="#data-robot">layout</a>). The track has no offline kit: it is run on the physical system.</dd></div>
         </dl>
-        <p class="s-benchmark__go s-benchmark__go--off">Data released, kit to follow</p>
+        <p class="s-benchmark__go"><a class="arrow" href="#data-robot">The demonstrations</a></p>
       </li>
     </ol>
+
+    <section id="bench-results" class="s-benchmark__detail s-benchmark__results" aria-labelledby="bench-results-h" data-reveal>
+      <header class="s-benchmark__detail-head">
+        <p class="s-benchmark__kicker">All four tracks</p>
+        <h3 id="bench-results-h">Results</h3>
+      </header>
+
+      <h4 id="bench-results-detection" class="s-benchmark__rh">Detection and instance segmentation</h4>
+      <p class="s-benchmark__rp">Test split: {{ res.detection.images | num }} scanner images of {{ det.desktops.test | num }} desktops, {{ res.detection.instances | num }} parts. Scores from 0 to 100.</p>
+      <div class="s-benchmark__scroll" data-scroll-x tabindex="0" role="group" aria-label="Detection and segmentation results; scrolls sideways">
+      <table class="s-benchmark__table s-benchmark__res">
+        <thead>
+          <tr><td></td><th scope="colgroup" colspan="5" class="s-benchmark__span">Detection (boxes)</th><th scope="colgroup" colspan="5" class="s-benchmark__span">Instance segmentation (masks)</th></tr>
+          <tr><th scope="col">Method</th><th scope="col">AP [95&nbsp;% interval]</th><th scope="col">AP50</th><th scope="col">F1</th><th scope="col">AP small</th><th scope="col">AP large</th>
+              <th scope="col">AP [95&nbsp;% interval]</th><th scope="col">AP50</th><th scope="col">F1</th><th scope="col">Class mIoU</th><th scope="col">Pixel IoU</th></tr>
+        </thead>
+        <tbody>
+          {% for s in res.detection.systems %}
+          <tr><th scope="row">{{ s.name | e }}</th>
+            {% if s.box_shared %}<td colspan="5" class="s-benchmark__same">the boxes of RF-DETR-Seg</td>{% else %}
+            <td>{{ '%.1f' | format(s.box.ap) }} <span class="s-benchmark__ci">[{{ '%.1f' | format(s.box.ci[0]) }}, {{ '%.1f' | format(s.box.ci[1]) }}]</span></td><td>{{ '%.1f' | format(s.box.ap50) }}</td><td>{{ '%.1f' | format(s.box.f1) }}</td><td>{{ '%.1f' | format(s.box.ap_small) }}</td><td>{{ '%.1f' | format(s.box.ap_large) }}</td>{% endif %}
+            <td>{{ '%.1f' | format(s.mask.ap) }} <span class="s-benchmark__ci">[{{ '%.1f' | format(s.mask.ci[0]) }}, {{ '%.1f' | format(s.mask.ci[1]) }}]</span></td><td>{{ '%.1f' | format(s.mask.ap50) }}</td><td>{{ '%.1f' | format(s.mask.f1) }}</td><td>{{ '%.1f' | format(s.mask.class_miou) }}</td><td>{{ '%.1f' | format(s.mask.pixel_iou) }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      <p class="s-benchmark__note">AP is COCO average precision, averaged over classes and over IoU thresholds from 0.50 to 0.95; the interval comes from resampling the {{ det.desktops.test | num }} test desktops 1,000 times. F1 pools matches, false positives and misses over classes and images at IoU 0.50, at a confidence threshold chosen on the validation split. Class mIoU averages over the {{ det.classes_with_test | num }} classes present in the test annotations; pixel IoU is total intersection over total union for all {{ n.classes | num }} classes. YOLO26m-seg, Mask R-CNN R50-FPN v2 and RF-DETR-Seg are trained end to end; DINOv3 + Mask R-CNN keeps the DINOv3 backbone frozen. SAM&nbsp;3 takes the {{ n.classes | num }} class names as text prompts, before and after fine-tuning. The two frozen SAM rows take the boxes, labels and scores of RF-DETR-Seg and only draw the masks.</p>
+
+      <h4 id="bench-results-qa" class="s-benchmark__rh">Visual question answering</h4>
+      <p class="s-benchmark__rp">{{ res.vqa.questions | num }} questions from the {{ res.vqa.desktops | num }} test desktops. Scores from 0 to 100, averaged per task; a reply that cannot be parsed scores zero.</p>
+      <div class="s-benchmark__scroll" data-scroll-x tabindex="0" role="group" aria-label="Question-answering results; scrolls sideways">
+      <table class="s-benchmark__table s-benchmark__res">
+        <thead>
+          <tr><td colspan="4"></td><th scope="colgroup" colspan="5" class="s-benchmark__span">As released</th><th scope="colgroup" colspan="4" class="s-benchmark__span">Fine-tuned</th></tr>
+          <tr><td colspan="4"></td><th scope="colgroup" colspan="4" class="s-benchmark__span s-benchmark__span--sub">With the images</th><th scope="col" class="s-benchmark__span s-benchmark__span--sub">No image</th><th scope="colgroup" colspan="2" class="s-benchmark__span s-benchmark__span--sub">With the images</th><th scope="colgroup" colspan="2" class="s-benchmark__span s-benchmark__span--sub">No image</th></tr>
+          <tr><th scope="col">Task</th><th scope="col">Metric</th><th scope="col">Questions</th><th scope="col">Const.</th>
+              <th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">GPT-6 Astra</th><th scope="col">Opus 5.5</th><th scope="col">GPT-6 Astra</th>
+              <th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">Qwen</th><th scope="col">InternVL</th></tr>
+        </thead>
+        {% macro cell(v, flag=false) %}<td>{% if v is none %}<span aria-hidden="true">&ndash;</span><span class="vh">not asked</span>{% else %}{{ '%.1f' | format(v) }}{% if flag %}<sup>&dagger;</sup>{% endif %}{% endif %}</td>{% endmacro %}
+        {% for group in ['Perception', 'Understanding', 'Planning'] %}
+        <tbody>
+          <tr class="s-benchmark__group"><th scope="rowgroup" colspan="13">{{ group }}</th></tr>
+          {% for t in res.vqa.tasks if t.group == group %}
+          <tr><th scope="row">{{ t.name | e }}</th><td class="s-benchmark__metric">{{ t.metric | e }}</td><td>{{ t.n }}</td>{{ cell(t.const) }}
+            {% for k in ['qwen', 'internvl', 'gpt', 'opus'] %}{{ cell(t.zero_shot[k], k in t.parse_failures) }}{% endfor %}
+            {{ cell(t.zero_shot_no_image.gpt) }}{{ cell(t.fine_tuned.qwen) }}{{ cell(t.fine_tuned.internvl) }}{{ cell(t.fine_tuned_no_image.qwen) }}{{ cell(t.fine_tuned_no_image.internvl) }}</tr>
+          {% endfor %}
+        </tbody>
+        {% endfor %}
+      </table>
+      </div>
+      <p class="s-benchmark__note">Models: {{ res.vqa.models.qwen }}, {{ res.vqa.models.internvl }}, {{ res.vqa.models.gpt }} and {{ res.vqa.models.opus }}, each given the same images in the same order. Fine-tuned: Qwen and InternVL with LoRA on the questions of the training desktops. Const. repeats the most frequent complete reference answer of a row. No image: the planning questions that state a target, an action, a plan, a rule or choices are also asked as text alone; a dash marks questions that need the images. Planning questions can have several right answers: any action of a feasible kind counts, and a removal plan may take any order that meets the prerequisites and reaches the goal. <sup>&dagger;</sup>At least 10&nbsp;% of the replies failed strict parsing.</p>
+
+      <h4 id="bench-results-depth" class="s-benchmark__rh">Depth from a single image</h4>
+      <p class="s-benchmark__rp">{{ res.depth.models | length }} models as released, none trained on the dataset, on the first step of {{ res.depth.desktops | join(', ') }}.</p>
+      <div class="s-benchmark__scroll" data-scroll-x tabindex="0" role="group" aria-label="Depth results; scrolls sideways">
+      <table class="s-benchmark__table s-benchmark__res">
+        <thead>
+          <tr><td colspan="2"></td><th scope="colgroup" colspan="5" class="s-benchmark__span">As predicted</th><th scope="colgroup" colspan="4" class="s-benchmark__span">After one scale factor per image</th></tr>
+          <tr><th scope="col">Model</th><th scope="col">Output</th><th scope="col">MAE (m)</th><th scope="col">RMSE (m)</th><th scope="col">AbsRel</th><th scope="col">&delta; &lt; 1.25</th><th scope="col">Scale</th>
+              <th scope="col">MAE (m)</th><th scope="col">RMSE (m)</th><th scope="col">AbsRel</th><th scope="col">&delta; &lt; 1.05</th></tr>
+        </thead>
+        {% macro num3(v) %}<td>{% if v is none %}<span aria-hidden="true">&ndash;</span><span class="vh">not defined</span>{% else %}{{ '%.3f' | format(v) }}{% endif %}</td>{% endmacro %}
+        <tbody>
+          {% for m in res.depth.models %}
+          <tr><th scope="row">{{ m.name | e }}</th><td class="s-benchmark__metric">{{ m.scale | capitalize }}</td>
+            {{ num3(m.raw.mae) }}{{ num3(m.raw.rmse) }}{{ num3(m.raw.absrel) }}<td>{% if m.raw.d125 is none %}<span aria-hidden="true">&ndash;</span><span class="vh">not defined</span>{% else %}{{ '%.2f' | format(m.raw.d125) }}&nbsp;%{% endif %}</td>
+            <td>{{ '%.3f' | format(m.ratio) }}{% if m.scale == 'relative' %}<sup>&Dagger;</sup>{% endif %}</td>
+            {{ num3(m.aligned.mae) }}{{ num3(m.aligned.rmse) }}{{ num3(m.aligned.absrel) }}<td>{{ '%.2f' | format(m.aligned.d105) }}&nbsp;%</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      <p class="s-benchmark__note">Lower is better for MAE, RMSE and AbsRel, higher for the two &delta; columns; &delta; &lt; t is the share of pixels where the larger of predicted over measured and measured over predicted depth is below t. Scale is the median of predicted over measured depth (1 is exact): the models that give metric depth place the machine too far away. <sup>&Dagger;</sup>This model gives relative depth, so its factor only describes the output and its unscaled errors are not defined.</p>
+
+      <h4 id="bench-results-robot" class="s-benchmark__rh">Robot disassembly</h4>
+      <p class="s-benchmark__rp">Trials on the real robot, each with the part in a slightly different position.</p>
+      <div class="s-benchmark__scroll">
+      <table class="s-benchmark__table s-benchmark__res s-benchmark__res--narrow">
+        <thead><tr><th scope="col">Policy</th><th scope="col">Setting</th><th scope="col">Completed</th><th scope="col">Trials</th><th scope="col">Rate</th></tr></thead>
+        <tbody>
+          {% for r in res.robot.rows %}
+          <tr><th scope="row">{{ r.policy | replace('pi0.5', '&pi;<sub>0.5</sub>') }}</th><td class="s-benchmark__metric">{{ r.setting | e }}</td><td>{{ r.success }}</td><td>{{ r.trials }}</td><td>{{ '%.1f' | format(r.success / r.trials * 100) }}&nbsp;%</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      <p class="s-benchmark__note">Fixture: OpenVLA-OFT and &pi;<sub>0.5</sub> are each fine-tuned with LoRA for 50,000 steps on the fixtured demonstrations of all seven part categories, then run for ten trials on each of five fixture configurations per category; trials with memory modules and connectors are spread over the slots. Motherboard: a separate &pi;<sub>0.5</sub> policy, trained on the first round of motherboard demonstrations, removes parts that are still installed on a motherboard taken out of its case.</p>
+    </section>
 
     <section id="bench-detection" class="s-benchmark__detail" aria-labelledby="bench-detection-h" data-reveal>
       <header class="s-benchmark__detail-head">

@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=a2d476e9">
   <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=b7b04bb3">
   <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=ef36cc95">
+  <link rel="stylesheet" href="assets/css/site.css?v=7c569ff9">
   <script>
     // Motion is switched on here and switched off again if the page script has not started within three seconds,
     // so a script that fails to load can never leave the content hidden.
@@ -58,7 +58,7 @@
       <p class="band__btns">
         <a class="btn btn--band" href="index.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6.5 9.5V20h11V9.5"/></svg>Home</a>
         <a class="btn btn--band" href="https://huggingface.co/datasets/ChangChrisLiu/E3D-Desktop-Disassembly" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.5" rx="7" ry="2.75"/><path d="M5 5.5v6.5c0 1.5 3.1 2.75 7 2.75s7-1.25 7-2.75V5.5"/><path d="M5 12v6.5c0 1.5 3.1 2.75 7 2.75s7-1.25 7-2.75V12"/></svg>Dataset</a>
-        <a class="btn btn--band" href="https://github.com/EoL3D" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></svg>Code</a>
+        <a class="btn btn--band" href="https://github.com/EoL3D/EoL3D" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7 3.5 12l5 5"/><path d="M15.5 7l5 5-5 5"/><path d="M13.5 4.5l-3 15"/></svg>Code</a>
       </p>
     </div>
   </header>
@@ -87,6 +87,7 @@
               <li><a href="#data-robot-h">Robot demonstrations</a></li>
             </ol></li>
           <li><a href="#guide-benchmark">Benchmark: tasks and scoring</a>            <ol>
+              <li><a href="#bench-results-h">Results</a></li>
               <li><a href="#bench-detection-h">Split and counts</a></li>
               <li><a href="#bench-qa-h">Tasks of the evaluation set</a></li>
             </ol></li>
@@ -266,7 +267,7 @@ print(rec["label"]["answer"], rec["label"]["split"])             <span class="c"
       <li id="start-evaluate" class="s-start__step" data-reveal>
         <div class="s-start__key">
           <h3 id="start-evaluate-h" class="s-start__name">Evaluate</h3>
-          <p class="s-start__gist">Score a file of predictions with the kit of a <a href="index.html#benchmark">benchmark track</a>.</p>
+          <p class="s-start__gist">Score a file of predictions with the kit of a <a href="index.html#benchmark">benchmark track</a>. The kits are also in the <a href="https://github.com/EoL3D/EoL3D" rel="noopener">code repository</a>.</p>
         </div>
         <div class="s-start__body">
           <div id="start-eval-det" class="s-start__kit">
@@ -308,6 +309,23 @@ python tools/vlm_score.py --truth eval_v3/multi.jsonl --pred runs/&lt;model&gt;.
     --chat runs/multi.openai.jsonl --out runs/scores --name &lt;model&gt;-multi</pre>
             </figure>
             <p class="s-start__note">Do the same for <code>scan</code>, <code>oak1</code> and <code>oak2</code>, and score each file separately. <code>vlm_score.py</code> writes <code>&lt;name&gt;.score.md</code> and <code>.score.json</code>: every task with strict and lenient parsing, intervals from a bootstrap over desktops, and reference lines beside each task.</p>
+          </div>
+
+          <div id="start-eval-depth" class="s-start__kit">
+            <h4 class="s-start__sub">Depth from a single image <a class="s-start__more" href="#guide-benchmark">What is measured</a></h4>
+            <p class="s-start__text">The two scripts need numpy alone. The reference is made from the scanner's point clouds; a model sees <code>annotations/scanner/D&lt;NN&gt;/images/S01.png</code> and writes its depth for that picture in metres.</p>
+            <figure class="s-start__sheet" data-copy-box>
+              <figcaption class="s-start__bar"><span>Shell: the code repository</span><button class="code__copy" type="button" hidden data-copy aria-label="Copy the depth evaluation commands">Copy</button></figcaption>
+              <pre class="code s-start__code" tabindex="0" data-copy-src>git clone https://github.com/EoL3D/EoL3D.git && cd EoL3D
+for d in D03 D04 D10 D11 D13; do                                      <span class="c"># the five desktops of the track</span>
+  hf download ChangChrisLiu/E3D-Desktop-Disassembly --repo-type dataset --local-dir "$DATA" \
+      --include "reconstructions/scanner/$d/S01.ply" --include "annotations/scanner/$d/images/S01.png"
+done
+python depth/make_reference.py --data "$DATA" --out work/depth_ref    <span class="c"># reference depth maps, in metres</span>
+<span class="c"># predict: your model writes work/&lt;model&gt;/D03_S01.npy ... D13_S01.npy</span>
+python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
+            </figure>
+            <p class="s-start__note">The scorer prints the errors as predicted, the median scale, and the errors after dividing each prediction by its scale; <code>--json</code> also writes them per image. Other desktops and steps work the same way (<code>--desktops</code>, <code>--step</code>).</p>
           </div>
         </div>
       </li>
@@ -643,7 +661,7 @@ python tools/vlm_score.py --truth eval_v3/multi.jsonl --pred runs/&lt;model&gt;.
 <section id="guide-benchmark" class="g-sec s-benchmark" data-section="guide-benchmark" aria-labelledby="guide-benchmark-h">
     <header class="s-benchmark__head">
       <h2 id="guide-benchmark-h" data-reveal>Benchmark: tasks and scoring</h2>
-      <p class="s-benchmark__lead" data-reveal>Each track fixes the input, the output, the metric and the evaluation set. A track with a released kit can be run now from the repository; the others come with a later release.</p>
+      <p class="s-benchmark__lead" data-reveal>Each track fixes the input, the output, the metric and the evaluation set. Three tracks have a kit that runs now; the robot track is run on the physical system. The <a href="#bench-results">results</a> of current models follow the four tracks.</p>
     </header>
 
     <ol class="s-benchmark__tracks">
@@ -677,33 +695,172 @@ python tools/vlm_score.py --truth eval_v3/multi.jsonl --pred runs/&lt;model&gt;.
       </li>
 
       <li class="s-benchmark__track" id="guide-track-depth" data-reveal>
-        <p class="s-benchmark__top"><span class="chip">Later release</span></p>
-        <h3 class="s-benchmark__name">Metric depth from a single image</h3>
-        <p class="s-benchmark__def">Predict the depth of every pixel of one image, in millimetres.</p>
+        <p class="s-benchmark__top"><span class="chip chip--accent">Kit released</span></p>
+        <h3 class="s-benchmark__name">Depth from a single image</h3>
+        <p class="s-benchmark__def">Predict depth from one scanner image; the scanner's own 3D measurement is the reference.</p>
         <dl class="spec s-benchmark__spec">
-          <div><dt>Input</dt><dd>One image.</dd></div>
-          <div><dt>Output</dt><dd>A depth map in millimetres.</dd></div>
-          <div><dt>Metric</dt><dd>Compared with the depth the scanner measured: absolute relative error, RMSE and threshold accuracy.</dd></div>
-          <div><dt>Evaluation set</dt><dd>The reference depth maps come with a later release.</dd></div>
-          <div><dt>Kit</dt><dd>Comes with a later release.</dd></div>
+          <div><dt>Input</dt><dd>One scanner image, 1600 &times; 1600 pixels.</dd></div>
+          <div><dt>Output</dt><dd>A depth map of that image, in metres. A model that gives depth up to a scale is scored after alignment only.</dd></div>
+          <div><dt>Metric</dt><dd>As predicted: MAE, RMSE, absolute relative error, the share of pixels within a ratio of 1.25, and the median scale (predicted over measured depth). After dividing each prediction by its scale: MAE, RMSE, absolute relative error and the share within 1.05.</dd></div>
+          <div><dt>Evaluation set</dt><dd>The first step (<code>S01</code>) of D03, D04, D10, D11, D13. The reference comes from <code>reconstructions/scanner/</code> and covers about half of the pixels of each picture; every desktop counts the same.</dd></div>
+          <div><dt>Kit</dt><dd><a href="https://github.com/EoL3D/EoL3D/tree/main/depth" rel="noopener"><code>depth/</code> in the code repository</a>: reference maps from the point clouds, and the scorer.</dd></div>
         </dl>
-        <p class="s-benchmark__go s-benchmark__go--off">Kit not in the repository yet</p>
+        <p class="s-benchmark__go"><a class="arrow" href="#start-eval-depth">Run it: get started, evaluate</a></p>
       </li>
 
       <li class="s-benchmark__track" id="guide-track-robot" data-reveal>
-        <p class="s-benchmark__top"><span class="chip">Later release</span></p>
-        <h3 class="s-benchmark__name">Robot manipulation</h3>
-        <p class="s-benchmark__def">Remove a named part with a robot, with a policy learned from the robot demonstrations.</p>
+        <p class="s-benchmark__top"><span class="chip chip--accent">Data released</span></p>
+        <h3 class="s-benchmark__name">Robot disassembly</h3>
+        <p class="s-benchmark__def">Remove the part named in an instruction and put it in the sorting zone, on the real robot.</p>
         <dl class="spec s-benchmark__spec">
-          <div><dt>Input</dt><dd>The part to remove. Policies learn from 1,808 robot demonstrations in two settings: Fixtured (1,092) and On motherboard (716).</dd></div>
-          <div><dt>Output</dt><dd>Robot actions that take the part out.</dd></div>
-          <div><dt>Metric</dt><dd>Task success over repeated trials on the real robot.</dd></div>
-          <div><dt>Evaluation set</dt><dd>Comes with a later release.</dd></div>
-          <div><dt>Kit</dt><dd>The demonstrations are in the repository, under <code>raw/robot/</code>. The evaluation kit comes with a later release.</dd></div>
+          <div><dt>Input</dt><dd>The instruction, and the images of the wrist and base cameras. Policies learn from 1,808 demonstrations in two settings: parts on a fixture (1,092) and parts on a motherboard (716).</dd></div>
+          <div><dt>Output</dt><dd>Arm and gripper actions for the whole trial.</dd></div>
+          <div><dt>Metric</dt><dd>Trials completed. A trial fails when it reaches 150&nbsp;s or when the operator judges that the robot cannot finish.</dd></div>
+          <div><dt>Evaluation</dt><dd>On the system the demonstrations were recorded with (a UR5e arm with a Robotiq 2F-85 gripper), with the same instructions and home pose. Fixture: seven part categories, five fixture configurations each, ten trials per configuration (350 trials). Motherboard: 100 trials.</dd></div>
+          <div><dt>Data</dt><dd>The demonstrations are in <code>raw/robot/</code> (<a href="#data-robot">layout</a>). The track has no offline kit: it is run on the physical system.</dd></div>
         </dl>
-        <p class="s-benchmark__go s-benchmark__go--off">Data released, kit to follow</p>
+        <p class="s-benchmark__go"><a class="arrow" href="#data-robot">The demonstrations</a></p>
       </li>
     </ol>
+
+    <section id="bench-results" class="s-benchmark__detail s-benchmark__results" aria-labelledby="bench-results-h" data-reveal>
+      <header class="s-benchmark__detail-head">
+        <p class="s-benchmark__kicker">All four tracks</p>
+        <h3 id="bench-results-h">Results</h3>
+      </header>
+
+      <h4 id="bench-results-detection" class="s-benchmark__rh">Detection and instance segmentation</h4>
+      <p class="s-benchmark__rp">Test split: 492 scanner images of 12 desktops, 12,930 parts. Scores from 0 to 100.</p>
+      <div class="s-benchmark__scroll" data-scroll-x tabindex="0" role="group" aria-label="Detection and segmentation results; scrolls sideways">
+      <table class="s-benchmark__table s-benchmark__res">
+        <thead>
+          <tr><td></td><th scope="colgroup" colspan="5" class="s-benchmark__span">Detection (boxes)</th><th scope="colgroup" colspan="5" class="s-benchmark__span">Instance segmentation (masks)</th></tr>
+          <tr><th scope="col">Method</th><th scope="col">AP [95&nbsp;% interval]</th><th scope="col">AP50</th><th scope="col">F1</th><th scope="col">AP small</th><th scope="col">AP large</th>
+              <th scope="col">AP [95&nbsp;% interval]</th><th scope="col">AP50</th><th scope="col">F1</th><th scope="col">Class mIoU</th><th scope="col">Pixel IoU</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">YOLO26m-seg</th>
+            <td>45.0 <span class="s-benchmark__ci">[41.9, 55.0]</span></td><td>62.9</td><td>76.0</td><td>14.6</td><td>53.3</td>            <td>43.4 <span class="s-benchmark__ci">[39.9, 52.8]</span></td><td>62.0</td><td>75.8</td><td>49.7</td><td>64.6</td></tr>
+          <tr><th scope="row">Mask R-CNN R50-FPN v2</th>
+            <td>51.8 <span class="s-benchmark__ci">[49.3, 58.9]</span></td><td>71.6</td><td>76.4</td><td>13.4</td><td>63.3</td>            <td>44.9 <span class="s-benchmark__ci">[43.1, 53.0]</span></td><td>64.3</td><td>75.0</td><td>51.3</td><td>76.0</td></tr>
+          <tr><th scope="row">DINOv3 + Mask R-CNN</th>
+            <td>42.9 <span class="s-benchmark__ci">[40.1, 52.0]</span></td><td>65.7</td><td>73.3</td><td>12.6</td><td>52.5</td>            <td>38.2 <span class="s-benchmark__ci">[35.7, 45.6]</span></td><td>63.1</td><td>72.4</td><td>47.7</td><td>70.4</td></tr>
+          <tr><th scope="row">RF-DETR-Seg</th>
+            <td>56.4 <span class="s-benchmark__ci">[52.1, 63.7]</span></td><td>72.2</td><td>77.2</td><td>14.9</td><td>69.9</td>            <td>49.6 <span class="s-benchmark__ci">[47.5, 57.7]</span></td><td>70.8</td><td>75.2</td><td>57.3</td><td>83.1</td></tr>
+          <tr><th scope="row">RF-DETR + frozen SAM 2.1</th>
+<td colspan="5" class="s-benchmark__same">the boxes of RF-DETR-Seg</td>            <td>34.6 <span class="s-benchmark__ci">[33.8, 40.5]</span></td><td>56.7</td><td>62.2</td><td>49.5</td><td>54.7</td></tr>
+          <tr><th scope="row">RF-DETR + frozen SAM 3</th>
+<td colspan="5" class="s-benchmark__same">the boxes of RF-DETR-Seg</td>            <td>35.0 <span class="s-benchmark__ci">[33.6, 41.1]</span></td><td>57.9</td><td>64.6</td><td>49.5</td><td>54.7</td></tr>
+          <tr><th scope="row">SAM 3, zero-shot</th>
+            <td>4.8 <span class="s-benchmark__ci">[4.5, 6.2]</span></td><td>5.7</td><td>7.0</td><td>0.4</td><td>6.0</td>            <td>3.8 <span class="s-benchmark__ci">[3.5, 5.2]</span></td><td>5.7</td><td>6.7</td><td>3.4</td><td>10.7</td></tr>
+          <tr><th scope="row">SAM 3, fine-tuned</th>
+            <td>59.3 <span class="s-benchmark__ci">[56.8, 66.2]</span></td><td>75.3</td><td>76.2</td><td>16.1</td><td>72.4</td>            <td>54.7 <span class="s-benchmark__ci">[51.9, 61.9]</span></td><td>73.7</td><td>75.6</td><td>61.7</td><td>79.0</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="s-benchmark__note">AP is COCO average precision, averaged over classes and over IoU thresholds from 0.50 to 0.95; the interval comes from resampling the 12 test desktops 1,000 times. F1 pools matches, false positives and misses over classes and images at IoU 0.50, at a confidence threshold chosen on the validation split. Class mIoU averages over the 21 classes present in the test annotations; pixel IoU is total intersection over total union for all 24 classes. YOLO26m-seg, Mask R-CNN R50-FPN v2 and RF-DETR-Seg are trained end to end; DINOv3 + Mask R-CNN keeps the DINOv3 backbone frozen. SAM&nbsp;3 takes the 24 class names as text prompts, before and after fine-tuning. The two frozen SAM rows take the boxes, labels and scores of RF-DETR-Seg and only draw the masks.</p>
+
+      <h4 id="bench-results-qa" class="s-benchmark__rh">Visual question answering</h4>
+      <p class="s-benchmark__rp">663 questions from the 12 test desktops. Scores from 0 to 100, averaged per task; a reply that cannot be parsed scores zero.</p>
+      <div class="s-benchmark__scroll" data-scroll-x tabindex="0" role="group" aria-label="Question-answering results; scrolls sideways">
+      <table class="s-benchmark__table s-benchmark__res">
+        <thead>
+          <tr><td colspan="4"></td><th scope="colgroup" colspan="5" class="s-benchmark__span">As released</th><th scope="colgroup" colspan="4" class="s-benchmark__span">Fine-tuned</th></tr>
+          <tr><td colspan="4"></td><th scope="colgroup" colspan="4" class="s-benchmark__span s-benchmark__span--sub">With the images</th><th scope="col" class="s-benchmark__span s-benchmark__span--sub">No image</th><th scope="colgroup" colspan="2" class="s-benchmark__span s-benchmark__span--sub">With the images</th><th scope="colgroup" colspan="2" class="s-benchmark__span s-benchmark__span--sub">No image</th></tr>
+          <tr><th scope="col">Task</th><th scope="col">Metric</th><th scope="col">Questions</th><th scope="col">Const.</th>
+              <th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">GPT-6 Astra</th><th scope="col">Opus 5.5</th><th scope="col">GPT-6 Astra</th>
+              <th scope="col">Qwen</th><th scope="col">InternVL</th><th scope="col">Qwen</th><th scope="col">InternVL</th></tr>
+        </thead>
+        <tbody>
+          <tr class="s-benchmark__group"><th scope="rowgroup" colspan="13">Perception</th></tr>
+          <tr><th scope="row">Visible component boxes</th><td class="s-benchmark__metric">Box-set F1</td><td>55</td><td>8.8</td>
+<td>2.5<sup>&dagger;</sup></td><td>0.6</td><td>9.8</td><td>8.6</td>            <td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td>18.9</td><td>17.9</td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td></tr>
+          <tr><th scope="row">Component grounding</th><td class="s-benchmark__metric">Grounding score</td><td>47</td><td>2.1</td>
+<td>2.1</td><td>4.3</td><td>52.1</td><td>34.9<sup>&dagger;</sup></td>            <td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td>51.1</td><td>51.1</td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td></tr>
+          <tr><th scope="row">Same step across views</th><td class="s-benchmark__metric">Accuracy</td><td>37</td><td>51.4</td>
+<td>43.2</td><td>48.6</td><td>78.4</td><td>70.3</td>            <td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td>86.5</td><td>83.8</td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td></tr>
+          <tr><th scope="row">Component state or screw count</th><td class="s-benchmark__metric">State/count score</td><td>54</td><td>27.8</td>
+<td>35.2</td><td>38.5</td><td>71.9</td><td>66.3</td>            <td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td>83.3</td><td>83.3</td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td></tr>
+        </tbody>
+        <tbody>
+          <tr class="s-benchmark__group"><th scope="rowgroup" colspan="13">Understanding</th></tr>
+          <tr><th scope="row">Observed operation</th><td class="s-benchmark__metric">Verb + target acc.</td><td>54</td><td>20.4</td>
+<td>3.7</td><td>3.7<sup>&dagger;</sup></td><td>24.1</td><td>25.9</td>            <td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td>74.1</td><td>74.1</td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td></tr>
+          <tr><th scope="row">State change</th><td class="s-benchmark__metric">Accuracy</td><td>74</td><td>51.4</td>
+<td>56.8</td><td>56.8</td><td>59.5</td><td>77.0</td>            <td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td>95.9</td><td>89.2</td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td></tr>
+          <tr><th scope="row">Completed operations</th><td class="s-benchmark__metric">Set F1</td><td>58</td><td>13.9</td>
+<td>5.2</td><td>5.2</td><td>28.3</td><td>20.8</td>            <td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td>75.1</td><td>70.4</td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td></tr>
+        </tbody>
+        <tbody>
+          <tr class="s-benchmark__group"><th scope="rowgroup" colspan="13">Planning</th></tr>
+          <tr><th scope="row">Proposed action feasibility</th><td class="s-benchmark__metric">Accuracy</td><td>71</td><td>46.5</td>
+<td>46.5<sup>&dagger;</sup></td><td>54.9</td><td>70.4</td><td>66.2</td>            <td>53.5</td><td>73.2</td><td>63.4</td><td>45.1</td><td>50.7</td></tr>
+          <tr><th scope="row">Next feasible action categories</th><td class="s-benchmark__metric">Set F1</td><td>52</td><td>46.5</td>
+<td>3.3</td><td>2.3</td><td>8.4</td><td>10.5</td>            <td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td>71.2</td><td>65.3</td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not asked</span></td></tr>
+          <tr><th scope="row">Target removal plan</th><td class="s-benchmark__metric">Replay success</td><td>53</td><td>66.0</td>
+<td>0.0</td><td>0.0</td><td>0.0</td><td>1.9</td>            <td>0.0</td><td>98.1</td><td>100.0</td><td>67.9</td><td>67.9</td></tr>
+          <tr><th scope="row">Constrained removal plan</th><td class="s-benchmark__metric">Replay success</td><td>51</td><td>5.9</td>
+<td>0.0</td><td>0.0</td><td>2.0</td><td>2.0</td>            <td>0.0</td><td>49.0</td><td>47.1</td><td>27.5</td><td>27.5</td></tr>
+          <tr><th scope="row">Proposed plan validity</th><td class="s-benchmark__metric">Accuracy</td><td>57</td><td>50.9</td>
+<td>54.4</td><td>33.3<sup>&dagger;</sup></td><td>68.4</td><td>75.4</td>            <td>63.2</td><td>87.7</td><td>86.0</td><td>63.2</td><td>78.9</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="s-benchmark__note">Models: Qwen3-VL-8B, InternVL3.5-8B, GPT-6 Astra and Claude Opus 5.5, each given the same images in the same order. Fine-tuned: Qwen and InternVL with LoRA on the questions of the training desktops. Const. repeats the most frequent complete reference answer of a row. No image: the planning questions that state a target, an action, a plan, a rule or choices are also asked as text alone; a dash marks questions that need the images. Planning questions can have several right answers: any action of a feasible kind counts, and a removal plan may take any order that meets the prerequisites and reaches the goal. <sup>&dagger;</sup>At least 10&nbsp;% of the replies failed strict parsing.</p>
+
+      <h4 id="bench-results-depth" class="s-benchmark__rh">Depth from a single image</h4>
+      <p class="s-benchmark__rp">6 models as released, none trained on the dataset, on the first step of D03, D04, D10, D11, D13.</p>
+      <div class="s-benchmark__scroll" data-scroll-x tabindex="0" role="group" aria-label="Depth results; scrolls sideways">
+      <table class="s-benchmark__table s-benchmark__res">
+        <thead>
+          <tr><td colspan="2"></td><th scope="colgroup" colspan="5" class="s-benchmark__span">As predicted</th><th scope="colgroup" colspan="4" class="s-benchmark__span">After one scale factor per image</th></tr>
+          <tr><th scope="col">Model</th><th scope="col">Output</th><th scope="col">MAE (m)</th><th scope="col">RMSE (m)</th><th scope="col">AbsRel</th><th scope="col">&delta; &lt; 1.25</th><th scope="col">Scale</th>
+              <th scope="col">MAE (m)</th><th scope="col">RMSE (m)</th><th scope="col">AbsRel</th><th scope="col">&delta; &lt; 1.05</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">UniDepth V2</th><td class="s-benchmark__metric">Metric</td>
+            <td>0.398</td><td>0.400</td><td>0.330</td><td>2.96&nbsp;%</td>
+            <td>1.334</td>
+            <td>0.016</td><td>0.021</td><td>0.014</td><td>98.73&nbsp;%</td></tr>
+          <tr><th scope="row">Depth Anything V2</th><td class="s-benchmark__metric">Metric</td>
+            <td>0.736</td><td>0.748</td><td>0.609</td><td>0.00&nbsp;%</td>
+            <td>1.650</td>
+            <td>0.046</td><td>0.071</td><td>0.040</td><td>71.49&nbsp;%</td></tr>
+          <tr><th scope="row">Depth Pro</th><td class="s-benchmark__metric">Metric</td>
+            <td>0.980</td><td>0.989</td><td>0.811</td><td>0.00&nbsp;%</td>
+            <td>1.862</td>
+            <td>0.038</td><td>0.061</td><td>0.033</td><td>72.37&nbsp;%</td></tr>
+          <tr><th scope="row">Metric3D v2</th><td class="s-benchmark__metric">Metric</td>
+            <td>2.073</td><td>2.078</td><td>1.718</td><td>0.00&nbsp;%</td>
+            <td>2.754</td>
+            <td>0.023</td><td>0.034</td><td>0.019</td><td>86.66&nbsp;%</td></tr>
+          <tr><th scope="row">Pi3X</th><td class="s-benchmark__metric">Approximately metric</td>
+            <td>1.214</td><td>1.218</td><td>1.010</td><td>0.00&nbsp;%</td>
+            <td>2.023</td>
+            <td>0.062</td><td>0.072</td><td>0.052</td><td>50.37&nbsp;%</td></tr>
+          <tr><th scope="row">DA3-BASE</th><td class="s-benchmark__metric">Relative</td>
+            <td><span aria-hidden="true">&ndash;</span><span class="vh">not defined</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not defined</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not defined</span></td><td><span aria-hidden="true">&ndash;</span><span class="vh">not defined</span></td>
+            <td>0.762<sup>&Dagger;</sup></td>
+            <td>0.029</td><td>0.035</td><td>0.024</td><td>90.58&nbsp;%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="s-benchmark__note">Lower is better for MAE, RMSE and AbsRel, higher for the two &delta; columns; &delta; &lt; t is the share of pixels where the larger of predicted over measured and measured over predicted depth is below t. Scale is the median of predicted over measured depth (1 is exact): the models that give metric depth place the machine too far away. <sup>&Dagger;</sup>This model gives relative depth, so its factor only describes the output and its unscaled errors are not defined.</p>
+
+      <h4 id="bench-results-robot" class="s-benchmark__rh">Robot disassembly</h4>
+      <p class="s-benchmark__rp">Trials on the real robot, each with the part in a slightly different position.</p>
+      <div class="s-benchmark__scroll">
+      <table class="s-benchmark__table s-benchmark__res s-benchmark__res--narrow">
+        <thead><tr><th scope="col">Policy</th><th scope="col">Setting</th><th scope="col">Completed</th><th scope="col">Trials</th><th scope="col">Rate</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">&pi;<sub>0.5</sub></th><td class="s-benchmark__metric">Parts on a fixture</td><td>83</td><td>350</td><td>23.7&nbsp;%</td></tr>
+          <tr><th scope="row">OpenVLA-OFT</th><td class="s-benchmark__metric">Parts on a fixture</td><td>0</td><td>350</td><td>0.0&nbsp;%</td></tr>
+          <tr><th scope="row">&pi;<sub>0.5</sub></th><td class="s-benchmark__metric">Parts on the motherboard</td><td>5</td><td>100</td><td>5.0&nbsp;%</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="s-benchmark__note">Fixture: OpenVLA-OFT and &pi;<sub>0.5</sub> are each fine-tuned with LoRA for 50,000 steps on the fixtured demonstrations of all seven part categories, then run for ten trials on each of five fixture configurations per category; trials with memory modules and connectors are spread over the slots. Motherboard: a separate &pi;<sub>0.5</sub> policy, trained on the first round of motherboard demonstrations, removes parts that are still installed on a motherboard taken out of its case.</p>
+    </section>
 
     <section id="bench-detection" class="s-benchmark__detail" aria-labelledby="bench-detection-h" data-reveal>
       <header class="s-benchmark__detail-head">
