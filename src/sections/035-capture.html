@@ -19,7 +19,7 @@
           <img src="{{ 'assets/img/story/rig.webp' | v }}" width="800" height="601" loading="lazy" decoding="async"
                alt="The capture rig: a metal frame over a bench. A 3D scanner hangs from the frame and looks down at an opened desktop computer; two cameras sit on boom arms, two more on tripods, and one on a robot arm at the left.">
           {% for d in devices %}{% for p in d.at %}
-          <span class="s-capture__dot" data-k="{{ d.k }}" style="left: {{ p[0] }}%; top: {{ p[1] }}%" aria-hidden="true">{{ d.n }}</span>
+          <span class="s-capture__dot" data-k="{{ d.k }}" style="left: {{ p[0] }}%; top: {{ p[1] }}%" aria-hidden="true"><i class="s-capture__num">{{ d.n }}</i></span>
           {% endfor %}{% endfor %}
         </div>
         <figcaption>

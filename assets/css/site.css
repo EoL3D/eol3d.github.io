@@ -1098,13 +1098,17 @@ code, kbd, pre, samp { font-family: var(--mono); font-size: .875em; }
 .s-capture__rig { margin: 0; min-width: 0; }
 .s-capture__photo { position: relative; overflow: hidden; border-radius: var(--r-4); box-shadow: var(--shadow-1); background: var(--media-bg); }
 .s-capture__photo img { width: 100%; }
-.s-capture__dot { position: absolute; display: grid; place-items: center; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%;
-                  background: var(--accent); color: var(--on-accent); font-size: var(--fs-00); font-weight: 600; line-height: 1;
-                  box-shadow: 0 0 0 3px rgba(255, 255, 255, .85); transition: transform .2s var(--ease); }
-.s-capture__dot::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; animation: capture-ping 3.2s var(--ease) infinite; }
-.s-capture__dot.is-on { transform: scale(1.25); }
+/* a mark is a ring around the device, so the device stays in view; its number sits on the ring's upper left edge */
+.s-capture__dot { --ring: 36px; position: absolute; width: var(--ring); height: var(--ring); margin: calc(var(--ring) / -2) 0 0 calc(var(--ring) / -2); border-radius: 50%;
+                  border: 2.5px solid var(--accent); box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .9), inset 0 0 0 1.5px rgba(255, 255, 255, .9);
+                  transition: transform .2s var(--ease), border-width .2s var(--ease); }
+.s-capture__num { position: absolute; left: -8px; top: -8px; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%;
+                  background: var(--accent); color: var(--on-accent); font-size: 11px; font-style: normal; font-weight: 600; line-height: 1;
+                  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .9); }
+.s-capture__dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; animation: capture-ping 3.2s var(--ease) infinite; }
+.s-capture__dot.is-on { transform: scale(1.15); border-width: 3.5px; }
 .s-capture.is-picked .s-capture__dot:not(.is-on) { opacity: .45; }
-@keyframes capture-ping { 0% { transform: scale(1); opacity: .7; } 60%, 100% { transform: scale(2); opacity: 0; } }
+@keyframes capture-ping { 0% { transform: scale(1); opacity: .6; } 60%, 100% { transform: scale(1.5); opacity: 0; } }
 .s-capture__legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem var(--sp-5); margin-top: var(--sp-4); counter-reset: dev; }
 .s-capture__legend li { position: relative; padding-left: 2.1rem; font-size: var(--fs-0); line-height: 1.45; counter-increment: dev; border-radius: var(--r-1); }
 .s-capture__legend li::before { content: counter(dev); position: absolute; left: 0; top: .1rem; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
@@ -1187,7 +1191,8 @@ code, kbd, pre, samp { font-family: var(--mono); font-size: .875em; }
 }
 @media (max-width: 560px) {
   .s-capture__legend { grid-template-columns: minmax(0, 1fr); }
-  .s-capture__dot { width: 22px; height: 22px; margin: -11px 0 0 -11px; }
+  .s-capture__dot { --ring: 26px; border-width: 2px; }
+  .s-capture__num { left: -7px; top: -7px; width: 15px; height: 15px; font-size: 10px; }
   .s-stages__tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
   .s-stages__tab, .s-stages__tab:first-child, .s-stages__tab:last-child { margin-left: 0; padding: .5rem .75rem; border-radius: var(--r-pill); clip-path: none; min-height: 44px; }
   .s-stages__strip, .s-stages__chain { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 10px; }
