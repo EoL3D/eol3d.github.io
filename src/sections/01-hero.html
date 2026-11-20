@@ -3,7 +3,7 @@
   <div class="band band--wall">
     <div class="band__wall" aria-hidden="true"></div>
     <div class="wrap band__in s-hero__in">
-      <h1 id="hero-h" class="s-hero__name">{{ site.name | e }}</h1>
+      <h1 id="hero-h" class="s-hero__name"><img class="s-hero__mark" src="{{ 'assets/img/logo.png' | v }}" width="1323" height="304" alt="{{ site.name | e }}"></h1>
       <p class="s-hero__title">{{ site.title | e | replace('end-of-life', '<span class="s-hero__nw">end-of-life</span>') }}</p>
       <ul class="s-hero__authors" aria-label="Authors">
         {% for a in site.authors %}

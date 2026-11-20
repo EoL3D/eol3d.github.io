@@ -1,0 +1,42 @@
+{# How it was recorded: the photograph of the capture rig with its devices marked, and the four things that happen
+   for every desktop. Positions of the marks are in percent of the photograph. #}
+{% set devices = [
+  {'k': 'scanner', 'n': 1, 'name': '3D scanner', 'what': 'looks straight down; its pictures carry the annotations, its scans the 3D points', 'at': [[45.6, 12.0]]},
+  {'k': 'oak', 'n': 2, 'name': 'Two OAK-D cameras', 'what': 'colour, depth and point clouds', 'at': [[64.4, 37.4], [43.1, 55.7]]},
+  {'k': 'realsense', 'n': 3, 'name': 'RealSense camera', 'what': 'colour, depth and point clouds at an angle', 'at': [[18.7, 46.0]]},
+  {'k': 'video', 'n': 4, 'name': 'Two video cameras', 'what': 'film the hands at work from two sides', 'at': [[49.4, 50.6], [66.0, 50.2]]},
+  {'k': 'desktop', 'n': 5, 'name': 'The desktop', 'what': 'on the bench, taken apart one step at a time', 'at': [[43.0, 91.0]]}
+] %}
+<section id="capture" class="sec s-capture" data-section="capture" data-module="capture" aria-labelledby="capture-h">
+  <div class="wrap">
+    <header class="sec__head">
+      <h2 id="capture-h" data-reveal>How it was recorded</h2>
+    </header>
+
+    <div class="s-capture__grid">
+      <figure class="s-capture__rig" data-reveal>
+        <div class="s-capture__photo">
+          <img src="{{ 'assets/img/story/rig.webp' | v }}" width="800" height="601" loading="lazy" decoding="async"
+               alt="The capture rig: a metal frame over a bench. A 3D scanner hangs from the frame and looks down at an opened desktop computer; two cameras sit on boom arms, two more on tripods, and one on a robot arm at the left.">
+          {% for d in devices %}{% for p in d.at %}
+          <span class="s-capture__dot" data-k="{{ d.k }}" style="left: {{ p[0] }}%; top: {{ p[1] }}%" aria-hidden="true">{{ d.n }}</span>
+          {% endfor %}{% endfor %}
+        </div>
+        <figcaption>
+          <ol class="s-capture__legend">
+            {% for d in devices %}
+            <li data-k="{{ d.k }}"><b>{{ d.name }}</b><span>{{ d.what }}</span></li>
+            {% endfor %}
+          </ol>
+        </figcaption>
+      </figure>
+
+      <ol class="s-capture__steps">
+        <li data-reveal><h3>One step at a time</h3><p>An operator takes the machine apart by hand. Every step is logged: the action, the part and the tool.</p></li>
+        <li data-reveal><h3>Four views after every step</h3><p>The scanner and three cameras record what is left on the bench, so all four views show the same state.</p></li>
+        <li data-reveal><h3>Annotated backward</h3><p>Annotators start from the late steps: a part that is exposed there is followed back through the frames where it was covered, under one identity.</p></li>
+        <li data-reveal><h3>Questions, video and robot data</h3><p>Question-answer pairs are generated from the annotations and the log. Two video cameras film the operator's hands, and a robot arm repeats part removals under teleoperation.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>

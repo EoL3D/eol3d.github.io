@@ -1,28 +1,11 @@
-{# Updates: what reached the repository and when (dates of the repository's commits, UTC), newest first. #}
-{% set n = site.numbers %}
+{# Updates: what changed and when, newest first. The list starts with the day the release went online. #}
 <section id="updates" class="sec s-updates" data-section="updates" aria-labelledby="updates-h">
   <div class="wrap">
     <h2 id="updates-h" class="s-updates__h" data-reveal>Updates</h2>
     <ol class="s-updates__list" data-reveal>
       <li class="s-updates__item is-new">
         <time datetime="2026-11-20">Nov 20, 2026</time>
-        <p><span class="chip chip--accent">New</span> <a href="#benchmark">Benchmark results</a> for detection, question answering, depth and robot trials, and the <a href="{{ site.links.github | e }}" rel="noopener">code repository</a> with the kits of the tracks.</p>
-      </li>
-      <li class="s-updates__item is-new">
-        <time datetime="2026-11-20">Nov 20, 2026</time>
-        <p><span class="chip chip--accent">New</span> The scanner's 3D reconstructions: {{ n.recon_files | num }} point clouds of {{ n.recon_desktops | num }} desktops, one for every annotated step, each point labelled with its part. <a href="guide.html#data-3d">How to read them</a></p>
-      </li>
-      <li class="s-updates__item">
-        <time datetime="2026-11-05">Nov 5, 2026</time>
-        <p>Annotations of all {{ n.desktops | num }} desktops in their final form, the question-answer pack ({{ n.qa_pairs | num }} pairs), the detection kit and {{ n.robot_demos | num }} robot demonstrations.</p>
-      </li>
-      <li class="s-updates__item">
-        <time datetime="2026-11-03">Nov 3, 2026</time>
-        <p>Operator video of the hands at work, faces masked ({{ n.clips | num }} clips, {{ n.clip_hours | num }} hours), and the components gallery.</p>
-      </li>
-      <li class="s-updates__item">
-        <time datetime="2026-10-28">Oct 28, 2026</time>
-        <p>Raw captures of the {{ ['no', 'one', 'two', 'three', 'four', 'five', 'six'][n.views] if n.views < 7 else n.views }} views for every step of all {{ n.desktops | num }} desktops.</p>
+        <p>{{ site.name | e }} is online: the <a href="{{ site.links.hf | e }}" rel="noopener">data</a> on Hugging Face, the <a href="{{ site.links.github | e }}" rel="noopener">code</a> on GitHub, and the <a href="#benchmark">benchmark results</a> on this page.</p>
       </li>
     </ol>
   </div>

@@ -1,5 +1,5 @@
-// The teardowns in numbers: a crosshair read-out on the line chart (pointer and arrow keys) and a hover tooltip on the
-// histogram's columns. Every value is also in the page itself (labels, the table), so this only adds convenience.
+// The teardowns in numbers: a crosshair read-out on the line chart (pointer and arrow keys), a hover tooltip on the
+// histogram's columns, and the highlighting of the flow chart. Every value is also in the page itself (labels, the table), so this only adds convenience.
 import { qs, qsa, on, clamp } from '../lib/dom.js';
 
 const pct = (v) => `${(Math.round(v * 10) / 10).toFixed(1)} %`;
@@ -65,7 +65,41 @@ function columns(root) {
   });
 }
 
+// The flow chart: pointing at (or focusing) an action or a part lights its ribbons and the nodes at their other ends;
+// pointing at one ribbon names it. The totals are printed beside every node and each node's accessible name lists
+// its ribbons, so nothing is readable only here.
+function flow(el) {
+  const links = qsa('.flow__link', el), nodes = qsa('.flow__node', el), tip = qs('[data-flow-tip]', el);
+  const name = (id) => { const n = nodes.find((x) => x.dataset.id === id); return n ? qs('span', n).firstChild.textContent.trim() : id; };
+  const pick = (test) => {
+    const on = new Set();
+    links.forEach((l) => { const hit = test(l); l.classList.toggle('is-on', hit); if (hit) { on.add(l.dataset.from); on.add(l.dataset.to); } });
+    nodes.forEach((n) => n.classList.toggle('is-on', on.has(n.dataset.id)));
+    el.classList.add('is-picked');
+  };
+  const clear = () => { el.classList.remove('is-picked'); if (tip) tip.hidden = true; };
+  nodes.forEach((n) => {
+    const side = n.parentElement.classList.contains('flow__col--left') ? 'from' : 'to';
+    const show = () => pick((l) => l.dataset[side] === n.dataset.id);
+    on(n, 'pointerenter', show); on(n, 'focus', show);
+    on(n, 'pointerleave', clear); on(n, 'blur', clear);
+  });
+  links.forEach((l) => {
+    on(l, 'pointerenter', (e) => {
+      pick((x) => x === l);
+      if (!tip) return;
+      tip.textContent = `${name(l.dataset.from)} → ${name(l.dataset.to)}: ${Number(l.dataset.n).toLocaleString('en-US')} actions`;
+      tip.hidden = false;
+      const r = el.getBoundingClientRect();
+      tip.style.left = `${clamp(e.clientX - r.left + 12, 0, r.width - tip.offsetWidth)}px`;
+      tip.style.top = `${clamp(e.clientY - r.top - 34, 0, r.height - 30)}px`;
+    });
+    on(l, 'pointerleave', clear);
+  });
+}
+
 export default function init(root) {
   qsa('[data-lc]', root).forEach(lineChart);
   qsa('.hist', root).forEach(columns);
+  qsa('[data-flow]', root).forEach(flow);
 }

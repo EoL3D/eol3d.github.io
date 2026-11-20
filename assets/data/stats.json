@@ -1,151 +1,670 @@
 {
-  "generated": "2026-11-18",
+  "generated": "2026-11-20",
   "classes": [
     {
       "id": "screw",
       "label": "Screw",
       "instances": 791,
-      "annotations": 20920
+      "annotations": 20920,
+      "hidden": [
+        17692,
+        1146,
+        2082
+      ],
+      "instances_bar": 96.73,
+      "annotations_bar": 100.0
     },
     {
       "id": "ram_latch",
       "label": "RAM latch",
       "instances": 494,
-      "annotations": 20245
+      "annotations": 20245,
+      "hidden": [
+        18774,
+        292,
+        1179
+      ],
+      "instances_bar": 90.54,
+      "annotations_bar": 99.69
     },
     {
       "id": "connector",
       "label": "Connector",
       "instances": 1015,
-      "annotations": 18510
+      "annotations": 18510,
+      "hidden": [
+        15826,
+        568,
+        2116
+      ],
+      "instances_bar": 100.0,
+      "annotations_bar": 98.85
     },
     {
       "id": "ram_module",
       "label": "RAM module",
       "instances": 127,
-      "annotations": 3225
+      "annotations": 3225,
+      "hidden": [
+        2741,
+        131,
+        353
+      ],
+      "instances_bar": 72.71,
+      "annotations_bar": 82.43
     },
     {
       "id": "chassis",
       "label": "Chassis",
       "instances": 66,
-      "annotations": 2800
+      "annotations": 2800,
+      "hidden": [
+        163,
+        2637,
+        0
+      ],
+      "instances_bar": 64.11,
+      "annotations_bar": 81.1
     },
     {
       "id": "motherboard",
       "label": "Motherboard",
       "instances": 66,
-      "annotations": 2714
+      "annotations": 2714,
+      "hidden": [
+        2327,
+        387,
+        0
+      ],
+      "instances_bar": 64.11,
+      "annotations_bar": 80.81
     },
     {
       "id": "cpu_socket_lever",
       "label": "CPU socket lever",
       "instances": 65,
-      "annotations": 2694
+      "annotations": 2694,
+      "hidden": [
+        2047,
+        144,
+        503
+      ],
+      "instances_bar": 63.91,
+      "annotations_bar": 80.74
     },
     {
       "id": "cpu",
       "label": "CPU",
       "instances": 65,
-      "annotations": 1854
+      "annotations": 1854,
+      "hidden": [
+        1151,
+        1,
+        702
+      ],
+      "instances_bar": 63.91,
+      "annotations_bar": 77.23
     },
     {
       "id": "psu",
       "label": "Power supply",
       "instances": 65,
-      "annotations": 1810
+      "annotations": 1810,
+      "hidden": [
+        1809,
+        1,
+        0
+      ],
+      "instances_bar": 63.91,
+      "annotations_bar": 77.0
     },
     {
       "id": "cover",
       "label": "Cover",
       "instances": 64,
-      "annotations": 1809
+      "annotations": 1809,
+      "hidden": [
+        1753,
+        56,
+        0
+      ],
+      "instances_bar": 63.71,
+      "annotations_bar": 77.0
     },
     {
       "id": "drive_cage",
       "label": "Drive cage",
       "instances": 55,
-      "annotations": 1609
+      "annotations": 1609,
+      "hidden": [
+        1394,
+        215,
+        0
+      ],
+      "instances_bar": 61.72,
+      "annotations_bar": 75.9
     },
     {
       "id": "expansion_card",
       "label": "Expansion card",
       "instances": 36,
-      "annotations": 1060
+      "annotations": 1060,
+      "hidden": [
+        951,
+        103,
+        6
+      ],
+      "instances_bar": 56.16,
+      "annotations_bar": 71.97
     },
     {
       "id": "cable_clip",
       "label": "Cable clip",
       "instances": 35,
-      "annotations": 1014
+      "annotations": 1014,
+      "hidden": [
+        922,
+        18,
+        74
+      ],
+      "instances_bar": 55.79,
+      "annotations_bar": 71.56
     },
     {
       "id": "cpu_cooler",
       "label": "CPU cooler",
       "instances": 75,
-      "annotations": 783
+      "annotations": 783,
+      "hidden": [
+        627,
+        153,
+        3
+      ],
+      "instances_bar": 65.79,
+      "annotations_bar": 69.13
     },
     {
       "id": "storage_drive",
       "label": "Storage drive",
       "instances": 65,
-      "annotations": 752
+      "annotations": 752,
+      "hidden": [
+        432,
+        167,
+        153
+      ],
+      "instances_bar": 63.91,
+      "annotations_bar": 68.75
     },
     {
       "id": "psu_latch",
       "label": "Power supply latch",
       "instances": 20,
-      "annotations": 735
+      "annotations": 735,
+      "hidden": [
+        735,
+        0,
+        0
+      ],
+      "instances_bar": 48.44,
+      "annotations_bar": 68.53
     },
     {
       "id": "card_latch",
       "label": "Card latch",
       "instances": 16,
-      "annotations": 564
+      "annotations": 564,
+      "hidden": [
+        563,
+        0,
+        1
+      ],
+      "instances_bar": 45.51,
+      "annotations_bar": 66.04
     },
     {
       "id": "screw_hole",
       "label": "Screw hole",
       "instances": 35,
-      "annotations": 510
+      "annotations": 510,
+      "hidden": [
+        384,
+        3,
+        123
+      ],
+      "instances_bar": 55.79,
+      "annotations_bar": 65.1
     },
     {
       "id": "optical_drive",
       "label": "Optical drive",
       "instances": 29,
-      "annotations": 279
+      "annotations": 279,
+      "hidden": [
+        268,
+        1,
+        10
+      ],
+      "instances_bar": 53.32,
+      "annotations_bar": 59.43
     },
     {
       "id": "drive_latch",
       "label": "Drive latch",
       "instances": 20,
-      "annotations": 251
+      "annotations": 251,
+      "hidden": [
+        248,
+        3,
+        0
+      ],
+      "instances_bar": 48.44,
+      "annotations_bar": 58.44
     },
     {
       "id": "case_fan",
       "label": "Case fan",
       "instances": 5,
-      "annotations": 45
+      "annotations": 45,
+      "hidden": [
+        45,
+        0,
+        0
+      ],
+      "instances_bar": 30.23,
+      "annotations_bar": 42.29
     },
     {
       "id": "misc_part",
-      "label": "Misc part",
+      "label": "Case connector part",
       "instances": 1,
-      "annotations": 23
+      "annotations": 23,
+      "hidden": [
+        23,
+        0,
+        0
+      ],
+      "instances_bar": 9.1,
+      "annotations_bar": 35.98
     },
     {
       "id": "cooler_bracket",
       "label": "Cooler bracket",
       "instances": 2,
-      "annotations": 13
+      "annotations": 13,
+      "hidden": [
+        9,
+        4,
+        0
+      ],
+      "instances_bar": 18.2,
+      "annotations_bar": 30.62
     },
     {
       "id": "cooler_latch",
       "label": "Cooler latch",
       "instances": 5,
-      "annotations": 6
+      "annotations": 6,
+      "hidden": [
+        4,
+        2,
+        0
+      ],
+      "instances_bar": 30.23,
+      "annotations_bar": 23.35
     }
   ],
+  "flows": {
+    "total": 1014,
+    "left": [
+      {
+        "id": "open",
+        "label": "Open",
+        "n": 349,
+        "y0": 0.0,
+        "y1": 27.98
+      },
+      {
+        "id": "remove",
+        "label": "Remove",
+        "n": 592,
+        "y0": 37.33,
+        "y1": 84.8
+      },
+      {
+        "id": "manipulate",
+        "label": "Move or release",
+        "n": 73,
+        "y0": 94.15,
+        "y1": 100.0
+      }
+    ],
+    "right": [
+      {
+        "id": "ram_latch",
+        "label": "RAM latch",
+        "n": 226,
+        "y0": 0.0,
+        "y1": 18.12
+      },
+      {
+        "id": "cpu_socket_lever",
+        "label": "CPU socket lever",
+        "n": 65,
+        "y0": 19.82,
+        "y1": 25.03
+      },
+      {
+        "id": "latches",
+        "label": "Latches and clips",
+        "n": 87,
+        "y0": 26.73,
+        "y1": 33.71
+      },
+      {
+        "id": "cover",
+        "label": "Cover",
+        "n": 63,
+        "y0": 35.41,
+        "y1": 40.46
+      },
+      {
+        "id": "ram_module",
+        "label": "RAM module",
+        "n": 112,
+        "y0": 42.16,
+        "y1": 51.14
+      },
+      {
+        "id": "cpu_cooler",
+        "label": "CPU cooler",
+        "n": 74,
+        "y0": 52.84,
+        "y1": 58.77
+      },
+      {
+        "id": "cpu",
+        "label": "CPU",
+        "n": 65,
+        "y0": 60.47,
+        "y1": 65.68
+      },
+      {
+        "id": "psu",
+        "label": "Power supply",
+        "n": 74,
+        "y0": 67.38,
+        "y1": 73.32
+      },
+      {
+        "id": "storage_drive",
+        "label": "Storage drive",
+        "n": 65,
+        "y0": 75.02,
+        "y1": 80.23
+      },
+      {
+        "id": "motherboard",
+        "label": "Motherboard",
+        "n": 60,
+        "y0": 81.93,
+        "y1": 86.74
+      },
+      {
+        "id": "cards",
+        "label": "Cards, drives and fans",
+        "n": 70,
+        "y0": 88.44,
+        "y1": 94.05
+      },
+      {
+        "id": "chassis",
+        "label": "Cages and chassis parts",
+        "n": 53,
+        "y0": 95.75,
+        "y1": 100.0
+      }
+    ],
+    "links": [
+      {
+        "from": "open",
+        "to": "ram_latch",
+        "n": 226,
+        "d": "M0,0.00 C50,0.00 50,0.00 100,0.00 L100,18.12 C50,18.12 50,18.12 0,18.12 Z"
+      },
+      {
+        "from": "open",
+        "to": "cpu_socket_lever",
+        "n": 65,
+        "d": "M0,18.12 C50,18.12 50,19.82 100,19.82 L100,25.03 C50,25.03 50,23.33 0,23.33 Z"
+      },
+      {
+        "from": "open",
+        "to": "latches",
+        "n": 20,
+        "d": "M0,23.33 C50,23.33 50,26.73 100,26.73 L100,28.34 C50,28.34 50,24.94 0,24.94 Z"
+      },
+      {
+        "from": "open",
+        "to": "cover",
+        "n": 38,
+        "d": "M0,24.94 C50,24.94 50,35.41 100,35.41 L100,38.45 C50,38.45 50,27.98 0,27.98 Z"
+      },
+      {
+        "from": "remove",
+        "to": "latches",
+        "n": 35,
+        "d": "M0,37.33 C50,37.33 50,28.34 100,28.34 L100,31.14 C50,31.14 50,40.14 0,40.14 Z"
+      },
+      {
+        "from": "remove",
+        "to": "cover",
+        "n": 25,
+        "d": "M0,40.14 C50,40.14 50,38.45 100,38.45 L100,40.46 C50,40.46 50,42.14 0,42.14 Z"
+      },
+      {
+        "from": "remove",
+        "to": "ram_module",
+        "n": 112,
+        "d": "M0,42.14 C50,42.14 50,42.16 100,42.16 L100,51.14 C50,51.14 50,51.12 0,51.12 Z"
+      },
+      {
+        "from": "remove",
+        "to": "cpu_cooler",
+        "n": 73,
+        "d": "M0,51.12 C50,51.12 50,52.84 100,52.84 L100,58.69 C50,58.69 50,56.98 0,56.98 Z"
+      },
+      {
+        "from": "remove",
+        "to": "cpu",
+        "n": 65,
+        "d": "M0,56.98 C50,56.98 50,60.47 100,60.47 L100,65.68 C50,65.68 50,62.19 0,62.19 Z"
+      },
+      {
+        "from": "remove",
+        "to": "psu",
+        "n": 62,
+        "d": "M0,62.19 C50,62.19 50,67.38 100,67.38 L100,72.35 C50,72.35 50,67.16 0,67.16 Z"
+      },
+      {
+        "from": "remove",
+        "to": "storage_drive",
+        "n": 64,
+        "d": "M0,67.16 C50,67.16 50,75.02 100,75.02 L100,80.15 C50,80.15 50,72.29 0,72.29 Z"
+      },
+      {
+        "from": "remove",
+        "to": "motherboard",
+        "n": 60,
+        "d": "M0,72.29 C50,72.29 50,81.93 100,81.93 L100,86.74 C50,86.74 50,77.10 0,77.10 Z"
+      },
+      {
+        "from": "remove",
+        "to": "cards",
+        "n": 70,
+        "d": "M0,77.10 C50,77.10 50,88.44 100,88.44 L100,94.05 C50,94.05 50,82.71 0,82.71 Z"
+      },
+      {
+        "from": "remove",
+        "to": "chassis",
+        "n": 26,
+        "d": "M0,82.71 C50,82.71 50,95.75 100,95.75 L100,97.84 C50,97.84 50,84.80 0,84.80 Z"
+      },
+      {
+        "from": "manipulate",
+        "to": "latches",
+        "n": 32,
+        "d": "M0,94.15 C50,94.15 50,31.14 100,31.14 L100,33.71 C50,33.71 50,96.71 0,96.71 Z"
+      },
+      {
+        "from": "manipulate",
+        "to": "cpu_cooler",
+        "n": 1,
+        "d": "M0,96.71 C50,96.71 50,58.69 100,58.69 L100,58.77 C50,58.77 50,96.79 0,96.79 Z"
+      },
+      {
+        "from": "manipulate",
+        "to": "psu",
+        "n": 12,
+        "d": "M0,96.79 C50,96.79 50,72.35 100,72.35 L100,73.32 C50,73.32 50,97.76 0,97.76 Z"
+      },
+      {
+        "from": "manipulate",
+        "to": "storage_drive",
+        "n": 1,
+        "d": "M0,97.76 C50,97.76 50,80.15 100,80.15 L100,80.23 C50,80.23 50,97.84 0,97.84 Z"
+      },
+      {
+        "from": "manipulate",
+        "to": "chassis",
+        "n": 27,
+        "d": "M0,97.84 C50,97.84 50,97.84 100,97.84 L100,100.00 C50,100.00 50,100.00 0,100.00 Z"
+      }
+    ],
+    "one_to_one": [
+      {
+        "verb": "Disconnect",
+        "part": "connector",
+        "n": 1006
+      },
+      {
+        "verb": "Unscrew",
+        "part": "screw",
+        "n": 785
+      }
+    ],
+    "actions": 2808
+  },
+  "question_types": [
+    {
+      "group": "Perception",
+      "n": 96849,
+      "types": [
+        {
+          "name": "Enumeration",
+          "n": 2804
+        },
+        {
+          "name": "Grounding",
+          "n": 29146
+        },
+        {
+          "name": "State",
+          "n": 34349
+        },
+        {
+          "name": "Cross-view",
+          "n": 30550
+        }
+      ]
+    },
+    {
+      "group": "Understanding",
+      "n": 17175,
+      "types": [
+        {
+          "name": "Action",
+          "n": 4662
+        },
+        {
+          "name": "State change",
+          "n": 2708
+        },
+        {
+          "name": "Multi-step change",
+          "n": 7164
+        },
+        {
+          "name": "Progress",
+          "n": 2641
+        }
+      ]
+    },
+    {
+      "group": "Planning",
+      "n": 70239,
+      "types": [
+        {
+          "name": "Feasibility",
+          "n": 38488
+        },
+        {
+          "name": "Next action",
+          "n": 4901
+        },
+        {
+          "name": "Plan",
+          "n": 13938
+        },
+        {
+          "name": "Plan check",
+          "n": 12912
+        }
+      ]
+    }
+  ],
+  "robot_parts": {
+    "total": 1808,
+    "fixture": 1092,
+    "motherboard": 716,
+    "rows": [
+      {
+        "part": "RAM module",
+        "fixture": 202,
+        "motherboard": 160
+      },
+      {
+        "part": "Connector",
+        "fixture": 199,
+        "motherboard": 160
+      },
+      {
+        "part": "CPU",
+        "fixture": 162,
+        "motherboard": 135
+      },
+      {
+        "part": "CPU fan",
+        "fixture": 155,
+        "motherboard": 131
+      },
+      {
+        "part": "Graphics card",
+        "fixture": 138,
+        "motherboard": 130
+      },
+      {
+        "part": "Hard drive",
+        "fixture": 131,
+        "motherboard": 0
+      },
+      {
+        "part": "Solid-state drive",
+        "fixture": 105,
+        "motherboard": 0
+      }
+    ]
+  },
   "verbs": [
     {
       "verb": "disconnect",

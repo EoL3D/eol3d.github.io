@@ -3,6 +3,7 @@
    affiliation logos, the corresponding-author note and the teaser video in the column. */
 .s-hero__in { padding-block: 76px 72px; }
 .s-hero__name { color: var(--ink); font-size: var(--fs-6); font-weight: 700; line-height: 1.1; }
+.s-hero__mark { display: block; width: auto; height: clamp(3.6rem, 2.4rem + 4.6vw, 5.25rem); margin-inline: auto; }
 .s-hero__title { margin-top: var(--sp-3); max-width: 40rem; font-size: var(--fs-3); line-height: 1.4; color: var(--text); text-wrap: balance; }
 .s-hero__nw { white-space: nowrap; }
 

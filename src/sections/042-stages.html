@@ -1,0 +1,149 @@
+{# The four stages the dataset serves, as tabs: perception, understanding, planning, execution. Without scripts all
+   four panels show one under the other. The pictures are small and not lazy: a hidden panel's lazy picture would only
+   start loading when its tab is opened. The relation graph is drawn from the two lists below (box 642 x 352). #}
+{% set n = site.numbers %}
+{% set W = 124 %}{% set H = 46 %}
+{% set nodes = [
+  {'id': 'airduct', 'label': 'Air duct', 'x': 8, 'y': 6, 'h': 46},
+  {'id': 'coolerscrews', 'label': 'Screws', 'x': 8, 'y': 62, 'h': 46},
+  {'id': 'heatsink', 'label': 'Heatsink', 'x': 186, 'y': 6, 'h': 102},
+  {'id': 'lever', 'label': 'Lever', 'x': 368, 'y': 62, 'h': 46, 'w': 104},
+  {'id': 'cpu', 'label': 'CPU', 'x': 530, 'y': 6, 'h': 102, 'w': 104, 'stack': 1},
+  {'id': 'latches', 'label': 'Latches', 'x': 8, 'y': 132, 'h': 46},
+  {'id': 'ram', 'label': 'RAM', 'x': 186, 'y': 132, 'h': 46},
+  {'id': 'drive', 'label': 'Hard drive', 'x': 8, 'y': 188, 'h': 46},
+  {'id': 'cage', 'label': 'Drive cage', 'x': 186, 'y': 188, 'h': 46},
+  {'id': 'screwcover', 'label': 'Cover', 'x': 8, 'y': 244, 'h': 46},
+  {'id': 'boardscrews', 'label': 'Screws', 'x': 186, 'y': 244, 'h': 46},
+  {'id': 'cables', 'label': 'Cables', 'x': 8, 'y': 300, 'h': 46},
+  {'id': 'board', 'label': 'Motherboard', 'x': 530, 'y': 132, 'h': 214, 'w': 104, 'stack': 1}
+] %}
+{% set edges = [
+  {'from': 'airduct', 'to': 'heatsink', 'label': 'covers', 'x1': 132, 'x2': 186, 'y': 29},
+  {'from': 'coolerscrews', 'to': 'heatsink', 'label': 'fasten', 'x1': 132, 'x2': 186, 'y': 85},
+  {'from': 'heatsink', 'to': 'cpu', 'label': 'covers', 'x1': 310, 'x2': 530, 'y': 29},
+  {'from': 'heatsink', 'to': 'lever', 'label': 'covers', 'x1': 310, 'x2': 368, 'y': 85},
+  {'from': 'lever', 'to': 'cpu', 'label': 'locks', 'x1': 472, 'x2': 530, 'y': 85},
+  {'from': 'cpu', 'to': 'board', 'label': 'on', 'x1': 582, 'x2': 582, 'y': 108, 'y2': 132},
+  {'from': 'latches', 'to': 'ram', 'label': 'hold', 'x1': 132, 'x2': 186, 'y': 155},
+  {'from': 'ram', 'to': 'board', 'label': 'on', 'x1': 310, 'x2': 530, 'y': 155},
+  {'from': 'drive', 'to': 'cage', 'label': 'in', 'x1': 132, 'x2': 186, 'y': 211},
+  {'from': 'cage', 'to': 'board', 'label': 'covers', 'x1': 310, 'x2': 530, 'y': 211},
+  {'from': 'screwcover', 'to': 'boardscrews', 'label': 'covers', 'x1': 132, 'x2': 186, 'y': 267},
+  {'from': 'boardscrews', 'to': 'board', 'label': 'fasten', 'x1': 310, 'x2': 530, 'y': 267},
+  {'from': 'cables', 'to': 'board', 'label': 'connect to', 'x1': 132, 'x2': 530, 'y': 323}
+] %}
+<section id="stages" class="sec s-stages" data-section="stages" data-module="stages" aria-labelledby="stages-h">
+  <div class="wrap">
+    <header class="sec__head">
+      <h2 id="stages-h" data-reveal>From seeing a machine to taking it apart</h2>
+      <p class="lead" data-reveal>The same {{ n.desktops | num }} teardowns serve four stages of the work. Each has its own annotations and its own questions.</p>
+    </header>
+
+    <div class="s-stages__tabs" role="tablist" aria-label="Stages" data-reveal>
+      {% for t in ['Perception', 'Understanding', 'Planning', 'Execution'] %}
+      <button class="s-stages__tab" type="button" role="tab" id="stage-tab-{{ loop.index }}" aria-controls="stage-{{ loop.index }}" aria-selected="{{ 'true' if loop.first else 'false' }}" tabindex="{{ 0 if loop.first else -1 }}"><span>{{ t }}</span></button>
+      {% endfor %}
+    </div>
+
+    <div class="s-stages__panels" data-reveal>
+      <article class="s-stages__panel" id="stage-1" role="tabpanel" aria-labelledby="stage-tab-1" tabindex="0">
+        <div class="s-stages__vis">
+          <ol class="s-stages__strip" aria-label="Four scanner frames of one teardown with the masks of the parts">
+            {% for i in [1, 2, 3, 4] %}
+            <li><img src="{{ ('assets/img/story/masks-' ~ i ~ '.webp') | v }}" width="300" height="300" decoding="async" alt="{{ ['Step 1: every part of the opened desktop filled in the colour of its class.', 'A later step: the cooler and its duct are gone; the remaining parts keep their colours.', 'Later still: the CPU is gone, the board and the power supply remain.', 'The last steps: only the empty case and one bracket remain.'][loop.index0] }}"></li>
+            {% endfor %}
+          </ol>
+          <p class="s-stages__cap">One teardown, four of its steps. A part keeps its identity and its colour until it is removed.</p>
+          <div class="s-stages__pair">
+            <figure><img src="{{ 'assets/img/story/extent-full.webp' | v }}" width="300" height="300" decoding="async" alt="The same frame with every part drawn at its complete extent, including the areas other parts cover."><figcaption>Complete extent</figcaption></figure>
+            <figure><img src="{{ 'assets/img/story/extent-visible.webp' | v }}" width="300" height="300" decoding="async" alt="The same frame with only the visible area of every part."><figcaption>Visible area</figcaption></figure>
+          </div>
+        </div>
+        <div class="s-stages__text">
+          <h3>Perception</h3>
+          <p>Which parts are in the picture, where they are, and how much of each is hidden. Every part in every scanner frame has a class, a visible mask and its complete extent; behind each frame are the measured depth and the labelled 3D points.</p>
+          <ul class="s-stages__types" aria-label="Question types"><li>Enumeration</li><li>Grounding</li><li>State</li><li>Cross-view</li></ul>
+          <p class="s-stages__links"><a class="arrow" href="#track-detection">Detection results</a><a class="arrow" href="#track-depth">Depth results</a></p>
+        </div>
+      </article>
+
+      <article class="s-stages__panel" id="stage-2" role="tabpanel" aria-labelledby="stage-tab-2" tabindex="0">
+        <div class="s-stages__vis">
+          <ol class="s-stages__chain" aria-label="Four states of one CPU over a teardown">
+            {% for cap in ['Covered', 'Exposed', 'Unlocked', 'Removed'] %}
+            <li><img src="{{ ('assets/img/story/state-' ~ loop.index ~ '.webp') | v }}" width="220" height="220" decoding="async" alt="{{ ['The CPU lies under its heatsink.', 'The heatsink is gone and the CPU shows in its closed socket.', 'The socket lever is open.', 'The socket is empty.'][loop.index0] }}"><span>{{ cap }}</span></li>
+            {% endfor %}
+          </ol>
+          <p class="s-stages__cap">One CPU through a teardown: its state is recorded at every step.</p>
+          <div class="s-stages__pair s-stages__pair--arrow">
+            <figure><img src="{{ 'assets/img/story/step-before.webp' | v }}" width="240" height="240" decoding="async" alt="A fan sits on a heatsink."><figcaption>Before a step</figcaption></figure>
+            <figure><img src="{{ 'assets/img/story/step-after.webp' | v }}" width="240" height="240" decoding="async" alt="The fan is gone and the fins of the heatsink show."><figcaption>After it: the fan is gone</figcaption></figure>
+          </div>
+        </div>
+        <div class="s-stages__text">
+          <h3>Understanding</h3>
+          <p>What state each part is in, what a step did, and how far the teardown has come. States are recorded for every part at every step, and the operation log names the action, the part and the tool of each step.</p>
+          <ul class="s-stages__types" aria-label="Question types"><li>Action</li><li>State change</li><li>Multi-step change</li><li>Progress</li></ul>
+          <p class="s-stages__links"><a class="arrow" href="#track-qa">Question-answering results</a></p>
+        </div>
+      </article>
+
+      <article class="s-stages__panel" id="stage-3" role="tabpanel" aria-labelledby="stage-tab-3" tabindex="0">
+        <div class="s-stages__vis">
+          <div class="rg-wrap" data-scroll-x tabindex="0" role="group" aria-label="Relations between the parts of one desktop; scrolls sideways on a narrow screen">
+            <svg class="rg" data-rg viewBox="0 0 642 352" role="img" aria-labelledby="rg-title rg-desc">
+              <title id="rg-title">Relations between the parts of one desktop</title>
+              <desc id="rg-desc">{% for e in edges %}{{ (nodes | selectattr('id', 'equalto', e.from) | first).label }} {{ e.label }} {{ (nodes | selectattr('id', 'equalto', e.to) | first).label }}. {% endfor %}</desc>
+              <defs><marker id="rg-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0.8 L7,4 L0,7.2 Z"/></marker></defs>
+              {% for e in edges %}
+              <g class="rg__edge" data-from="{{ e.from }}" data-to="{{ e.to }}">
+                {% if e.y2 is defined %}
+                <line x1="{{ e.x1 }}" y1="{{ e.y }}" x2="{{ e.x2 }}" y2="{{ e.y2 - 2 }}" marker-end="url(#rg-arrow)"/>
+                <text x="{{ e.x1 + 8 }}" y="{{ (e.y + e.y2) / 2 + 4 }}">{{ e.label }}</text>
+                {% else %}
+                <line x1="{{ e.x1 }}" y1="{{ e.y }}" x2="{{ e.x2 - 2 }}" y2="{{ e.y }}" marker-end="url(#rg-arrow)"/>
+                <text x="{{ (e.x1 + e.x2) / 2 }}" y="{{ e.y - 6 }}" text-anchor="middle">{{ e.label }}</text>
+                {% endif %}
+              </g>
+              {% endfor %}
+              {% for d in nodes %}
+              {% set w = d.w if d.w is defined else W %}
+              <g class="rg__node" data-id="{{ d.id }}" data-label="{{ d.label }}" tabindex="0" role="img" aria-label="{{ d.label }}">
+                <rect x="{{ d.x }}" y="{{ d.y }}" width="{{ w }}" height="{{ d.h }}" rx="10"/>
+                {% if d.stack is defined %}
+                <image href="{{ ('assets/img/story/rel-' ~ d.id ~ '.webp') | v }}" x="{{ d.x + (w - 44) / 2 }}" y="{{ d.y + d.h / 2 - 34 }}" width="44" height="44" clip-path="inset(0 round 6px)"/>
+                <text x="{{ d.x + w / 2 }}" y="{{ d.y + d.h / 2 + 28 }}" text-anchor="middle">{{ d.label }}</text>
+                {% else %}
+                <image href="{{ ('assets/img/story/rel-' ~ d.id ~ '.webp') | v }}" x="{{ d.x + 5 }}" y="{{ d.y + (d.h - 36) / 2 }}" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="{{ d.x + 48 }}" y="{{ d.y + d.h / 2 + 4 }}">{{ d.label }}</text>
+                {% endif %}
+              </g>
+              {% endfor %}
+            </svg>
+          </div>
+          <p class="s-stages__cap" data-rg-note aria-live="polite">Point at a part to see what leads to it.</p>
+        </div>
+        <div class="s-stages__text">
+          <h3>Planning</h3>
+          <p>What can be done now, and in which order. Relations between the parts say what covers, fastens, holds or locks what: here the CPU can be removed only after the heatsink is removed and the socket lever is opened.</p>
+          <ul class="s-stages__types" aria-label="Question types"><li>Feasibility</li><li>Next action</li><li>Plan</li><li>Plan check</li></ul>
+          <p class="s-stages__links"><a class="arrow" href="#track-qa">Question-answering results</a></p>
+        </div>
+      </article>
+
+      <article class="s-stages__panel" id="stage-4" role="tabpanel" aria-labelledby="stage-tab-4" tabindex="0">
+        <div class="s-stages__vis">
+          <img class="s-stages__wide" src="{{ 'assets/img/uses/tile-robot.webp' | v }}" width="1600" height="583" decoding="async"
+               alt="Three robot camera frames during memory module removal: the base camera over a memory slot on a perforated plate, the wrist camera between the gripper fingers, and the base camera over the memory slots of a whole motherboard.">
+          <p class="s-stages__cap">A robot arm removes a memory module: base and wrist cameras, on a fixture and on a motherboard.</p>
+        </div>
+        <div class="s-stages__text">
+          <h3>Execution</h3>
+          <p>Doing it with a robot. {{ n.robot_demos | num }} teleoperated demonstrations of an arm removing one part and placing it in a sorting zone, with the parts on a fixture ({{ n.robot_fixtured | num }}) or on a motherboard ({{ n.robot_on_board | num }}). Each holds wrist and base camera images, robot states and actions.</p>
+          <p class="s-stages__links"><a class="arrow" href="#track-robot">Robot trials</a></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

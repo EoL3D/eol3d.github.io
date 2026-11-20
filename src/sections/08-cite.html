@@ -1,21 +1,10 @@
-<section id="cite" class="sec sec--sheet tint--lilac s-cite" data-section="cite" data-module="cite" aria-labelledby="cite-h">
+<section id="cite" class="sec sec--sheet tint--lilac s-cite" data-section="cite" aria-labelledby="cite-h">
   <div class="wrap">
     <header class="sec__head" data-reveal>
       <h2 id="cite-h">Citation</h2>
-      <p class="lead">Until a formal citation is published, please cite this page.</p>
+      <p class="lead s-cite__soon">Coming soon.</p>
     </header>
 
-    <div class="code s-cite__bib" data-copy-box data-reveal>
-      <pre class="s-cite__pre" tabindex="0" aria-label="BibTeX entry" data-copy-src>@misc{eol3d{{ site.year }},
-  title        = {{ '{' }}{{ site.name | e }}: {{ site.title | e }}{{ '}' }},
-  author       = {{ '{' }}{{ site.authors | map(attribute='name') | join(' and ') | e }}{{ '}' }},
-  year         = {{ '{' }}{{ site.year }}{{ '}' }},
-  howpublished = {\url{{ '{' }}{{ site.links.site | e }}{{ '}' }}}
-}</pre>
-      <button class="code__copy" type="button" hidden data-copy aria-label="Copy the BibTeX entry">Copy</button>
-    </div>
-
     <p class="s-cite__licence" data-reveal>The data is in pre-release: provided for inspection and research evaluation, with a licence to come with the first tagged release. The code is under the MIT licence. <a href="guide.html#guide-licence">Terms of use</a></p>
-    <span class="vh" aria-live="polite" data-copy-status></span>
   </div>
 </section>

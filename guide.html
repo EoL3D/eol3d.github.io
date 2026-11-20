@@ -15,10 +15,10 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="EoL3D: Step-by-step teardowns of end-of-life desktop computers, over a wall of the dataset's desktops">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=a2d476e9">
-  <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=b7b04bb3">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=6d5fe0e5">
+  <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=a079d0fe">
   <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=7c569ff9">
+  <link rel="stylesheet" href="assets/css/site.css?v=8fab2da2">
   <script>
     // Motion is switched on here and switched off again if the page script has not started within three seconds,
     // so a script that fails to load can never leave the content hidden.
@@ -30,14 +30,14 @@
  "imports": {
   "./assets/js/lib/dom.js": "./assets/js/lib/dom.js?v=dcf2fb31",
   "./assets/js/main.js": "./assets/js/main.js?v=12707ed2",
-  "./assets/js/sections/cite.js": "./assets/js/sections/cite.js?v=e1b7bc53",
+  "./assets/js/sections/capture.js": "./assets/js/sections/capture.js?v=2203c5dc",
   "./assets/js/sections/explore.js": "./assets/js/sections/explore.js?v=96871964",
   "./assets/js/sections/get.js": "./assets/js/sections/get.js?v=354126ab",
   "./assets/js/sections/hero.js": "./assets/js/sections/hero.js?v=783cd614",
   "./assets/js/sections/numbers.js": "./assets/js/sections/numbers.js?v=e3b25e90",
+  "./assets/js/sections/stages.js": "./assets/js/sections/stages.js?v=b165ea77",
   "./assets/js/sections/start.js": "./assets/js/sections/start.js?v=331f2bda",
-  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=03bbe54e",
-  "./assets/js/sections/team.js": "./assets/js/sections/team.js?v=c896bfb4",
+  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=7e440300",
   "./assets/js/teardown/gl.js": "./assets/js/teardown/gl.js?v=7839b5fe",
   "./assets/js/teardown/shaders.js": "./assets/js/teardown/shaders.js?v=15212227",
   "./assets/js/teardown/store.js": "./assets/js/teardown/store.js?v=229d5514",
@@ -1001,7 +1001,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
     </section>
 </section>
 
-<section id="guide-team" class="g-sec s-team" data-section="guide-team" data-module="team" aria-labelledby="guide-team-h">
+<section id="guide-team" class="g-sec s-team" data-section="guide-team" aria-labelledby="guide-team-h">
     <header class="g-sec__head">
       <h2 id="guide-team-h">Licence, citation and questions</h2>
     </header>
@@ -1010,7 +1010,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
       <h3 id="guide-licence">Licence and use</h3>
       <div class="s-team__licence">
         <p class="s-team__kicker"><span class="chip chip--accent">Pre-release</span></p>
-        <p>A licence and a formal citation come with the first tagged release. Until then the data is provided for inspection and for research evaluation.</p>
+        <p>A licence comes with the first tagged release. Until then the data is provided for inspection and for research evaluation.</p>
         <p>Please do not redistribute copies of the data, and do not use it to train models you intend to release, without our permission. Annotations may still change before that release.</p>
         <p>These terms are for the data. The code in the <a href="https://github.com/EoL3D/EoL3D" rel="noopener">code repository</a> is released under the MIT licence.</p>
       </div>
@@ -1018,17 +1018,7 @@ python depth/eval_depth.py --ref work/depth_ref --pred work/&lt;model&gt;</pre>
 
     <div class="s-team__block">
       <h3 id="guide-cite">Citation</h3>
-      <div class="s-team__sheet">
-        <button class="code__copy" type="button" hidden data-copy aria-label="Copy the BibTeX entry">Copy</button>
-        <pre class="code s-team__bib"><code data-bibtex>@misc{eol3d2026,
-  title        = {EoL3D: Step-by-step teardowns of end-of-life desktop computers},
-  author       = {Chang Liu and Haiyang Zhao and Jiurun Song and Badrinath Balasubramaniam and Jiachen Li and Zhiwen Fan and Sara Behdad and Yu She and Beiwen Li and Xiao Liang and Minghui Zheng},
-  year         = {2026},
-  howpublished = {\url{https://eol3d.github.io}}
-}</code></pre>
-      </div>
-      <p class="s-team__cite-note">Until the formal citation is published, please cite this page. Contact: Minghui Zheng, <a href="mailto:mhzheng@tamu.edu">mhzheng@tamu.edu</a>.</p>
-      <span class="vh" aria-live="polite" data-copy-status></span>
+      <p class="s-team__cite-note">Coming soon. Contact: Minghui Zheng, <a href="mailto:mhzheng@tamu.edu">mhzheng@tamu.edu</a>.</p>
     </div>
 
     <div class="s-team__block">

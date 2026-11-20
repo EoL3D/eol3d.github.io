@@ -4,6 +4,8 @@
    The three series colours were checked for colour-blind separation (all pairs) against white; the orange is below
    3:1, so every chart that uses it also has direct labels or a table. */
 .s-stats { --series-1: #6A55B8; --series-2: #E8833A; --series-3: #2B9FB0; --bar: var(--series-1); --track: var(--soft-2); }
+/* the share of a part that is hidden, in three steps of one hue (light to dark; checked as an ordinal ramp) */
+.s-stats { --hid-1: #A394DC; --hid-2: #6A55B8; --hid-3: #3B2E80; }
 .s-stats__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px; }
 .s-stats__card { min-width: 0; margin: 0; padding: clamp(1rem, .7rem + 1vw, 1.5rem); border-radius: var(--r-4); background: var(--page); box-shadow: var(--shadow-1); }
 .s-stats__card--wide { grid-column: 1 / -1; }
@@ -21,6 +23,13 @@
 .s-stats__key--1 { --k: var(--series-1); }
 .s-stats__key--2 { --k: var(--series-2); }
 .s-stats__key--3 { --k: var(--series-3); }
+.s-stats__key--sq { width: 10px; height: 10px; border-radius: 3px; }
+.s-stats__key--h1 { --k: var(--hid-1); }
+.s-stats__key--h2 { --k: var(--hid-2); }
+.s-stats__key--h3 { --k: var(--hid-3); }
+.s-stats__key--g1 { --k: var(--series-3); }
+.s-stats__key--g2 { --k: var(--series-1); }
+.s-stats__key--g3 { --k: var(--series-2); }
 
 /* the line chart: lines in an SVG stretched to the plot, every word in HTML so it keeps its size on a phone */
 .lc { position: relative; padding: 4px 8px 28px 44px; border-radius: var(--r-2); outline-offset: 4px; }
@@ -78,12 +87,77 @@
 .bars__track i { display: block; height: 100%; min-width: 2px; border-radius: 0 4px 4px 0; background: var(--bar); }
 .bars__val { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
 
+/* the flow chart: actions on the left, parts on the right, one ribbon per pair; its thickness is the number of actions.
+   Nodes and labels are HTML (they keep their size on a phone); the ribbons are an SVG stretched between them. */
+.flow { --flow-h: 470px; position: relative; display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) 13.5rem; grid-template-rows: var(--flow-h); margin-top: var(--sp-2); }
+.flow__col { position: relative; }
+.flow__node { position: absolute; left: 0; right: 0; display: flex; align-items: center; min-height: 2px; outline-offset: 2px; cursor: default; }
+.flow__node::before { content: ""; position: absolute; top: 0; bottom: 0; width: 6px; border-radius: 3px; background: var(--ink-soft, #7B8791); transition: background .15s; }
+.flow__col--left .flow__node { justify-content: flex-end; padding-right: 14px; text-align: right; }
+.flow__col--left .flow__node::before { right: 0; }
+.flow__col--right .flow__node { padding-left: 14px; }
+.flow__col--right .flow__node::before { left: 0; }
+.flow__node span { font-size: var(--fs-0); line-height: 1.2; color: var(--text); }
+.flow__node b { margin-left: .2em; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.flow__svg { display: block; width: 100%; height: var(--flow-h); overflow: visible; }
+.flow__link { fill: var(--series-1); opacity: .2; transition: opacity .15s; }
+.flow__link:hover { opacity: .55; }
+.flow.is-picked .flow__link { opacity: .07; }
+.flow.is-picked .flow__link.is-on { opacity: .55; }
+.flow.is-picked .flow__node { opacity: .45; }
+.flow.is-picked .flow__node.is-on { opacity: 1; }
+.flow__node.is-on::before, .flow__node:hover::before, .flow__node:focus-visible::before { background: var(--series-1); }
+.flow__tip { min-width: 0; }
+
+/* the class table: name, parts, mask annotations (bars on a log scale, the number beside each), and how much of the
+   part is hidden over its annotations (one bar per class, split in three) */
+.ct { width: 100%; border-collapse: collapse; font-size: var(--fs-0); }
+.ct-note { font-style: normal; }
+.ct thead th { padding: 0 .5rem .4rem 0; font-size: var(--fs-00); font-weight: 400; color: var(--muted); text-align: left; white-space: nowrap; }
+.ct tbody th { width: 11.5rem; padding: .22rem .75rem .22rem 0; font-weight: 400; color: var(--text); text-align: left; white-space: nowrap; }
+.ct td { padding: .22rem 0; }
+.ct__bar { width: 17%; }
+.ct__bar i { display: block; height: 8px; min-width: 2px; border-radius: 0 4px 4px 0; background: var(--bar); }
+.ct td.ct__n { width: 4.6rem; padding: 0 1.25rem 0 .5rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ct__stack { display: flex; gap: 2px; height: 8px; }
+.ct__stack i { min-width: 2px; border-radius: 2px; }
+.ct__h1 { background: var(--hid-1); }
+.ct__h2 { background: var(--hid-2); }
+.ct__h3 { background: var(--hid-3); }
+
+/* question types: one block of bars per group, in the group's colour */
+.qt__group { display: flex; align-items: center; gap: .45rem; margin: var(--sp-3) 0 .3rem; font-size: var(--fs-0); font-weight: 600; color: var(--ink); }
+.qt__group:first-of-type { margin-top: 0; }
+.qt__group span { margin-left: auto; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+.qt--1 { --bar: var(--series-3); }
+.qt--2 { --bar: var(--series-1); }
+.qt--3 { --bar: var(--series-2); }
+
+/* robot demonstrations: one bar per part, the two settings end to end with a gap */
+.rb__track { display: flex; gap: 2px; }
+.rb__track i { flex: none; }
+.rb .rb__track .rb__a { background: var(--series-1); border-radius: 0; }
+.rb .rb__track .rb__b { background: var(--series-2); }
+.rb .bars__row:not(:has(.rb__b)) .rb__track .rb__a { border-radius: 0 4px 4px 0; }
+
 @media (max-width: 900px) {
   .s-stats__grid { grid-template-columns: minmax(0, 1fr); }
   .bars--two { grid-template-columns: minmax(0, 1fr); grid-auto-flow: row; grid-template-rows: none; }
 }
 @media (max-width: 560px) {
   .bars__row { grid-template-columns: minmax(6.5rem, 42%) minmax(0, 1fr) 3.4rem; gap: .5rem; }
+  .flow { --flow-h: 440px; grid-template-columns: 5.4rem minmax(0, 1fr) 9.6rem; }
+  .flow__node span { font-size: var(--fs-00); }
+  .flow__col--left .flow__node { padding-right: 10px; }
+  .flow__col--right .flow__node { padding-left: 10px; }
+  .ct tbody th { width: auto; white-space: normal; padding-right: .5rem; }
+  .ct thead th { white-space: normal; vertical-align: bottom; line-height: 1.25; }
+  .ct thead th:nth-child(2), .ct thead th:nth-child(3) { padding-right: .6rem; text-align: right; }
+  .ct-note { display: none; }
+  .ct__bar { width: 0; }
+  .ct__bar i { display: none; }
+  .ct td.ct__n { width: auto; padding: 0 .6rem 0 0; text-align: right; }
+  .ct__hid { width: 28%; }
   .lc { padding-left: 38px; }
   .lc__ytick { left: -38px; width: 32px; }
 }

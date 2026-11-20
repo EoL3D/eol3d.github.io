@@ -1,9 +1,3 @@
-/* 19 cite: "Citation". The BibTeX entry in a code block with its copy control, one line on the licence. */
-.s-cite__bib { padding-right: 5rem; }
-.s-cite__pre { margin: 0; font: inherit; white-space: pre-wrap; overflow-wrap: anywhere; }
-.s-cite__pre:focus-visible { outline-offset: 4px; }
-.s-cite__licence { max-width: var(--measure); margin-top: var(--sp-4); font-size: var(--fs-0); color: var(--text); }
-
-@media (max-width: 560px) {
-  .s-cite__bib { padding-right: var(--sp-4); padding-top: 3.4rem; }
-}
+/* 19 cite: "Citation". One line for now, and one line on the terms. */
+.s-cite__soon { color: var(--ink); }
+.s-cite__licence { max-width: var(--measure); font-size: var(--fs-0); color: var(--text); }

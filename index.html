@@ -15,10 +15,10 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="EoL3D: Step-by-step teardowns of end-of-life desktop computers, over a wall of the dataset's desktops">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=a2d476e9">
-  <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=b7b04bb3">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/img/mark-64.png?v=6d5fe0e5">
+  <link rel="apple-touch-icon" href="assets/img/mark-180.png?v=a079d0fe">
   <link rel="preload" href="assets/fonts/text-var.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=7c569ff9">
+  <link rel="stylesheet" href="assets/css/site.css?v=8fab2da2">
   <script>
     // Motion is switched on here and switched off again if the page script has not started within three seconds,
     // so a script that fails to load can never leave the content hidden.
@@ -30,14 +30,14 @@
  "imports": {
   "./assets/js/lib/dom.js": "./assets/js/lib/dom.js?v=dcf2fb31",
   "./assets/js/main.js": "./assets/js/main.js?v=12707ed2",
-  "./assets/js/sections/cite.js": "./assets/js/sections/cite.js?v=e1b7bc53",
+  "./assets/js/sections/capture.js": "./assets/js/sections/capture.js?v=2203c5dc",
   "./assets/js/sections/explore.js": "./assets/js/sections/explore.js?v=96871964",
   "./assets/js/sections/get.js": "./assets/js/sections/get.js?v=354126ab",
   "./assets/js/sections/hero.js": "./assets/js/sections/hero.js?v=783cd614",
   "./assets/js/sections/numbers.js": "./assets/js/sections/numbers.js?v=e3b25e90",
+  "./assets/js/sections/stages.js": "./assets/js/sections/stages.js?v=b165ea77",
   "./assets/js/sections/start.js": "./assets/js/sections/start.js?v=331f2bda",
-  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=03bbe54e",
-  "./assets/js/sections/team.js": "./assets/js/sections/team.js?v=c896bfb4",
+  "./assets/js/sections/stats.js": "./assets/js/sections/stats.js?v=7e440300",
   "./assets/js/teardown/gl.js": "./assets/js/teardown/gl.js?v=7839b5fe",
   "./assets/js/teardown/shaders.js": "./assets/js/teardown/shaders.js?v=15212227",
   "./assets/js/teardown/store.js": "./assets/js/teardown/store.js?v=229d5514",
@@ -55,7 +55,7 @@
   <div class="band band--wall">
     <div class="band__wall" aria-hidden="true"></div>
     <div class="wrap band__in s-hero__in">
-      <h1 id="hero-h" class="s-hero__name">EoL3D</h1>
+      <h1 id="hero-h" class="s-hero__name"><img class="s-hero__mark" src="assets/img/logo.png?v=9afc0c1a" width="1323" height="304" alt="EoL3D"></h1>
       <p class="s-hero__title">Step-by-step teardowns of <span class="s-hero__nw">end-of-life</span> desktop computers</p>
       <ul class="s-hero__authors" aria-label="Authors">
         <li>Chang Liu<sup>1</sup></li>
@@ -158,25 +158,49 @@
     <ol class="s-updates__list" data-reveal>
       <li class="s-updates__item is-new">
         <time datetime="2026-11-20">Nov 20, 2026</time>
-        <p><span class="chip chip--accent">New</span> <a href="#benchmark">Benchmark results</a> for detection, question answering, depth and robot trials, and the <a href="https://github.com/EoL3D/EoL3D" rel="noopener">code repository</a> with the kits of the tracks.</p>
-      </li>
-      <li class="s-updates__item is-new">
-        <time datetime="2026-11-20">Nov 20, 2026</time>
-        <p><span class="chip chip--accent">New</span> The scanner's 3D reconstructions: 2,764 point clouds of 65 desktops, one for every annotated step, each point labelled with its part. <a href="guide.html#data-3d">How to read them</a></p>
-      </li>
-      <li class="s-updates__item">
-        <time datetime="2026-11-05">Nov 5, 2026</time>
-        <p>Annotations of all 66 desktops in their final form, the question-answer pack (184,263 pairs), the detection kit and 1,808 robot demonstrations.</p>
-      </li>
-      <li class="s-updates__item">
-        <time datetime="2026-11-03">Nov 3, 2026</time>
-        <p>Operator video of the hands at work, faces masked (3,179 clips, 11.1 hours), and the components gallery.</p>
-      </li>
-      <li class="s-updates__item">
-        <time datetime="2026-10-28">Oct 28, 2026</time>
-        <p>Raw captures of the four views for every step of all 66 desktops.</p>
+        <p>EoL3D is online: the <a href="https://huggingface.co/datasets/ChangChrisLiu/E3D-Desktop-Disassembly" rel="noopener">data</a> on Hugging Face, the <a href="https://github.com/EoL3D/EoL3D" rel="noopener">code</a> on GitHub, and the <a href="#benchmark">benchmark results</a> on this page.</p>
       </li>
     </ol>
+  </div>
+</section>
+
+<section id="capture" class="sec s-capture" data-section="capture" data-module="capture" aria-labelledby="capture-h">
+  <div class="wrap">
+    <header class="sec__head">
+      <h2 id="capture-h" data-reveal>How it was recorded</h2>
+    </header>
+
+    <div class="s-capture__grid">
+      <figure class="s-capture__rig" data-reveal>
+        <div class="s-capture__photo">
+          <img src="assets/img/story/rig.webp?v=7189d0ab" width="800" height="601" loading="lazy" decoding="async"
+               alt="The capture rig: a metal frame over a bench. A 3D scanner hangs from the frame and looks down at an opened desktop computer; two cameras sit on boom arms, two more on tripods, and one on a robot arm at the left.">
+          <span class="s-capture__dot" data-k="scanner" style="left: 45.6%; top: 12.0%" aria-hidden="true">1</span>
+          <span class="s-capture__dot" data-k="oak" style="left: 64.4%; top: 37.4%" aria-hidden="true">2</span>
+          <span class="s-capture__dot" data-k="oak" style="left: 43.1%; top: 55.7%" aria-hidden="true">2</span>
+          <span class="s-capture__dot" data-k="realsense" style="left: 18.7%; top: 46.0%" aria-hidden="true">3</span>
+          <span class="s-capture__dot" data-k="video" style="left: 49.4%; top: 50.6%" aria-hidden="true">4</span>
+          <span class="s-capture__dot" data-k="video" style="left: 66.0%; top: 50.2%" aria-hidden="true">4</span>
+          <span class="s-capture__dot" data-k="desktop" style="left: 43.0%; top: 91.0%" aria-hidden="true">5</span>
+        </div>
+        <figcaption>
+          <ol class="s-capture__legend">
+            <li data-k="scanner"><b>3D scanner</b><span>looks straight down; its pictures carry the annotations, its scans the 3D points</span></li>
+            <li data-k="oak"><b>Two OAK-D cameras</b><span>colour, depth and point clouds</span></li>
+            <li data-k="realsense"><b>RealSense camera</b><span>colour, depth and point clouds at an angle</span></li>
+            <li data-k="video"><b>Two video cameras</b><span>film the hands at work from two sides</span></li>
+            <li data-k="desktop"><b>The desktop</b><span>on the bench, taken apart one step at a time</span></li>
+          </ol>
+        </figcaption>
+      </figure>
+
+      <ol class="s-capture__steps">
+        <li data-reveal><h3>One step at a time</h3><p>An operator takes the machine apart by hand. Every step is logged: the action, the part and the tool.</p></li>
+        <li data-reveal><h3>Four views after every step</h3><p>The scanner and three cameras record what is left on the bench, so all four views show the same state.</p></li>
+        <li data-reveal><h3>Annotated backward</h3><p>Annotators start from the late steps: a part that is exposed there is followed back through the frames where it was covered, under one identity.</p></li>
+        <li data-reveal><h3>Questions, video and robot data</h3><p>Question-answer pairs are generated from the annotations and the log. Two video cameras film the operator's hands, and a robot arm repeats part removals under teleoperation.</p></li>
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -250,6 +274,217 @@
     </div>
 
     <p class="s-hdata__more" data-reveal><a class="arrow" href="guide.html#guide-data">Files and fields</a></p>
+  </div>
+</section>
+
+<section id="stages" class="sec s-stages" data-section="stages" data-module="stages" aria-labelledby="stages-h">
+  <div class="wrap">
+    <header class="sec__head">
+      <h2 id="stages-h" data-reveal>From seeing a machine to taking it apart</h2>
+      <p class="lead" data-reveal>The same 66 teardowns serve four stages of the work. Each has its own annotations and its own questions.</p>
+    </header>
+
+    <div class="s-stages__tabs" role="tablist" aria-label="Stages" data-reveal>
+      <button class="s-stages__tab" type="button" role="tab" id="stage-tab-1" aria-controls="stage-1" aria-selected="true" tabindex="0"><span>Perception</span></button>
+      <button class="s-stages__tab" type="button" role="tab" id="stage-tab-2" aria-controls="stage-2" aria-selected="false" tabindex="-1"><span>Understanding</span></button>
+      <button class="s-stages__tab" type="button" role="tab" id="stage-tab-3" aria-controls="stage-3" aria-selected="false" tabindex="-1"><span>Planning</span></button>
+      <button class="s-stages__tab" type="button" role="tab" id="stage-tab-4" aria-controls="stage-4" aria-selected="false" tabindex="-1"><span>Execution</span></button>
+    </div>
+
+    <div class="s-stages__panels" data-reveal>
+      <article class="s-stages__panel" id="stage-1" role="tabpanel" aria-labelledby="stage-tab-1" tabindex="0">
+        <div class="s-stages__vis">
+          <ol class="s-stages__strip" aria-label="Four scanner frames of one teardown with the masks of the parts">
+            <li><img src="assets/img/story/masks-1.webp?v=4c2f9298" width="300" height="300" decoding="async" alt="Step 1: every part of the opened desktop filled in the colour of its class."></li>
+            <li><img src="assets/img/story/masks-2.webp?v=88645564" width="300" height="300" decoding="async" alt="A later step: the cooler and its duct are gone; the remaining parts keep their colours."></li>
+            <li><img src="assets/img/story/masks-3.webp?v=c3cae1ad" width="300" height="300" decoding="async" alt="Later still: the CPU is gone, the board and the power supply remain."></li>
+            <li><img src="assets/img/story/masks-4.webp?v=105f2345" width="300" height="300" decoding="async" alt="The last steps: only the empty case and one bracket remain."></li>
+          </ol>
+          <p class="s-stages__cap">One teardown, four of its steps. A part keeps its identity and its colour until it is removed.</p>
+          <div class="s-stages__pair">
+            <figure><img src="assets/img/story/extent-full.webp?v=871f47e1" width="300" height="300" decoding="async" alt="The same frame with every part drawn at its complete extent, including the areas other parts cover."><figcaption>Complete extent</figcaption></figure>
+            <figure><img src="assets/img/story/extent-visible.webp?v=959b4277" width="300" height="300" decoding="async" alt="The same frame with only the visible area of every part."><figcaption>Visible area</figcaption></figure>
+          </div>
+        </div>
+        <div class="s-stages__text">
+          <h3>Perception</h3>
+          <p>Which parts are in the picture, where they are, and how much of each is hidden. Every part in every scanner frame has a class, a visible mask and its complete extent; behind each frame are the measured depth and the labelled 3D points.</p>
+          <ul class="s-stages__types" aria-label="Question types"><li>Enumeration</li><li>Grounding</li><li>State</li><li>Cross-view</li></ul>
+          <p class="s-stages__links"><a class="arrow" href="#track-detection">Detection results</a><a class="arrow" href="#track-depth">Depth results</a></p>
+        </div>
+      </article>
+
+      <article class="s-stages__panel" id="stage-2" role="tabpanel" aria-labelledby="stage-tab-2" tabindex="0">
+        <div class="s-stages__vis">
+          <ol class="s-stages__chain" aria-label="Four states of one CPU over a teardown">
+            <li><img src="assets/img/story/state-1.webp?v=7586cec4" width="220" height="220" decoding="async" alt="The CPU lies under its heatsink."><span>Covered</span></li>
+            <li><img src="assets/img/story/state-2.webp?v=bdb6e446" width="220" height="220" decoding="async" alt="The heatsink is gone and the CPU shows in its closed socket."><span>Exposed</span></li>
+            <li><img src="assets/img/story/state-3.webp?v=ff1b89b9" width="220" height="220" decoding="async" alt="The socket lever is open."><span>Unlocked</span></li>
+            <li><img src="assets/img/story/state-4.webp?v=607302d6" width="220" height="220" decoding="async" alt="The socket is empty."><span>Removed</span></li>
+          </ol>
+          <p class="s-stages__cap">One CPU through a teardown: its state is recorded at every step.</p>
+          <div class="s-stages__pair s-stages__pair--arrow">
+            <figure><img src="assets/img/story/step-before.webp?v=031fe26b" width="240" height="240" decoding="async" alt="A fan sits on a heatsink."><figcaption>Before a step</figcaption></figure>
+            <figure><img src="assets/img/story/step-after.webp?v=27c3e59f" width="240" height="240" decoding="async" alt="The fan is gone and the fins of the heatsink show."><figcaption>After it: the fan is gone</figcaption></figure>
+          </div>
+        </div>
+        <div class="s-stages__text">
+          <h3>Understanding</h3>
+          <p>What state each part is in, what a step did, and how far the teardown has come. States are recorded for every part at every step, and the operation log names the action, the part and the tool of each step.</p>
+          <ul class="s-stages__types" aria-label="Question types"><li>Action</li><li>State change</li><li>Multi-step change</li><li>Progress</li></ul>
+          <p class="s-stages__links"><a class="arrow" href="#track-qa">Question-answering results</a></p>
+        </div>
+      </article>
+
+      <article class="s-stages__panel" id="stage-3" role="tabpanel" aria-labelledby="stage-tab-3" tabindex="0">
+        <div class="s-stages__vis">
+          <div class="rg-wrap" data-scroll-x tabindex="0" role="group" aria-label="Relations between the parts of one desktop; scrolls sideways on a narrow screen">
+            <svg class="rg" data-rg viewBox="0 0 642 352" role="img" aria-labelledby="rg-title rg-desc">
+              <title id="rg-title">Relations between the parts of one desktop</title>
+              <desc id="rg-desc">Air duct covers Heatsink. Screws fasten Heatsink. Heatsink covers CPU. Heatsink covers Lever. Lever locks CPU. CPU on Motherboard. Latches hold RAM. RAM on Motherboard. Hard drive in Drive cage. Drive cage covers Motherboard. Cover covers Screws. Screws fasten Motherboard. Cables connect to Motherboard. </desc>
+              <defs><marker id="rg-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0.8 L7,4 L0,7.2 Z"/></marker></defs>
+              <g class="rg__edge" data-from="airduct" data-to="heatsink">
+                <line x1="132" y1="29" x2="184" y2="29" marker-end="url(#rg-arrow)"/>
+                <text x="159.0" y="23" text-anchor="middle">covers</text>
+              </g>
+              <g class="rg__edge" data-from="coolerscrews" data-to="heatsink">
+                <line x1="132" y1="85" x2="184" y2="85" marker-end="url(#rg-arrow)"/>
+                <text x="159.0" y="79" text-anchor="middle">fasten</text>
+              </g>
+              <g class="rg__edge" data-from="heatsink" data-to="cpu">
+                <line x1="310" y1="29" x2="528" y2="29" marker-end="url(#rg-arrow)"/>
+                <text x="420.0" y="23" text-anchor="middle">covers</text>
+              </g>
+              <g class="rg__edge" data-from="heatsink" data-to="lever">
+                <line x1="310" y1="85" x2="366" y2="85" marker-end="url(#rg-arrow)"/>
+                <text x="339.0" y="79" text-anchor="middle">covers</text>
+              </g>
+              <g class="rg__edge" data-from="lever" data-to="cpu">
+                <line x1="472" y1="85" x2="528" y2="85" marker-end="url(#rg-arrow)"/>
+                <text x="501.0" y="79" text-anchor="middle">locks</text>
+              </g>
+              <g class="rg__edge" data-from="cpu" data-to="board">
+                <line x1="582" y1="108" x2="582" y2="130" marker-end="url(#rg-arrow)"/>
+                <text x="590" y="124.0">on</text>
+              </g>
+              <g class="rg__edge" data-from="latches" data-to="ram">
+                <line x1="132" y1="155" x2="184" y2="155" marker-end="url(#rg-arrow)"/>
+                <text x="159.0" y="149" text-anchor="middle">hold</text>
+              </g>
+              <g class="rg__edge" data-from="ram" data-to="board">
+                <line x1="310" y1="155" x2="528" y2="155" marker-end="url(#rg-arrow)"/>
+                <text x="420.0" y="149" text-anchor="middle">on</text>
+              </g>
+              <g class="rg__edge" data-from="drive" data-to="cage">
+                <line x1="132" y1="211" x2="184" y2="211" marker-end="url(#rg-arrow)"/>
+                <text x="159.0" y="205" text-anchor="middle">in</text>
+              </g>
+              <g class="rg__edge" data-from="cage" data-to="board">
+                <line x1="310" y1="211" x2="528" y2="211" marker-end="url(#rg-arrow)"/>
+                <text x="420.0" y="205" text-anchor="middle">covers</text>
+              </g>
+              <g class="rg__edge" data-from="screwcover" data-to="boardscrews">
+                <line x1="132" y1="267" x2="184" y2="267" marker-end="url(#rg-arrow)"/>
+                <text x="159.0" y="261" text-anchor="middle">covers</text>
+              </g>
+              <g class="rg__edge" data-from="boardscrews" data-to="board">
+                <line x1="310" y1="267" x2="528" y2="267" marker-end="url(#rg-arrow)"/>
+                <text x="420.0" y="261" text-anchor="middle">fasten</text>
+              </g>
+              <g class="rg__edge" data-from="cables" data-to="board">
+                <line x1="132" y1="323" x2="528" y2="323" marker-end="url(#rg-arrow)"/>
+                <text x="331.0" y="317" text-anchor="middle">connect to</text>
+              </g>
+              <g class="rg__node" data-id="airduct" data-label="Air duct" tabindex="0" role="img" aria-label="Air duct">
+                <rect x="8" y="6" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-airduct.webp?v=5aac7295" x="13" y="11.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="56" y="33.0">Air duct</text>
+              </g>
+              <g class="rg__node" data-id="coolerscrews" data-label="Screws" tabindex="0" role="img" aria-label="Screws">
+                <rect x="8" y="62" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-coolerscrews.webp?v=5d11d717" x="13" y="67.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="56" y="89.0">Screws</text>
+              </g>
+              <g class="rg__node" data-id="heatsink" data-label="Heatsink" tabindex="0" role="img" aria-label="Heatsink">
+                <rect x="186" y="6" width="124" height="102" rx="10"/>
+                <image href="assets/img/story/rel-heatsink.webp?v=0d21b5db" x="191" y="39.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="234" y="61.0">Heatsink</text>
+              </g>
+              <g class="rg__node" data-id="lever" data-label="Lever" tabindex="0" role="img" aria-label="Lever">
+                <rect x="368" y="62" width="104" height="46" rx="10"/>
+                <image href="assets/img/story/rel-lever.webp?v=bb489933" x="373" y="67.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="416" y="89.0">Lever</text>
+              </g>
+              <g class="rg__node" data-id="cpu" data-label="CPU" tabindex="0" role="img" aria-label="CPU">
+                <rect x="530" y="6" width="104" height="102" rx="10"/>
+                <image href="assets/img/story/rel-cpu.webp?v=acf75b76" x="560.0" y="23.0" width="44" height="44" clip-path="inset(0 round 6px)"/>
+                <text x="582.0" y="85.0" text-anchor="middle">CPU</text>
+              </g>
+              <g class="rg__node" data-id="latches" data-label="Latches" tabindex="0" role="img" aria-label="Latches">
+                <rect x="8" y="132" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-latches.webp?v=063613f0" x="13" y="137.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="56" y="159.0">Latches</text>
+              </g>
+              <g class="rg__node" data-id="ram" data-label="RAM" tabindex="0" role="img" aria-label="RAM">
+                <rect x="186" y="132" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-ram.webp?v=c08e5cb8" x="191" y="137.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="234" y="159.0">RAM</text>
+              </g>
+              <g class="rg__node" data-id="drive" data-label="Hard drive" tabindex="0" role="img" aria-label="Hard drive">
+                <rect x="8" y="188" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-drive.webp?v=88247897" x="13" y="193.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="56" y="215.0">Hard drive</text>
+              </g>
+              <g class="rg__node" data-id="cage" data-label="Drive cage" tabindex="0" role="img" aria-label="Drive cage">
+                <rect x="186" y="188" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-cage.webp?v=0bfba271" x="191" y="193.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="234" y="215.0">Drive cage</text>
+              </g>
+              <g class="rg__node" data-id="screwcover" data-label="Cover" tabindex="0" role="img" aria-label="Cover">
+                <rect x="8" y="244" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-screwcover.webp?v=db8554ea" x="13" y="249.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="56" y="271.0">Cover</text>
+              </g>
+              <g class="rg__node" data-id="boardscrews" data-label="Screws" tabindex="0" role="img" aria-label="Screws">
+                <rect x="186" y="244" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-boardscrews.webp?v=5fd85902" x="191" y="249.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="234" y="271.0">Screws</text>
+              </g>
+              <g class="rg__node" data-id="cables" data-label="Cables" tabindex="0" role="img" aria-label="Cables">
+                <rect x="8" y="300" width="124" height="46" rx="10"/>
+                <image href="assets/img/story/rel-cables.webp?v=82a8d65d" x="13" y="305.0" width="36" height="36" clip-path="inset(0 round 6px)"/>
+                <text x="56" y="327.0">Cables</text>
+              </g>
+              <g class="rg__node" data-id="board" data-label="Motherboard" tabindex="0" role="img" aria-label="Motherboard">
+                <rect x="530" y="132" width="104" height="214" rx="10"/>
+                <image href="assets/img/story/rel-board.webp?v=c527a406" x="560.0" y="205.0" width="44" height="44" clip-path="inset(0 round 6px)"/>
+                <text x="582.0" y="267.0" text-anchor="middle">Motherboard</text>
+              </g>
+            </svg>
+          </div>
+          <p class="s-stages__cap" data-rg-note aria-live="polite">Point at a part to see what leads to it.</p>
+        </div>
+        <div class="s-stages__text">
+          <h3>Planning</h3>
+          <p>What can be done now, and in which order. Relations between the parts say what covers, fastens, holds or locks what: here the CPU can be removed only after the heatsink is removed and the socket lever is opened.</p>
+          <ul class="s-stages__types" aria-label="Question types"><li>Feasibility</li><li>Next action</li><li>Plan</li><li>Plan check</li></ul>
+          <p class="s-stages__links"><a class="arrow" href="#track-qa">Question-answering results</a></p>
+        </div>
+      </article>
+
+      <article class="s-stages__panel" id="stage-4" role="tabpanel" aria-labelledby="stage-tab-4" tabindex="0">
+        <div class="s-stages__vis">
+          <img class="s-stages__wide" src="assets/img/uses/tile-robot.webp?v=a3af6edb" width="1600" height="583" decoding="async"
+               alt="Three robot camera frames during memory module removal: the base camera over a memory slot on a perforated plate, the wrist camera between the gripper fingers, and the base camera over the memory slots of a whole motherboard.">
+          <p class="s-stages__cap">A robot arm removes a memory module: base and wrist cameras, on a fixture and on a motherboard.</p>
+        </div>
+        <div class="s-stages__text">
+          <h3>Execution</h3>
+          <p>Doing it with a robot. 1,808 teleoperated demonstrations of an arm removing one part and placing it in a sorting zone, with the parts on a fixture (1,092) or on a motherboard (716). Each holds wrist and base camera images, robot states and actions.</p>
+          <p class="s-stages__links"><a class="arrow" href="#track-robot">Robot trials</a></p>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -381,50 +616,222 @@
       </div>
 
       <figure class="s-stats__card s-stats__card--wide" data-reveal>
-        <figcaption class="s-stats__title"><b>Annotations by part class</b><span>Mask annotations over all scanner frames: one per part per frame it appears in.</span></figcaption>
-        <ol class="bars bars--two">
-          <li class="bars__row"><span class="bars__name">Screw</span><span class="bars__track"><i style="width: 100.0%"></i></span><span class="bars__val">20,920</span></li>
-          <li class="bars__row"><span class="bars__name">RAM latch</span><span class="bars__track"><i style="width: 96.77%"></i></span><span class="bars__val">20,245</span></li>
-          <li class="bars__row"><span class="bars__name">Connector</span><span class="bars__track"><i style="width: 88.48%"></i></span><span class="bars__val">18,510</span></li>
-          <li class="bars__row"><span class="bars__name">RAM module</span><span class="bars__track"><i style="width: 15.42%"></i></span><span class="bars__val">3,225</span></li>
-          <li class="bars__row"><span class="bars__name">Chassis</span><span class="bars__track"><i style="width: 13.38%"></i></span><span class="bars__val">2,800</span></li>
-          <li class="bars__row"><span class="bars__name">Motherboard</span><span class="bars__track"><i style="width: 12.97%"></i></span><span class="bars__val">2,714</span></li>
-          <li class="bars__row"><span class="bars__name">CPU socket lever</span><span class="bars__track"><i style="width: 12.88%"></i></span><span class="bars__val">2,694</span></li>
-          <li class="bars__row"><span class="bars__name">CPU</span><span class="bars__track"><i style="width: 8.86%"></i></span><span class="bars__val">1,854</span></li>
-          <li class="bars__row"><span class="bars__name">Power supply</span><span class="bars__track"><i style="width: 8.65%"></i></span><span class="bars__val">1,810</span></li>
-          <li class="bars__row"><span class="bars__name">Cover</span><span class="bars__track"><i style="width: 8.65%"></i></span><span class="bars__val">1,809</span></li>
-          <li class="bars__row"><span class="bars__name">Drive cage</span><span class="bars__track"><i style="width: 7.69%"></i></span><span class="bars__val">1,609</span></li>
-          <li class="bars__row"><span class="bars__name">Expansion card</span><span class="bars__track"><i style="width: 5.07%"></i></span><span class="bars__val">1,060</span></li>
-          <li class="bars__row"><span class="bars__name">Cable clip</span><span class="bars__track"><i style="width: 4.85%"></i></span><span class="bars__val">1,014</span></li>
-          <li class="bars__row"><span class="bars__name">CPU cooler</span><span class="bars__track"><i style="width: 3.74%"></i></span><span class="bars__val">783</span></li>
-          <li class="bars__row"><span class="bars__name">Storage drive</span><span class="bars__track"><i style="width: 3.59%"></i></span><span class="bars__val">752</span></li>
-          <li class="bars__row"><span class="bars__name">Power supply latch</span><span class="bars__track"><i style="width: 3.51%"></i></span><span class="bars__val">735</span></li>
-          <li class="bars__row"><span class="bars__name">Card latch</span><span class="bars__track"><i style="width: 2.7%"></i></span><span class="bars__val">564</span></li>
-          <li class="bars__row"><span class="bars__name">Screw hole</span><span class="bars__track"><i style="width: 2.44%"></i></span><span class="bars__val">510</span></li>
-          <li class="bars__row"><span class="bars__name">Optical drive</span><span class="bars__track"><i style="width: 1.33%"></i></span><span class="bars__val">279</span></li>
-          <li class="bars__row"><span class="bars__name">Drive latch</span><span class="bars__track"><i style="width: 1.2%"></i></span><span class="bars__val">251</span></li>
-          <li class="bars__row"><span class="bars__name">Case fan</span><span class="bars__track"><i style="width: 0.22%"></i></span><span class="bars__val">45</span></li>
-          <li class="bars__row"><span class="bars__name">Misc part</span><span class="bars__track"><i style="width: 0.11%"></i></span><span class="bars__val">23</span></li>
-          <li class="bars__row"><span class="bars__name">Cooler bracket</span><span class="bars__track"><i style="width: 0.06%"></i></span><span class="bars__val">13</span></li>
-          <li class="bars__row"><span class="bars__name">Cooler latch</span><span class="bars__track"><i style="width: 0.03%"></i></span><span class="bars__val">6</span></li>
+        <figcaption class="s-stats__title"><b>What the steps do, and to which parts</b><span>1,014 actions that open, remove or move a part, by the part they act on. Disconnect a connector: 1,006, Unscrew a screw: 785 more, each on its own kind of part.</span></figcaption>
+        <div class="flow" data-flow>
+          <ul class="flow__col flow__col--left" aria-label="Actions">
+            <li class="flow__node" data-id="open" tabindex="0" style="top: 0.0%; height: 27.98%"
+                aria-label="Open: 349 actions. RAM latch 226, CPU socket lever 65, Latches and clips 20, Cover 38."><span>Open <b>349</b></span></li>
+            <li class="flow__node" data-id="remove" tabindex="0" style="top: 37.33%; height: 47.47%"
+                aria-label="Remove: 592 actions. Latches and clips 35, Cover 25, RAM module 112, CPU cooler 73, CPU 65, Power supply 62, Storage drive 64, Motherboard 60, Cards, drives and fans 70, Cages and chassis parts 26."><span>Remove <b>592</b></span></li>
+            <li class="flow__node" data-id="manipulate" tabindex="0" style="top: 94.15%; height: 5.85%"
+                aria-label="Move or release: 73 actions. Latches and clips 32, CPU cooler 1, Power supply 12, Storage drive 1, Cages and chassis parts 27."><span>Move or release <b>73</b></span></li>
+          </ul>
+          <svg class="flow__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path class="flow__link" data-from="open" data-to="ram_latch" data-n="226" d="M0,0.00 C50,0.00 50,0.00 100,0.00 L100,18.12 C50,18.12 50,18.12 0,18.12 Z"/>
+            <path class="flow__link" data-from="open" data-to="cpu_socket_lever" data-n="65" d="M0,18.12 C50,18.12 50,19.82 100,19.82 L100,25.03 C50,25.03 50,23.33 0,23.33 Z"/>
+            <path class="flow__link" data-from="open" data-to="latches" data-n="20" d="M0,23.33 C50,23.33 50,26.73 100,26.73 L100,28.34 C50,28.34 50,24.94 0,24.94 Z"/>
+            <path class="flow__link" data-from="open" data-to="cover" data-n="38" d="M0,24.94 C50,24.94 50,35.41 100,35.41 L100,38.45 C50,38.45 50,27.98 0,27.98 Z"/>
+            <path class="flow__link" data-from="remove" data-to="latches" data-n="35" d="M0,37.33 C50,37.33 50,28.34 100,28.34 L100,31.14 C50,31.14 50,40.14 0,40.14 Z"/>
+            <path class="flow__link" data-from="remove" data-to="cover" data-n="25" d="M0,40.14 C50,40.14 50,38.45 100,38.45 L100,40.46 C50,40.46 50,42.14 0,42.14 Z"/>
+            <path class="flow__link" data-from="remove" data-to="ram_module" data-n="112" d="M0,42.14 C50,42.14 50,42.16 100,42.16 L100,51.14 C50,51.14 50,51.12 0,51.12 Z"/>
+            <path class="flow__link" data-from="remove" data-to="cpu_cooler" data-n="73" d="M0,51.12 C50,51.12 50,52.84 100,52.84 L100,58.69 C50,58.69 50,56.98 0,56.98 Z"/>
+            <path class="flow__link" data-from="remove" data-to="cpu" data-n="65" d="M0,56.98 C50,56.98 50,60.47 100,60.47 L100,65.68 C50,65.68 50,62.19 0,62.19 Z"/>
+            <path class="flow__link" data-from="remove" data-to="psu" data-n="62" d="M0,62.19 C50,62.19 50,67.38 100,67.38 L100,72.35 C50,72.35 50,67.16 0,67.16 Z"/>
+            <path class="flow__link" data-from="remove" data-to="storage_drive" data-n="64" d="M0,67.16 C50,67.16 50,75.02 100,75.02 L100,80.15 C50,80.15 50,72.29 0,72.29 Z"/>
+            <path class="flow__link" data-from="remove" data-to="motherboard" data-n="60" d="M0,72.29 C50,72.29 50,81.93 100,81.93 L100,86.74 C50,86.74 50,77.10 0,77.10 Z"/>
+            <path class="flow__link" data-from="remove" data-to="cards" data-n="70" d="M0,77.10 C50,77.10 50,88.44 100,88.44 L100,94.05 C50,94.05 50,82.71 0,82.71 Z"/>
+            <path class="flow__link" data-from="remove" data-to="chassis" data-n="26" d="M0,82.71 C50,82.71 50,95.75 100,95.75 L100,97.84 C50,97.84 50,84.80 0,84.80 Z"/>
+            <path class="flow__link" data-from="manipulate" data-to="latches" data-n="32" d="M0,94.15 C50,94.15 50,31.14 100,31.14 L100,33.71 C50,33.71 50,96.71 0,96.71 Z"/>
+            <path class="flow__link" data-from="manipulate" data-to="cpu_cooler" data-n="1" d="M0,96.71 C50,96.71 50,58.69 100,58.69 L100,58.77 C50,58.77 50,96.79 0,96.79 Z"/>
+            <path class="flow__link" data-from="manipulate" data-to="psu" data-n="12" d="M0,96.79 C50,96.79 50,72.35 100,72.35 L100,73.32 C50,73.32 50,97.76 0,97.76 Z"/>
+            <path class="flow__link" data-from="manipulate" data-to="storage_drive" data-n="1" d="M0,97.76 C50,97.76 50,80.15 100,80.15 L100,80.23 C50,80.23 50,97.84 0,97.84 Z"/>
+            <path class="flow__link" data-from="manipulate" data-to="chassis" data-n="27" d="M0,97.84 C50,97.84 50,97.84 100,97.84 L100,100.00 C50,100.00 50,100.00 0,100.00 Z"/>
+          </svg>
+          <ul class="flow__col flow__col--right" aria-label="Parts">
+            <li class="flow__node" data-id="ram_latch" tabindex="0" style="top: 0.0%; height: 18.12%"
+                aria-label="RAM latch: 226 actions. Open 226."><span>RAM latch <b>226</b></span></li>
+            <li class="flow__node" data-id="cpu_socket_lever" tabindex="0" style="top: 19.82%; height: 5.21%"
+                aria-label="CPU socket lever: 65 actions. Open 65."><span>CPU socket lever <b>65</b></span></li>
+            <li class="flow__node" data-id="latches" tabindex="0" style="top: 26.73%; height: 6.98%"
+                aria-label="Latches and clips: 87 actions. Open 20, Remove 35, Move or release 32."><span>Latches and clips <b>87</b></span></li>
+            <li class="flow__node" data-id="cover" tabindex="0" style="top: 35.41%; height: 5.05%"
+                aria-label="Cover: 63 actions. Open 38, Remove 25."><span>Cover <b>63</b></span></li>
+            <li class="flow__node" data-id="ram_module" tabindex="0" style="top: 42.16%; height: 8.98%"
+                aria-label="RAM module: 112 actions. Remove 112."><span>RAM module <b>112</b></span></li>
+            <li class="flow__node" data-id="cpu_cooler" tabindex="0" style="top: 52.84%; height: 5.93%"
+                aria-label="CPU cooler: 74 actions. Remove 73, Move or release 1."><span>CPU cooler <b>74</b></span></li>
+            <li class="flow__node" data-id="cpu" tabindex="0" style="top: 60.47%; height: 5.21%"
+                aria-label="CPU: 65 actions. Remove 65."><span>CPU <b>65</b></span></li>
+            <li class="flow__node" data-id="psu" tabindex="0" style="top: 67.38%; height: 5.94%"
+                aria-label="Power supply: 74 actions. Remove 62, Move or release 12."><span>Power supply <b>74</b></span></li>
+            <li class="flow__node" data-id="storage_drive" tabindex="0" style="top: 75.02%; height: 5.21%"
+                aria-label="Storage drive: 65 actions. Remove 64, Move or release 1."><span>Storage drive <b>65</b></span></li>
+            <li class="flow__node" data-id="motherboard" tabindex="0" style="top: 81.93%; height: 4.81%"
+                aria-label="Motherboard: 60 actions. Remove 60."><span>Motherboard <b>60</b></span></li>
+            <li class="flow__node" data-id="cards" tabindex="0" style="top: 88.44%; height: 5.61%"
+                aria-label="Cards, drives and fans: 70 actions. Remove 70."><span>Cards, drives and fans <b>70</b></span></li>
+            <li class="flow__node" data-id="chassis" tabindex="0" style="top: 95.75%; height: 4.25%"
+                aria-label="Cages and chassis parts: 53 actions. Remove 26, Move or release 27."><span>Cages and chassis parts <b>53</b></span></li>
+          </ul>
+          <span class="s-stats__tip flow__tip" data-flow-tip hidden></span>
+        </div>
+      </figure>
+
+      <figure class="s-stats__card s-stats__card--wide" data-reveal>
+        <figcaption class="s-stats__title"><b>Part classes</b><span>24 classes, 3,217 parts, 84,225 mask annotations: one per part per frame it is in.<i class="ct-note"> The two bar columns are on a log scale.</i></span></figcaption>
+        <ul class="s-stats__legend" aria-hidden="true">
+          <li><i class="s-stats__key s-stats__key--sq s-stats__key--h1"></i>Less than 30&nbsp;% of the part hidden</li>
+          <li><i class="s-stats__key s-stats__key--sq s-stats__key--h2"></i>30 to 95&nbsp;%</li>
+          <li><i class="s-stats__key s-stats__key--sq s-stats__key--h3"></i>95&nbsp;% or more</li>
+        </ul>
+        <table class="ct">
+          <thead><tr><th scope="col">Class</th><th scope="col" colspan="2">Parts</th><th scope="col" colspan="2">Mask annotations</th><th scope="col">Hidden share</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Screw</th>
+              <td class="ct__bar"><i style="width: 96.73%"></i></td><td class="ct__n">791</td>
+              <td class="ct__bar"><i style="width: 100.0%"></i></td><td class="ct__n">20,920</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="85 % little hidden, 5 % partly, 10 % fully"><i class="ct__h1" style="flex: 17692"></i><i class="ct__h2" style="flex: 1146"></i><i class="ct__h3" style="flex: 2082"></i></span></td></tr>
+            <tr><th scope="row">RAM latch</th>
+              <td class="ct__bar"><i style="width: 90.54%"></i></td><td class="ct__n">494</td>
+              <td class="ct__bar"><i style="width: 99.69%"></i></td><td class="ct__n">20,245</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="93 % little hidden, 1 % partly, 6 % fully"><i class="ct__h1" style="flex: 18774"></i><i class="ct__h2" style="flex: 292"></i><i class="ct__h3" style="flex: 1179"></i></span></td></tr>
+            <tr><th scope="row">Connector</th>
+              <td class="ct__bar"><i style="width: 100.0%"></i></td><td class="ct__n">1,015</td>
+              <td class="ct__bar"><i style="width: 98.85%"></i></td><td class="ct__n">18,510</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="85 % little hidden, 3 % partly, 11 % fully"><i class="ct__h1" style="flex: 15826"></i><i class="ct__h2" style="flex: 568"></i><i class="ct__h3" style="flex: 2116"></i></span></td></tr>
+            <tr><th scope="row">RAM module</th>
+              <td class="ct__bar"><i style="width: 72.71%"></i></td><td class="ct__n">127</td>
+              <td class="ct__bar"><i style="width: 82.43%"></i></td><td class="ct__n">3,225</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="85 % little hidden, 4 % partly, 11 % fully"><i class="ct__h1" style="flex: 2741"></i><i class="ct__h2" style="flex: 131"></i><i class="ct__h3" style="flex: 353"></i></span></td></tr>
+            <tr><th scope="row">Chassis</th>
+              <td class="ct__bar"><i style="width: 64.11%"></i></td><td class="ct__n">66</td>
+              <td class="ct__bar"><i style="width: 81.1%"></i></td><td class="ct__n">2,800</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="6 % little hidden, 94 % partly, 0 % fully"><i class="ct__h1" style="flex: 163"></i><i class="ct__h2" style="flex: 2637"></i></span></td></tr>
+            <tr><th scope="row">Motherboard</th>
+              <td class="ct__bar"><i style="width: 64.11%"></i></td><td class="ct__n">66</td>
+              <td class="ct__bar"><i style="width: 80.81%"></i></td><td class="ct__n">2,714</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="86 % little hidden, 14 % partly, 0 % fully"><i class="ct__h1" style="flex: 2327"></i><i class="ct__h2" style="flex: 387"></i></span></td></tr>
+            <tr><th scope="row">CPU socket lever</th>
+              <td class="ct__bar"><i style="width: 63.91%"></i></td><td class="ct__n">65</td>
+              <td class="ct__bar"><i style="width: 80.74%"></i></td><td class="ct__n">2,694</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="76 % little hidden, 5 % partly, 19 % fully"><i class="ct__h1" style="flex: 2047"></i><i class="ct__h2" style="flex: 144"></i><i class="ct__h3" style="flex: 503"></i></span></td></tr>
+            <tr><th scope="row">CPU</th>
+              <td class="ct__bar"><i style="width: 63.91%"></i></td><td class="ct__n">65</td>
+              <td class="ct__bar"><i style="width: 77.23%"></i></td><td class="ct__n">1,854</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="62 % little hidden, 0 % partly, 38 % fully"><i class="ct__h1" style="flex: 1151"></i><i class="ct__h2" style="flex: 1"></i><i class="ct__h3" style="flex: 702"></i></span></td></tr>
+            <tr><th scope="row">Power supply</th>
+              <td class="ct__bar"><i style="width: 63.91%"></i></td><td class="ct__n">65</td>
+              <td class="ct__bar"><i style="width: 77.0%"></i></td><td class="ct__n">1,810</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="100 % little hidden, 0 % partly, 0 % fully"><i class="ct__h1" style="flex: 1809"></i><i class="ct__h2" style="flex: 1"></i></span></td></tr>
+            <tr><th scope="row">Cover</th>
+              <td class="ct__bar"><i style="width: 63.71%"></i></td><td class="ct__n">64</td>
+              <td class="ct__bar"><i style="width: 77.0%"></i></td><td class="ct__n">1,809</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="97 % little hidden, 3 % partly, 0 % fully"><i class="ct__h1" style="flex: 1753"></i><i class="ct__h2" style="flex: 56"></i></span></td></tr>
+            <tr><th scope="row">Drive cage</th>
+              <td class="ct__bar"><i style="width: 61.72%"></i></td><td class="ct__n">55</td>
+              <td class="ct__bar"><i style="width: 75.9%"></i></td><td class="ct__n">1,609</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="87 % little hidden, 13 % partly, 0 % fully"><i class="ct__h1" style="flex: 1394"></i><i class="ct__h2" style="flex: 215"></i></span></td></tr>
+            <tr><th scope="row">Expansion card</th>
+              <td class="ct__bar"><i style="width: 56.16%"></i></td><td class="ct__n">36</td>
+              <td class="ct__bar"><i style="width: 71.97%"></i></td><td class="ct__n">1,060</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="90 % little hidden, 10 % partly, 1 % fully"><i class="ct__h1" style="flex: 951"></i><i class="ct__h2" style="flex: 103"></i><i class="ct__h3" style="flex: 6"></i></span></td></tr>
+            <tr><th scope="row">Cable clip</th>
+              <td class="ct__bar"><i style="width: 55.79%"></i></td><td class="ct__n">35</td>
+              <td class="ct__bar"><i style="width: 71.56%"></i></td><td class="ct__n">1,014</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="91 % little hidden, 2 % partly, 7 % fully"><i class="ct__h1" style="flex: 922"></i><i class="ct__h2" style="flex: 18"></i><i class="ct__h3" style="flex: 74"></i></span></td></tr>
+            <tr><th scope="row">CPU cooler</th>
+              <td class="ct__bar"><i style="width: 65.79%"></i></td><td class="ct__n">75</td>
+              <td class="ct__bar"><i style="width: 69.13%"></i></td><td class="ct__n">783</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="80 % little hidden, 20 % partly, 0 % fully"><i class="ct__h1" style="flex: 627"></i><i class="ct__h2" style="flex: 153"></i><i class="ct__h3" style="flex: 3"></i></span></td></tr>
+            <tr><th scope="row">Storage drive</th>
+              <td class="ct__bar"><i style="width: 63.91%"></i></td><td class="ct__n">65</td>
+              <td class="ct__bar"><i style="width: 68.75%"></i></td><td class="ct__n">752</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="57 % little hidden, 22 % partly, 20 % fully"><i class="ct__h1" style="flex: 432"></i><i class="ct__h2" style="flex: 167"></i><i class="ct__h3" style="flex: 153"></i></span></td></tr>
+            <tr><th scope="row">Power supply latch</th>
+              <td class="ct__bar"><i style="width: 48.44%"></i></td><td class="ct__n">20</td>
+              <td class="ct__bar"><i style="width: 68.53%"></i></td><td class="ct__n">735</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="100 % little hidden, 0 % partly, 0 % fully"><i class="ct__h1" style="flex: 735"></i></span></td></tr>
+            <tr><th scope="row">Card latch</th>
+              <td class="ct__bar"><i style="width: 45.51%"></i></td><td class="ct__n">16</td>
+              <td class="ct__bar"><i style="width: 66.04%"></i></td><td class="ct__n">564</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="100 % little hidden, 0 % partly, 0 % fully"><i class="ct__h1" style="flex: 563"></i><i class="ct__h3" style="flex: 1"></i></span></td></tr>
+            <tr><th scope="row">Screw hole</th>
+              <td class="ct__bar"><i style="width: 55.79%"></i></td><td class="ct__n">35</td>
+              <td class="ct__bar"><i style="width: 65.1%"></i></td><td class="ct__n">510</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="75 % little hidden, 1 % partly, 24 % fully"><i class="ct__h1" style="flex: 384"></i><i class="ct__h2" style="flex: 3"></i><i class="ct__h3" style="flex: 123"></i></span></td></tr>
+            <tr><th scope="row">Optical drive</th>
+              <td class="ct__bar"><i style="width: 53.32%"></i></td><td class="ct__n">29</td>
+              <td class="ct__bar"><i style="width: 59.43%"></i></td><td class="ct__n">279</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="96 % little hidden, 0 % partly, 4 % fully"><i class="ct__h1" style="flex: 268"></i><i class="ct__h2" style="flex: 1"></i><i class="ct__h3" style="flex: 10"></i></span></td></tr>
+            <tr><th scope="row">Drive latch</th>
+              <td class="ct__bar"><i style="width: 48.44%"></i></td><td class="ct__n">20</td>
+              <td class="ct__bar"><i style="width: 58.44%"></i></td><td class="ct__n">251</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="99 % little hidden, 1 % partly, 0 % fully"><i class="ct__h1" style="flex: 248"></i><i class="ct__h2" style="flex: 3"></i></span></td></tr>
+            <tr><th scope="row">Case fan</th>
+              <td class="ct__bar"><i style="width: 30.23%"></i></td><td class="ct__n">5</td>
+              <td class="ct__bar"><i style="width: 42.29%"></i></td><td class="ct__n">45</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="100 % little hidden, 0 % partly, 0 % fully"><i class="ct__h1" style="flex: 45"></i></span></td></tr>
+            <tr><th scope="row">Case connector part</th>
+              <td class="ct__bar"><i style="width: 9.1%"></i></td><td class="ct__n">1</td>
+              <td class="ct__bar"><i style="width: 35.98%"></i></td><td class="ct__n">23</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="100 % little hidden, 0 % partly, 0 % fully"><i class="ct__h1" style="flex: 23"></i></span></td></tr>
+            <tr><th scope="row">Cooler bracket</th>
+              <td class="ct__bar"><i style="width: 18.2%"></i></td><td class="ct__n">2</td>
+              <td class="ct__bar"><i style="width: 30.62%"></i></td><td class="ct__n">13</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="69 % little hidden, 31 % partly, 0 % fully"><i class="ct__h1" style="flex: 9"></i><i class="ct__h2" style="flex: 4"></i></span></td></tr>
+            <tr><th scope="row">Cooler latch</th>
+              <td class="ct__bar"><i style="width: 30.23%"></i></td><td class="ct__n">5</td>
+              <td class="ct__bar"><i style="width: 23.35%"></i></td><td class="ct__n">6</td>
+              <td class="ct__hid"><span class="ct__stack" role="img" aria-label="67 % little hidden, 33 % partly, 0 % fully"><i class="ct__h1" style="flex: 4"></i><i class="ct__h2" style="flex: 2"></i></span></td></tr>
+          </tbody>
+        </table>
+      </figure>
+
+      <figure class="s-stats__card" data-reveal>
+        <figcaption class="s-stats__title"><b>Questions by type</b><span>184,263 question-answer pairs in twelve types.</span></figcaption>
+        <p class="qt__group"><i class="s-stats__key s-stats__key--sq s-stats__key--g1"></i>Perception <span>96,849</span></p>
+        <ol class="bars qt qt--1">
+          <li class="bars__row"><span class="bars__name">Enumeration</span><span class="bars__track"><i style="width: 7.29%"></i></span><span class="bars__val">2,804</span></li>
+          <li class="bars__row"><span class="bars__name">Grounding</span><span class="bars__track"><i style="width: 75.73%"></i></span><span class="bars__val">29,146</span></li>
+          <li class="bars__row"><span class="bars__name">State</span><span class="bars__track"><i style="width: 89.25%"></i></span><span class="bars__val">34,349</span></li>
+          <li class="bars__row"><span class="bars__name">Cross-view</span><span class="bars__track"><i style="width: 79.38%"></i></span><span class="bars__val">30,550</span></li>
+        </ol>
+        <p class="qt__group"><i class="s-stats__key s-stats__key--sq s-stats__key--g2"></i>Understanding <span>17,175</span></p>
+        <ol class="bars qt qt--2">
+          <li class="bars__row"><span class="bars__name">Action</span><span class="bars__track"><i style="width: 12.11%"></i></span><span class="bars__val">4,662</span></li>
+          <li class="bars__row"><span class="bars__name">State change</span><span class="bars__track"><i style="width: 7.04%"></i></span><span class="bars__val">2,708</span></li>
+          <li class="bars__row"><span class="bars__name">Multi-step change</span><span class="bars__track"><i style="width: 18.61%"></i></span><span class="bars__val">7,164</span></li>
+          <li class="bars__row"><span class="bars__name">Progress</span><span class="bars__track"><i style="width: 6.86%"></i></span><span class="bars__val">2,641</span></li>
+        </ol>
+        <p class="qt__group"><i class="s-stats__key s-stats__key--sq s-stats__key--g3"></i>Planning <span>70,239</span></p>
+        <ol class="bars qt qt--3">
+          <li class="bars__row"><span class="bars__name">Feasibility</span><span class="bars__track"><i style="width: 100.0%"></i></span><span class="bars__val">38,488</span></li>
+          <li class="bars__row"><span class="bars__name">Next action</span><span class="bars__track"><i style="width: 12.73%"></i></span><span class="bars__val">4,901</span></li>
+          <li class="bars__row"><span class="bars__name">Plan</span><span class="bars__track"><i style="width: 36.21%"></i></span><span class="bars__val">13,938</span></li>
+          <li class="bars__row"><span class="bars__name">Plan check</span><span class="bars__track"><i style="width: 33.55%"></i></span><span class="bars__val">12,912</span></li>
+        </ol>
+      </figure>
+
+      <div class="s-stats__side">
+      <figure class="s-stats__card" data-reveal>
+        <figcaption class="s-stats__title"><b>Robot demonstrations by part</b><span>1,808 demonstrations of a robot arm removing one part.</span></figcaption>
+        <ul class="s-stats__legend" aria-hidden="true">
+          <li><i class="s-stats__key s-stats__key--sq s-stats__key--1"></i>Parts on a fixture: 1,092</li>
+          <li><i class="s-stats__key s-stats__key--sq s-stats__key--2"></i>Parts on a motherboard: 716</li>
+        </ul>
+        <ol class="bars rb">
+          <li class="bars__row" aria-label="RAM module: 202 on a fixture, 160 on a motherboard"><span class="bars__name">RAM module</span><span class="bars__track rb__track"><i class="rb__a" style="width: 55.8%"></i><i class="rb__b" style="width: 44.2%"></i></span><span class="bars__val">362</span></li>
+          <li class="bars__row" aria-label="Connector: 199 on a fixture, 160 on a motherboard"><span class="bars__name">Connector</span><span class="bars__track rb__track"><i class="rb__a" style="width: 54.97%"></i><i class="rb__b" style="width: 44.2%"></i></span><span class="bars__val">359</span></li>
+          <li class="bars__row" aria-label="CPU: 162 on a fixture, 135 on a motherboard"><span class="bars__name">CPU</span><span class="bars__track rb__track"><i class="rb__a" style="width: 44.75%"></i><i class="rb__b" style="width: 37.29%"></i></span><span class="bars__val">297</span></li>
+          <li class="bars__row" aria-label="CPU fan: 155 on a fixture, 131 on a motherboard"><span class="bars__name">CPU fan</span><span class="bars__track rb__track"><i class="rb__a" style="width: 42.82%"></i><i class="rb__b" style="width: 36.19%"></i></span><span class="bars__val">286</span></li>
+          <li class="bars__row" aria-label="Graphics card: 138 on a fixture, 130 on a motherboard"><span class="bars__name">Graphics card</span><span class="bars__track rb__track"><i class="rb__a" style="width: 38.12%"></i><i class="rb__b" style="width: 35.91%"></i></span><span class="bars__val">268</span></li>
+          <li class="bars__row" aria-label="Hard drive: 131 on a fixture, 0 on a motherboard"><span class="bars__name">Hard drive</span><span class="bars__track rb__track"><i class="rb__a" style="width: 36.19%"></i></span><span class="bars__val">131</span></li>
+          <li class="bars__row" aria-label="Solid-state drive: 105 on a fixture, 0 on a motherboard"><span class="bars__name">Solid-state drive</span><span class="bars__track rb__track"><i class="rb__a" style="width: 29.01%"></i></span><span class="bars__val">105</span></li>
         </ol>
       </figure>
 
       <figure class="s-stats__card" data-reveal>
-        <figcaption class="s-stats__title"><b>What a step does</b><span>Actions in the operation log, by verb.</span></figcaption>
-        <ol class="bars">
-          <li class="bars__row"><span class="bars__name">Disconnect</span><span class="bars__track"><i style="width: 100.0%"></i></span><span class="bars__val">1,006</span></li>
-          <li class="bars__row"><span class="bars__name">Unscrew</span><span class="bars__track"><i style="width: 78.03%"></i></span><span class="bars__val">785</span></li>
-          <li class="bars__row"><span class="bars__name">Remove</span><span class="bars__track"><i style="width: 59.05%"></i></span><span class="bars__val">594</span></li>
-          <li class="bars__row"><span class="bars__name">Open</span><span class="bars__track"><i style="width: 34.69%"></i></span><span class="bars__val">349</span></li>
-          <li class="bars__row"><span class="bars__name">Displace</span><span class="bars__track"><i style="width: 3.18%"></i></span><span class="bars__val">32</span></li>
-          <li class="bars__row"><span class="bars__name">Release</span><span class="bars__track"><i style="width: 3.18%"></i></span><span class="bars__val">32</span></li>
-          <li class="bars__row"><span class="bars__name">Reorient</span><span class="bars__track"><i style="width: 0.99%"></i></span><span class="bars__val">10</span></li>
-        </ol>
-      </figure>
-
-      <figure class="s-stats__card" data-reveal>
-        <figcaption class="s-stats__title"><b>Tools</b><span>The tool each action needed.</span></figcaption>
+        <figcaption class="s-stats__title"><b>Tools</b><span>The tool each of the 2,808 logged actions needed.</span></figcaption>
         <ol class="bars">
           <li class="bars__row"><span class="bars__name">No tool</span><span class="bars__track"><i style="width: 100.0%"></i></span><span class="bars__val">2,020</span></li>
           <li class="bars__row"><span class="bars__name">Phillips #2</span><span class="bars__track"><i style="width: 18.27%"></i></span><span class="bars__val">369</span></li>
@@ -434,6 +841,7 @@
           <li class="bars__row"><span class="bars__name">Phillips #1</span><span class="bars__track"><i style="width: 0.25%"></i></span><span class="bars__val">5</span></li>
         </ol>
       </figure>
+      </div>
     </div>
   </div>
 </section>
@@ -737,25 +1145,14 @@
   </div>
 </section>
 
-<section id="cite" class="sec sec--sheet tint--lilac s-cite" data-section="cite" data-module="cite" aria-labelledby="cite-h">
+<section id="cite" class="sec sec--sheet tint--lilac s-cite" data-section="cite" aria-labelledby="cite-h">
   <div class="wrap">
     <header class="sec__head" data-reveal>
       <h2 id="cite-h">Citation</h2>
-      <p class="lead">Until a formal citation is published, please cite this page.</p>
+      <p class="lead s-cite__soon">Coming soon.</p>
     </header>
 
-    <div class="code s-cite__bib" data-copy-box data-reveal>
-      <pre class="s-cite__pre" tabindex="0" aria-label="BibTeX entry" data-copy-src>@misc{eol3d2026,
-  title        = {EoL3D: Step-by-step teardowns of end-of-life desktop computers},
-  author       = {Chang Liu and Haiyang Zhao and Jiurun Song and Badrinath Balasubramaniam and Jiachen Li and Zhiwen Fan and Sara Behdad and Yu She and Beiwen Li and Xiao Liang and Minghui Zheng},
-  year         = {2026},
-  howpublished = {\url{https://eol3d.github.io}}
-}</pre>
-      <button class="code__copy" type="button" hidden data-copy aria-label="Copy the BibTeX entry">Copy</button>
-    </div>
-
     <p class="s-cite__licence" data-reveal>The data is in pre-release: provided for inspection and research evaluation, with a licence to come with the first tagged release. The code is under the MIT licence. <a href="guide.html#guide-licence">Terms of use</a></p>
-    <span class="vh" aria-live="polite" data-copy-status></span>
   </div>
 </section>
   </main>
