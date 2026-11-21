@@ -115,7 +115,7 @@
           <dl class="spec s-data__spec">
             <div><dt>Scanner</dt><dd><code>raw/scanner/&lt;batch&gt;/&lt;batch&gt;/&lt;NN&gt;/RGB&lt;n&gt;1/</code>: a burst of colour images per step, <code>P_0.png</code>, <code>P_1.png</code>, &hellip;</dd></div>
             <div><dt>OAK</dt><dd><code>raw/oak/Desktop NN/Disassemble/Camera_1|2/&lt;step&gt;/</code>: colour JPEG, colour aligned to depth (PNG), raw depth (<code>.npy</code>, <code>.png</code>), point cloud (<code>.ply</code>)</dd></div>
-            <div><dt>RealSense</dt><dd><code>raw/realsense/Desktop NN/Disassemble/&lt;step&gt;/</code>: colour, raw depth (<code>.npy</code>), point cloud (<code>.ply</code>)</dd></div>
+            <div><dt>RealSense</dt><dd><code>raw/realsense/Desktop NN/Disassemble/&lt;step&gt;/</code> (the folder is named <code>Disassembly</code> for desktops 18 to 22): colour, raw depth (<code>.npy</code>), point cloud (<code>.ply</code>)</dd></div>
             <div><dt>Calibration</dt><dd><code>Calibration/</code> in each desktop folder of the cameras</dd></div>
             <div><dt>Log</dt><dd><code>annotations/scanner/D&lt;nn&gt;/sequence.json</code>: per step its name, type and actions; verbs: unscrew, disconnect, open, release, remove, displace, reorient</dd></div>
           </dl>
@@ -231,7 +231,7 @@
           <h3 id="data-3d-h">3D</h3>
           <p class="s-data__body">The scanner measures depth at most of its pixels, so most of each visible mask is also a set of measured 3D points, in millimetres. Each annotated step has its reconstruction, named like its picture, and every point carries the instance and the class of the part it lies on. Nothing is filled in: a surface the scanner could not see has no points.</p>
           <dl class="spec s-data__spec">
-            <div><dt>Scanner</dt><dd><code>reconstructions/scanner/D&lt;NN&gt;/S&lt;nn&gt;.ply</code>: <code>x y z</code> in millimetres in the scanner camera frame, <code>red green blue</code>, <code>instance</code> (the value of <code>labels/S&lt;nn&gt;.png</code> at the point's pixel, 0 = none) and <code>category</code> (the COCO class id); format, pixel mapping and checksums in its <code>README.md</code> and <code>manifest.csv</code>. D30's reconstructions are not available yet.</dd></div>
+            <div><dt>Scanner</dt><dd><code>reconstructions/scanner/D&lt;NN&gt;/S&lt;nn&gt;.ply</code>: <code>x y z</code> in millimetres in the scanner camera frame, <code>red green blue</code>, <code>instance</code> (the value of <code>labels/S&lt;nn&gt;.png</code> at the point's pixel, 0 = none) and <code>category</code> (the COCO class id); format, pixel mapping and checksums in its <code>README.md</code> and <code>manifest.csv</code>. Seven steps have an almost empty reconstruction; the manifest gives the point count of every file.</dd></div>
             <div><dt>Parts</dt><dd>select a part's points with <code>instance</code>, or use <code>annotations/scanner/tools/parts3d.py</code>, which cuts each part out of a reconstruction with the masks; steps in <code>HOW_TO_EXTRACT_3D_PARTS.md</code>, route and best frame per part in <code>parts_3d_plan.csv</code></dd></div>
             <div><dt>Cameras</dt><dd>Depth and point clouds of the OAK and RealSense cameras are in <code>raw/</code> (<code>.npy</code>, <code>.ply</code>)</dd></div>
           </dl>

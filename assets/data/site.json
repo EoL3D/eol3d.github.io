@@ -157,9 +157,9 @@
     "qa_eval": 5347,
     "robot_fixtured": 1092,
     "robot_on_board": 716,
-    "recon_files": 2764,
-    "recon_desktops": 65,
-    "recon_gb": 57.9
+    "recon_files": 2800,
+    "recon_desktops": 66,
+    "recon_gb": 58.6
   },
   "tiles": [
     {
@@ -221,7 +221,7 @@
       "paths": [
         "reconstructions/scanner/"
       ],
-      "size_gb": 57.9,
+      "size_gb": 58.6,
       "about": false
     },
     {
